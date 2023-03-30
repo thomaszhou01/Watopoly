@@ -1,0 +1,4 @@
+#ifndef OWNABLEPROPERTY_H
+#define OWNABLEPROPERTY_H
+
+#endif
