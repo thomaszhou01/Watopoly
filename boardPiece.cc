@@ -28,6 +28,10 @@ int BoardPiece::getPrice(){
     return cost;
 }
 
+int BoardPiece::getPropertiesInSet(){
+    return propertiesInSet;
+}
+
 bool BoardPiece::tuitionPaid(){
     return tuitionPaid;
 }

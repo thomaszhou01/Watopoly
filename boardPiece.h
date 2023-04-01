@@ -14,12 +14,14 @@ class BoardPiece: public Subject{
         const bool gym;
         const bool residence;
         int improvementTier;
-        Player *ownedPlayer = nullptr;
+        int propertiesInSet;
+        Player *ownedPlayer;
         bool owned;
         bool mortgaged;
         bool ownable;
         bool tuitionPaid;
     public:
+        BoardPiece(std::string name, std::string id, int cost, int improvementCost, std::vector<int> tuition, int position, bool isGym, bool isResidence, int propertiesInSet, bool ownable);
         bool isOwnable(); //gets if it is an ownable property or unownable
         bool isOwned(); //gets if it is owned 
         Player* getOwner();
@@ -27,6 +29,7 @@ class BoardPiece: public Subject{
         bool isResidence();
         int getPosition();
         int getPrice();
+        int getPropertiesInSet();
         bool tuitionPaid();
         bool isMortgaged();
         std::string getName();

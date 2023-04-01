@@ -1,5 +1,9 @@
 #include "ownableProperty.h"
 
+
+OwnableProperty::OwnableProperty(std::string name, std::string id, int cost, int improvementCost, std::vector<int> tuition, int position, bool isGym, bool isResidence, int propertiesInSet): 
+    BoardPiece{name, id, cost, improvementCost, tuition, position, isGym, isResidence, propertiesInSet, true}{}
+
 void OwnableProperty::mortgage(Player* p){
     if(!isMortgaged && improvementTier == 0 && p == ownedPlayer){
         int morgageMoney = cost/2;
