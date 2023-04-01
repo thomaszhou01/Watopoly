@@ -11,11 +11,12 @@ class BoardPiece: public Subject{
         const int cost;
         const int improvementCost;
         const std::vector<int> tuition;
+        const bool gym;
+        const bool residence;
         int improvementTier;
         Player *ownedPlayer = nullptr;
         bool owned;
         bool mortgaged;
-        bool gym;
         bool ownable;
         bool tuitionPaid;
     public:
@@ -23,6 +24,7 @@ class BoardPiece: public Subject{
         bool isOwned(); //gets if it is owned 
         Player* getOwner();
         bool isGym();
+        bool isResidence();
         int getPosition();
         int getPrice();
         bool tuitionPaid();

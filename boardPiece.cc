@@ -16,6 +16,10 @@ bool BoardPiece::isGym(){
     return gym;
 }
 
+bool BoardPiece::isResidence(){
+    return residence;
+}
+
 int BoardPiece::getPosition(){
     return position;
 }
