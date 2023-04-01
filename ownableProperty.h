@@ -4,10 +4,11 @@
 
 class OwnableProperty: public BoardPiece{
     
+    int calculateTuition();
     public:
         OwnableProperty(std::string name, std::string id, int cost, int improvementCost, std::vector<int> tuition, int position);
-        void morgage(Player* p) override;
-        void unmorgage(Player* p) override;
+        void mortgage(Player* p) override;
+        void unmortgage(Player* p) override;
         void improve(Player* p) override;        
         void landedOn(Player* p) override;
 

@@ -12,21 +12,25 @@ class BoardPiece: public Subject{
         int improvementCost;
         int improvementTier;
         std::vector<int> tuition;
-        Player *ownedPlayer;
-        bool isOwned;
-        bool isMorgaged;
-        bool isGym;
-        bool isOwnable;
+        Player *ownedPlayer = nullptr;
+        bool owned;
+        bool mortgaged;
+        bool gym;
+        bool ownable;
         bool tuitionPaid;
     public:
         bool isOwnable(); //gets if it is an ownable property or unownable
-        Player* owned(); //gets if it is owned 
+        bool isOwned(); //gets if it is owned 
+        Player* getOwner();
+        bool isGym();
         int getPosition();
         int getPrice();
         bool tuitionPaid();
+        bool isMortgaged();
         std::string getName();
-        virtual void morgage(Player* p);
-        virtual void unmorgage(Player* p);
+        std::string getId();
+        virtual void mortgage(Player* p);
+        virtual void unmortgage(Player* p);
         virtual void improve(Player* p);
         virtual void landedOn(Player* p) = 0;
 
