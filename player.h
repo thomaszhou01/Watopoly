@@ -23,6 +23,7 @@ class Player{
         bool inTims();
         void sendToTims();
         int turnsInTims();
+        void addMoney(int money);
         void addProperty(BoardPiece* bp);
         bool trade(Player* p);
         void setPosition(int pos);
