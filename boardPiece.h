@@ -5,13 +5,13 @@
 
 class BoardPiece: public Subject{
     protected:
-        int position;
-        std::string name;
-        std::string id;
-        int cost;
-        int improvementCost;
+        const int position;
+        const std::string name;
+        const std::string id;
+        const int cost;
+        const int improvementCost;
+        const std::vector<int> tuition;
         int improvementTier;
-        std::vector<int> tuition;
         Player *ownedPlayer = nullptr;
         bool owned;
         bool mortgaged;
