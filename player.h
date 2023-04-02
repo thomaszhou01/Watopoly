@@ -25,7 +25,9 @@ class Player{
         void sendToTims();
         int getTurnsInTims();
         void addMoney(int money);
+        void subtractMoney(int money);
         void addProperty(BoardPiece* bp);
+        std::vector<BoardPiece*> getProperties();
         bool trade(Player* p);
         void setPosition(int pos);
         void showAssets();

@@ -1,5 +1,6 @@
 #ifndef BOARDPIECE_H
 #define BOARDPIECE_H
+#include <iostream>
 #include "subject.h"
 #include "player.h"
 
@@ -14,8 +15,8 @@ class BoardPiece: public Subject{
         const bool gym;
         const bool residence;
         const bool ownable;
+        const int propertiesInSet;
         int improvementTier;
-        int propertiesInSet;
         Player *ownedPlayer;
         bool owned;
         bool mortgaged;
@@ -34,9 +35,10 @@ class BoardPiece: public Subject{
         bool isMortgaged();
         std::string getName();
         std::string getId();
-        virtual void mortgage(Player* p);
-        virtual void unmortgage(Player* p);
-        virtual void improve(Player* p);
+        virtual bool mortgage(Player* p);
+        virtual bool unmortgage(Player* p);
+        virtual bool improve(Player* p);
+        virtual bool sellImprovement(Player* p);
         virtual void landedOn(Player* p) = 0;
         virtual ~BoardPiece()=0;
 
