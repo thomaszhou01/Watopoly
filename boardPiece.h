@@ -34,9 +34,9 @@ class BoardPiece: public Subject{
         bool isMortgaged();
         std::string getName();
         std::string getId();
-        virtual void mortgage(Player* p) = 0;
-        virtual void unmortgage(Player* p) = 0;
-        virtual void improve(Player* p) = 0;
+        virtual void mortgage(Player* p);
+        virtual void unmortgage(Player* p);
+        virtual void improve(Player* p);
         virtual void landedOn(Player* p) = 0;
         virtual ~BoardPiece()=0;
 

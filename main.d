@@ -1,1 +1,2 @@
-main.o: main.cc boardPiece.h subject.h player.h ownableProperty.h
+main.o: main.cc boardPiece.h subject.h player.h ownableProperty.h \
+ unownableProperty.h

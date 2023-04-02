@@ -51,4 +51,7 @@ std::string BoardPiece::getId(){
     return id;
 }
 
+void BoardPiece::mortgage(Player* p){}
+void BoardPiece::unmortgage(Player* p){}
+void BoardPiece::improve(Player* p){}
 BoardPiece::~BoardPiece(){}
