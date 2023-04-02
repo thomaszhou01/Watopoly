@@ -45,16 +45,8 @@
 		"xtr1common": "cpp",
 		"xutility": "cpp",
 		"algorithm": "cpp",
-		"array": "cpp",
-		"*.tcc": "cpp",
-		"cwctype": "cpp",
-		"deque": "cpp",
-		"unordered_map": "cpp",
-		"functional": "cpp",
-		"memory_resource": "cpp",
-		"numeric": "cpp",
+		"chrono": "cpp",
 		"random": "cpp",
-		"string_view": "cpp",
-		"numbers": "cpp"
+		"ratio": "cpp"
 	}
 }
