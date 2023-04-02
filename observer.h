@@ -4,8 +4,9 @@
 #include "subject.h"
 
 class Observer{
-    virtual void notify() = 0;
-    virtual ~Observer();
+    public:
+        virtual void notify() = 0;
+        virtual ~Observer();
 };
 
 #endif
