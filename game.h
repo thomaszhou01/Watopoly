@@ -21,7 +21,8 @@ class Game{
         bool testing = false;
 
     public:
-        void start();   // starts the game, no constructor required
+        Game();     // Constructor initializer
+        void start();   // starts the game
         int getNumPlayers();
         bool getTesting();
         bool setTesting();
