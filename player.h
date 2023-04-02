@@ -16,6 +16,7 @@ class Player{
     std::vector<BoardPiece*> properties;
 
     public:
+        Player(std::string name, char character);
         std::string getName();
         int getPosition();
         int getMoney();
