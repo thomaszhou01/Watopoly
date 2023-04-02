@@ -4,8 +4,8 @@
 #include "subject.h"
 
 class Observer{
-    virtual void notify(Subject * subject) = 0;
-    virtual ~Observer() {}
+    virtual void notify() = 0;
+    virtual ~Observer();
 };
 
 #endif

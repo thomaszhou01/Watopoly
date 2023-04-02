@@ -21,6 +21,7 @@ class BoardPiece: public Subject{
         bool owned;
         bool mortgaged;
         bool tuitionPaid;
+        // what is propertiesInSet? is that the amount of Buildings in a Monopoly Block?
     public:
         BoardPiece(std::string name, std::string id, int cost, int improvementCost, std::vector<int> tuition, int position, bool isGym, bool isResidence, int propertiesInSet, bool ownable);
         bool isOwnable(); //gets if it is an ownable property or unownable

@@ -4,6 +4,7 @@
 #include "player.h"
 #include "boardPiece.h"
 #include "subject.h"
+#include "string"
 
 class Game{
     protected:
@@ -12,13 +13,21 @@ class Game{
         const int pieces = 40;
         const int initialMoney = 1500;
 
-        int numPlayers;
+        int numPlayers; 
         std::vector<Player *> order;
         BoardPiece * game[40];
 
         bool testing = false;
+
+        BoardPiece(std::string name, std::string id, int cost, int improvementCost, std::vector<int> tuition, int position, bool isGym, bool isResidence, int propertiesInSet, bool ownable);
+        BoardPiece * CollectOsap{"Collect Osap", "COLLECTOSAP", -1, -1, {}, 0, false, false, 0, false};
+        BoardPiece * AL{"AL", "AL", 40, 50, {2, 10, 30, 90, 160, 250}, 1, false, false, 2, true};
+        BoardPiece * SLC{"SLC", "SLC", -1, -1, {}, 2, false, false, 0, false};
+        //BoardPiece * 
+
+
     public:
-        void start();
+        void start();   // starts the game, no constructor required
         int getNumPlayers();
         bool getTesting();
         bool setTesting();
