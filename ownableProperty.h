@@ -10,6 +10,7 @@ class OwnableProperty: public BoardPiece{
         void unmortgage(Player* p) override;
         void improve(Player* p) override;        
         void landedOn(Player* p) override;
+        ~OwnableProperty() override;
 
 };
 

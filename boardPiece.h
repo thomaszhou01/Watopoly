@@ -13,12 +13,12 @@ class BoardPiece: public Subject{
         const std::vector<int> tuition;
         const bool gym;
         const bool residence;
+        const bool ownable;
         int improvementTier;
         int propertiesInSet;
         Player *ownedPlayer;
         bool owned;
         bool mortgaged;
-        bool ownable;
         bool tuitionPaid;
     public:
         BoardPiece(std::string name, std::string id, int cost, int improvementCost, std::vector<int> tuition, int position, bool isGym, bool isResidence, int propertiesInSet, bool ownable);
@@ -30,14 +30,15 @@ class BoardPiece: public Subject{
         int getPosition();
         int getPrice();
         int getPropertiesInSet();
-        bool tuitionPaid();
+        bool isTuitionPaid();
         bool isMortgaged();
         std::string getName();
         std::string getId();
-        virtual void mortgage(Player* p);
-        virtual void unmortgage(Player* p);
-        virtual void improve(Player* p);
+        virtual void mortgage(Player* p) = 0;
+        virtual void unmortgage(Player* p) = 0;
+        virtual void improve(Player* p) = 0;
         virtual void landedOn(Player* p) = 0;
+        virtual ~BoardPiece()=0;
 
 };
 

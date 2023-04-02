@@ -1,16 +1,14 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "boardPiece.h"
+#include "ownableProperty.h"
 
 using namespace std;
 
 int main()
 {
-    vector<string> msg {"Hello", "C++", "World", "from", "and the C++ extension!", "Watopoly"};
+    BoardPiece *p = new OwnableProperty{"AL", "Arts1", 40, 50, {2,10,30,90,160,250}, 0, false, false, 3};
 
-    for (const string& word : msg)
-    {
-        cout << word << " ";
-    }
-    cout << endl;
+    cout << p->getId() << " " << p->getOwner() << endl;
 }

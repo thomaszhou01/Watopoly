@@ -5,7 +5,7 @@ OwnableProperty::OwnableProperty(std::string name, std::string id, int cost, int
     BoardPiece{name, id, cost, improvementCost, tuition, position, isGym, isResidence, propertiesInSet, true}{}
 
 void OwnableProperty::mortgage(Player* p){
-    if(!isMortgaged && improvementTier == 0 && p == ownedPlayer){
+    if(!mortgaged && improvementTier == 0 && p == ownedPlayer){
         int morgageMoney = cost/2;
         //money gets added to player
         mortgaged = true;
@@ -13,7 +13,7 @@ void OwnableProperty::mortgage(Player* p){
 }
 
 void OwnableProperty::unmortgage(Player* p){
-    if(isMortgaged && p == ownedPlayer){
+    if(mortgaged && p == ownedPlayer){
         int morgageMoney = cost*0.6;
         //player gets money withdrawed
         mortgaged = false;
@@ -27,5 +27,9 @@ void OwnableProperty::improve(Player* p){
 }
 
 void OwnableProperty::landedOn(Player* p){
+    
+}
+
+OwnableProperty::~OwnableProperty(){
     
 }

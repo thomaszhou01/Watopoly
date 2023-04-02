@@ -1,7 +1,10 @@
 #include "boardPiece.h"
 
+BoardPiece::BoardPiece(std::string name, std::string id, int cost, int improvementCost, std::vector<int> tuition, int position, bool gym, bool residence, int propertiesInSet, bool ownable):
+    name{name}, id{id}, cost{cost}, improvementCost{improvementCost}, tuition{tuition}, position{position}, gym{gym}, residence{residence}, propertiesInSet{propertiesInSet}, ownable{ownable}, improvementTier{0}, ownedPlayer{nullptr}, owned{false}, mortgaged{false}, tuitionPaid{true}{}
+
 bool BoardPiece::isOwnable(){
-    return isOwnable;
+    return ownable;
 }
 
 bool BoardPiece::isOwned(){
@@ -32,12 +35,12 @@ int BoardPiece::getPropertiesInSet(){
     return propertiesInSet;
 }
 
-bool BoardPiece::tuitionPaid(){
+bool BoardPiece::isTuitionPaid(){
     return tuitionPaid;
 }
 
 bool BoardPiece::isMortgaged(){
-    return isMortgaged;
+    return mortgaged;
 }
 
 std::string BoardPiece::getName(){
@@ -47,3 +50,5 @@ std::string BoardPiece::getName(){
 std::string BoardPiece::getId(){
     return id;
 }
+
+BoardPiece::~BoardPiece(){}

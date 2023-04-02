@@ -1,2 +1,2 @@
 unownableProperty.o: unownableProperty.cc unownableProperty.h \
- boardPiece.h subject.h
+ boardPiece.h subject.h player.h

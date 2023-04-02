@@ -1,1 +1,1 @@
-boardPiece.o: boardPiece.cc boardPiece.h subject.h
+boardPiece.o: boardPiece.cc boardPiece.h subject.h player.h

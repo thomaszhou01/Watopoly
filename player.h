@@ -2,7 +2,8 @@
 #define PLAYER_H
 #include <string>
 #include <vector>
-#include <boardPiece.h>
+
+class BoardPiece;
 
 class Player{
     const std::string name;
@@ -19,10 +20,10 @@ class Player{
         int getPosition();
         int getMoney();
         bool isBankrupt();
-        void bankrupt();
-        bool inTims();
+        void setBankrupt();
+        bool isInTims();
         void sendToTims();
-        int turnsInTims();
+        int getTurnsInTims();
         void addMoney(int money);
         void addProperty(BoardPiece* bp);
         bool trade(Player* p);
