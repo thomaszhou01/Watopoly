@@ -1,1 +1,1 @@
-player.o: player.cc player.h
+player.o: player.cc player.h boardPiece.h subject.h

@@ -29,16 +29,22 @@ bool OwnableProperty::unmortgage(Player* p){
 bool OwnableProperty::improve(Player* p){
     if(p == this->ownedPlayer){
         std::vector<BoardPiece*> properties = p->getProperties();
-        int sameIdCount = 1;
+        int sameIdCount = 0;
         for(auto & i : properties){
             if(i->getId() == this->id){
                 sameIdCount++;
             }
         }
-        if(sameIdCount == this->propertiesInSet && p->getMoney() >= this->improvementCost){
+        if(sameIdCount == this->propertiesInSet && p->getMoney() >= this->improvementCost && this->improvementTier < 5){
             p->subtractMoney(this->improvementCost);
             this->improvementTier++;
             return true;
+        }
+        else if(this->improvementTier == 5){
+            std::cout << "This property already has 5 improvements" << std::endl;
+        }
+        else if(p->getMoney() < this->improvementCost){
+            std::cout << "You do not have the money to improve" << std::endl;
         }
     }  
     return false;
@@ -54,43 +60,52 @@ bool OwnableProperty::sellImprovement(Player* p){
     return false;
 }
 
-
+// need to implement residences/gyms
 void OwnableProperty::landedOn(Player* p){
     if(owned && !mortgaged){
         this->tuitionPaid = true;
         int tuitionRequired = 0;
-        //determine the cost of tuition
-        //if there are improvements
-        if(this->improvementTier > 0){
-            tuitionRequired = tuition[this->improvementTier];
+        //calculate number of gyms
+        if(this->gym){
+
         }
-        //if there are no improvements, check if full set is owned
+        //residence
+        else if (this->residence){
+
+        }
         else{
-            std::vector<BoardPiece*> properties = this->ownedPlayer->getProperties();
-            int sameIdCount = 1;
-            for(auto & i : properties){
-                if(i->getId() == this->id){
-                    sameIdCount++;
+            //determine the cost of tuition
+            //if there are improvements
+            if(this->improvementTier > 0){
+                tuitionRequired = tuition[this->improvementTier];
+            }
+            //if there are no improvements, check if full set is owned
+            else{
+                std::vector<BoardPiece*> properties = this->ownedPlayer->getProperties();
+                int sameIdCount = 0;
+                for(auto & i : properties){
+                    if(i->getId() == this->id){
+                        sameIdCount++;
+                    }
+                }
+                if(sameIdCount == this->propertiesInSet){
+                    tuitionRequired = tuition[0]*2;
+                }
+                else{
+                    tuitionRequired = tuition[0];
                 }
             }
-            if(sameIdCount == this->propertiesInSet){
-                tuitionRequired = tuition[0]*2;
+            //exchange tuition
+            if(p->getMoney() >= tuitionRequired){
+                p->subtractMoney(tuitionRequired);
+                ownedPlayer->addMoney(tuitionRequired);
+                this->tuitionPaid = true;
             }
             else{
-                tuitionRequired = tuition[0];
+                //Game class should allow Player to make enough money to pay, or bankrupt 
+                this->tuitionPaid = false;
             }
         }
-        //exchange tuition
-        if(p->getMoney() >= tuitionRequired){
-            p->subtractMoney(tuitionRequired);
-            ownedPlayer->addMoney(tuitionRequired);
-            this->tuitionPaid = true;
-        }
-        else{
-            //Game class should allow Player to make enough money to pay, or bankrupt 
-            this->tuitionPaid = false;
-        }
-        
     }
     else if(owned && !mortgaged){
         std::cout << "This property is mortgaged" << std::endl;
@@ -111,6 +126,7 @@ void OwnableProperty::landedOn(Player* p){
         if(input == "y"){
             if(p->getMoney() >= this->cost){
                 p->addProperty(this);
+                p->subtractMoney(this->cost);
                 this->owned = true;
                 this->ownedPlayer = p;
                 std::cout << "Purchased" << std::endl;

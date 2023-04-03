@@ -2,6 +2,8 @@
 #define PLAYER_H
 #include <string>
 #include <vector>
+#include <iostream>
+#include <sstream>
 
 class BoardPiece;
 
@@ -22,17 +24,17 @@ class Player{
         int getPosition();
         int getMoney();
         bool isBankrupt();
-        void setBankrupt();
+        void setBankrupt(Player* p);
         bool isInTims();
+        void reduceTimsTime();
         void sendToTims();
-        int getTurnsInTims();
         int getRollUpTheRimCards();
         void setRollUpTheRimCards(int number);
-        void addMoney(int money);
-        void subtractMoney(int money);
+        void addMoney(int newMoney);
+        void subtractMoney(int newMoney);
         void addProperty(BoardPiece* bp);
         std::vector<BoardPiece*> getProperties();
-        bool trade(Player* p);
+        bool trade(Player* p, std::string give, std::string recieve);
         void setPosition(int pos);
         void showAssets();
 };
