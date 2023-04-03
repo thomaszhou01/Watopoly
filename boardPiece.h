@@ -27,6 +27,7 @@ class BoardPiece: public Subject{
         bool isOwnable(); //gets if it is an ownable property or unownable
         bool isOwned(); //gets if it is owned 
         Player* getOwner();
+        void setOwner(Player* p);
         bool isGym();
         bool isResidence();
         int getPosition();
@@ -38,6 +39,7 @@ class BoardPiece: public Subject{
         bool isMortgaged();
         std::string getName();
         std::string getId();
+        void reset();
         virtual bool mortgage(Player* p);
         virtual bool unmortgage(Player* p);
         virtual bool improve(Player* p);

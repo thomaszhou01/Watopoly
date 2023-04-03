@@ -1,7 +1,5 @@
 #include "unownableProperty.h"
 
-int UnownableProperty::rollupCardsGiven = 0;
-
 int UnownableProperty::generateRandom(int range){
     std::vector<int> v;
     for(int i = 0; i < range; i++){
@@ -63,7 +61,7 @@ void UnownableProperty::CoopFee(Player* p){
 void UnownableProperty::SLC(Player* p){
     int randomNum = generateRandom(24);
     int getRollUptheRim = generateRandom(100);
-    if(getRollUptheRim == 0  && UnownableProperty::rollupCardsGiven < 4){
+    if(getRollUptheRim == 0  && Player::rollupCardsGiven < 4){
         p->setRollUpTheRimCards(p->getRollUpTheRimCards()+1);
     }
     else if(randomNum >= 0 && randomNum < 3){
@@ -99,7 +97,7 @@ void UnownableProperty::NeedlesHall(Player* p){
     int getRollUptheRim = generateRandom(100);
     int valueRequired = 0;
     bool gain = false;
-    if(getRollUptheRim == 0  && UnownableProperty::rollupCardsGiven < 4){
+    if(getRollUptheRim == 0  && Player::rollupCardsGiven < 4){
         p->setRollUpTheRimCards(p->getRollUpTheRimCards()+1);
     }
     else if(randomNum >= 0 && randomNum < 1){

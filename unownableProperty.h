@@ -8,7 +8,6 @@
 #include "boardPiece.h"
 
 class UnownableProperty: public BoardPiece{
-    static int rollupCardsGiven;
     int generateRandom(int range);
     void Tuition(Player* p);
     void CoopFee(Player* p);

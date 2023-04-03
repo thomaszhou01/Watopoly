@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
     player2->addMoney(1000);
     p3->landedOn(player2);
     cout << p3->isTuitionPaid() << endl << endl;
-    
+
     cout << p1->improve(player) << endl;
     cout << p1->getImprovementLevel() << endl;
     
@@ -41,15 +41,11 @@ int main(int argc, char *argv[])
 
     cout << player->getMoney() << endl;
     cout << player2->getMoney() << endl;
-
+    player->removeProperty(p1);
+    std::vector<BoardPiece*> otherProperties1 = player->getProperties();
+    for(auto & i : otherProperties1){
+        cout << i->getName() << endl;
+    }
 
 }
 
-// int main()
-// {
-//     BoardPiece *p = new OwnableProperty{"AL", "Arts1", 40, 50, {2,10,30,90,160,250}, 0, false, false, 3};
-//     BoardPiece *q = new UnownableProperty{"TimsLine", 2};
-
-//     cout << p->getName() << " " << p->isOwnable() << endl;
-//     cout << q->getName() << " " << q->isOwnable() << endl;
-// }

@@ -8,6 +8,7 @@
 class BoardPiece;
 
 class Player{
+    
     const std::string name;
     const char character;
     int position;
@@ -19,6 +20,7 @@ class Player{
     std::vector<BoardPiece*> properties;
 
     public:
+        static int rollupCardsGiven;
         Player(std::string name, char character);
         std::string getName();
         int getPosition();
@@ -33,6 +35,7 @@ class Player{
         void addMoney(int newMoney);
         void subtractMoney(int newMoney);
         void addProperty(BoardPiece* bp);
+        void removeProperty(BoardPiece* bp);
         std::vector<BoardPiece*> getProperties();
         bool trade(Player* p, std::string give, std::string recieve);
         void setPosition(int pos);

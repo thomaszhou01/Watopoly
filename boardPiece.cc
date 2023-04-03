@@ -15,6 +15,10 @@ Player* BoardPiece::getOwner(){
     return ownedPlayer;
 }
 
+void BoardPiece::setOwner(Player* p){
+    ownedPlayer = p;
+}
+
 bool BoardPiece::isGym(){
     return gym;
 }
@@ -57,6 +61,13 @@ std::string BoardPiece::getName(){
 
 std::string BoardPiece::getId(){
     return id;
+}
+
+void BoardPiece::reset(){
+    ownedPlayer = nullptr;
+    mortgaged = false;
+    improvementTier = 0;
+    owned = false;
 }
 
 bool BoardPiece::mortgage(Player* p){}
