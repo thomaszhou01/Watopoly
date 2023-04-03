@@ -32,6 +32,8 @@ class BoardPiece: public Subject{
         int getPosition();
         int getPrice();
         int getPropertiesInSet();
+        int getImprovementCost();
+        int getImprovementLevel();
         bool isTuitionPaid();
         bool isMortgaged();
         std::string getName();

@@ -35,6 +35,14 @@ int BoardPiece::getPropertiesInSet(){
     return propertiesInSet;
 }
 
+int BoardPiece::getImprovementCost(){
+    return improvementCost;
+}
+
+int BoardPiece::getImprovementLevel(){
+    return improvementTier;
+}
+
 bool BoardPiece::isTuitionPaid(){
     return tuitionPaid;
 }

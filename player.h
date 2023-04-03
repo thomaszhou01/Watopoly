@@ -13,6 +13,7 @@ class Player{
     bool bankrupt;
     bool inTims;
     int turnsInTims;
+    int rollUpTheRimCards;
     std::vector<BoardPiece*> properties;
 
     public:
@@ -25,6 +26,8 @@ class Player{
         bool isInTims();
         void sendToTims();
         int getTurnsInTims();
+        int getRollUpTheRimCards();
+        void setRollUpTheRimCards(int number);
         void addMoney(int money);
         void subtractMoney(int money);
         void addProperty(BoardPiece* bp);

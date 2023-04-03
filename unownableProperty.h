@@ -4,14 +4,12 @@
 #include <algorithm>
 #include <random>
 #include <chrono>
+#include <iostream>
 #include "boardPiece.h"
 
 class UnownableProperty: public BoardPiece{
-    int generateRandom(int begin, int end, int range);
-    void OSAP(Player* p);
-    void DCTimsLine(Player* p);
-    void GoToTims(Player* p);
-    void GooseNesting(Player* p);
+    static int rollupCardsGiven;
+    int generateRandom(int range);
     void Tuition(Player* p);
     void CoopFee(Player* p);
     void SLC(Player* p);

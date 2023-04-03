@@ -34,6 +34,14 @@ int Player::getTurnsInTims(){
 
 }
 
+int Player::getRollUpTheRimCards(){
+
+}
+
+void Player::setRollUpTheRimCards(int number){
+
+}
+
 void Player::addMoney(int money){
 
 }
