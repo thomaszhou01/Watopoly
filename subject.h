@@ -6,8 +6,9 @@
 class Observer;
 
 class Subject{
+    Observer* observer;
     public:
-        void attach(Observer ob);
+        void attach(Observer* ob);
         void notifyObservers();
         virtual ~Subject()=0;
 };
