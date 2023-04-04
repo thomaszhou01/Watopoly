@@ -1,10 +1,5 @@
 #ifndef UNOWNABLEPROPERTY_H
 #define UNOWNABLEPROPERTY_H
-#include <stdexcept>
-#include <algorithm>
-#include <random>
-#include <chrono>
-#include <iostream>
 #include "boardPiece.h"
 
 class UnownableProperty: public BoardPiece{

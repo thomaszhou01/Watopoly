@@ -67,11 +67,49 @@ void OwnableProperty::landedOn(Player* p){
         int tuitionRequired = 0;
         //calculate number of gyms
         if(this->gym){
-
+            std::vector<BoardPiece*> properties = this->ownedPlayer->getProperties();
+            int gyms = 0;
+            for(auto & i : properties){
+                if(i->isGym()){
+                    gyms++;
+                }
+            }
+            if(gyms == 1){
+                tuitionRequired = 25;
+            }
+            else if(gyms == 2){
+                tuitionRequired = 50;
+            }
+            else if(gyms == 3){
+                tuitionRequired = 100;
+            }
+            else if(gyms == 4){
+                tuitionRequired = 200;
+            }
         }
         //residence
         else if (this->residence){
+            std::vector<BoardPiece*> properties = this->ownedPlayer->getProperties();
+            int residences = 0;
+            for(auto & i : properties){
+                if(i->isResidence()){
+                    residences++;
+                }
+            }
 
+            std::vector<int> v = {1,2,3,4,5,6};
+            unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+            std::shuffle(v.begin(), v.end(), std::default_random_engine(seed));
+            int roll1 = v[0];
+            std::shuffle(v.begin(), v.end(), std::default_random_engine(seed));
+            int roll2 = v[0];
+
+            if(residences == 2){
+                tuitionRequired = 4*(roll1+roll2);
+            }
+            else{
+                tuitionRequired = 10*(roll1+roll2);
+            }
         }
         else{
             //determine the cost of tuition
@@ -95,16 +133,17 @@ void OwnableProperty::landedOn(Player* p){
                     tuitionRequired = tuition[0];
                 }
             }
-            //exchange tuition
-            if(p->getMoney() >= tuitionRequired){
-                p->subtractMoney(tuitionRequired);
-                ownedPlayer->addMoney(tuitionRequired);
-                this->tuitionPaid = true;
-            }
-            else{
-                //Game class should allow Player to make enough money to pay, or bankrupt 
-                this->tuitionPaid = false;
-            }
+        }
+
+        //exchange tuition
+        if(p->getMoney() >= tuitionRequired){
+            p->subtractMoney(tuitionRequired);
+            ownedPlayer->addMoney(tuitionRequired);
+            this->tuitionPaid = true;
+        }
+        else{
+            //Game class should allow Player to make enough money to pay, or bankrupt 
+            this->tuitionPaid = false;
         }
     }
     else if(owned && !mortgaged){
