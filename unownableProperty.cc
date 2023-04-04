@@ -11,8 +11,8 @@ int UnownableProperty::generateRandom(int range){
 }
 
 
-UnownableProperty::UnownableProperty(std::string name, int position):
-    BoardPiece{name, "", 0, 0, {}, position, false, false, 0, false}{}
+UnownableProperty::UnownableProperty(std::string name, int position, int row, int col):
+    BoardPiece{name, "", 0, 0, {}, position, false, false, 0, false, row, col}{}
 
 void UnownableProperty::Tuition(Player* p){
     this->tuitionPaid = true;

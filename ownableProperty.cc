@@ -1,8 +1,8 @@
 #include "ownableProperty.h"
 
 
-OwnableProperty::OwnableProperty(std::string name, std::string id, int cost, int improvementCost, std::vector<int> tuition, int position, bool isGym, bool isResidence, int propertiesInSet): 
-    BoardPiece{name, id, cost, improvementCost, tuition, position, isGym, isResidence, propertiesInSet, true}{}
+OwnableProperty::OwnableProperty(std::string name, std::string id, int cost, int improvementCost, std::vector<int> tuition, int position, bool isGym, bool isResidence, int propertiesInSet, int row, int col): 
+    BoardPiece{name, id, cost, improvementCost, tuition, position, isGym, isResidence, propertiesInSet, true, row, col}{}
 
 bool OwnableProperty::mortgage(Player* p){
     if(!this->mortgaged && this->improvementTier == 0 && p == this->ownedPlayer){

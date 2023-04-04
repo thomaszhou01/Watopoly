@@ -5,7 +5,7 @@
 class OwnableProperty: public BoardPiece{
     int calculateTuition();
     public:
-        OwnableProperty(std::string name, std::string id, int cost, int improvementCost, std::vector<int> tuition, int position, bool isGym, bool isResidence, int propertiesInSet);
+        OwnableProperty(std::string name, std::string id, int cost, int improvementCost, std::vector<int> tuition, int position, bool isGym, bool isResidence, int propertiesInSet, int row, int col);
         bool mortgage(Player* p) override;
         bool unmortgage(Player* p) override;
         bool improve(Player* p) override;   

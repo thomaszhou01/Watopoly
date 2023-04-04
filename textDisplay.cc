@@ -43,7 +43,7 @@ void TextDisplay::updateBoardPiece(BoardPiece * piece) {
         board[row][col+6] = 'I';
     }
 
-    bool playerNum = 0;
+    int playerNum = 0;
     for (int i = 0; i < game->getNumPlayers(); ++i) {
         if (players[i]->getPosition() == piece->getPosition()) {
             if (playerNum < 4) {
@@ -77,7 +77,7 @@ TextDisplay::TextDisplay(Game * game, vector<Player *> players): game{game}, pla
 
 void TextDisplay::notify(Subject * subject) {
     BoardPiece * piece = nullptr;
-    for (int i = 0; i < game->getPieces()) {
+    for (int i = 0; i < game->getPieces(); i++) {
         if (game->getGame()[i]->getName() == subject->getName()) {
             piece = game->getGame()[i];
             break;

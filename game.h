@@ -27,6 +27,7 @@ class Game{
         int getPieces();
         bool getTesting();
         bool setTesting();
+        std::vector<BoardPiece *> getGame();
 
         int roll(Player * p);
         void next(Player * p);
