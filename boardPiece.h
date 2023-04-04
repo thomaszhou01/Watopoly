@@ -1,6 +1,10 @@
 #ifndef BOARDPIECE_H
 #define BOARDPIECE_H
 #include <iostream>
+#include <stdexcept>
+#include <algorithm>
+#include <random>
+#include <chrono>
 #include "subject.h"
 #include "player.h"
 

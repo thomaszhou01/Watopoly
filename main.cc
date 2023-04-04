@@ -24,7 +24,16 @@ int main(int argc, char *argv[])
             }
         }
     }
-    
+
+    std::vector<int> v = {1,2,3,4,5,6};
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::shuffle(v.begin(), v.end(), std::default_random_engine(seed));
+    int roll1 = v[0];
+    std::shuffle(v.begin(), v.end(), std::default_random_engine(seed));
+    int roll2 = v[0];
+
+    cout << roll1 << " " << roll2 << endl;
+
 }
 
 /*
