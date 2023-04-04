@@ -6,7 +6,7 @@ void Subject::attach(Observer* ob){
 }
 
 void Subject::notifyObservers(){
-    observer->notify();
+    observer->notify(this);
 }
 
 Subject::~Subject(){}
