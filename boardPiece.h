@@ -37,14 +37,14 @@ class BoardPiece: public Subject{
         int getImprovementLevel();
         bool isTuitionPaid();
         bool isMortgaged();
-        std::string getName();
+        std::string getName() override;
         std::string getId();
         void reset();
         virtual bool mortgage(Player* p);
         virtual bool unmortgage(Player* p);
         virtual bool improve(Player* p);
         virtual bool sellImprovement(Player* p);
-        virtual void landedOn(Player* p) = 0;
+        virtual void landedOn(Player* p)=0;
         virtual ~BoardPiece()=0;
 
 };

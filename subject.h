@@ -10,6 +10,7 @@ class Subject{
     public:
         void attach(Observer* ob);
         void notifyObservers();
+        virtual std::string getName()=0;
         virtual ~Subject()=0;
 };
 
