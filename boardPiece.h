@@ -21,9 +21,10 @@ class BoardPiece: public Subject{
         bool owned;
         bool mortgaged;
         bool tuitionPaid;
-        // what is propertiesInSet? is that the amount of Buildings in a Monopoly Block?
+        const int row;
+        const int col;
     public:
-        BoardPiece(std::string name, std::string id, int cost, int improvementCost, std::vector<int> tuition, int position, bool isGym, bool isResidence, int propertiesInSet, bool ownable);
+        BoardPiece(std::string name, std::string id, int cost, int improvementCost, std::vector<int> tuition, int position, bool isGym, bool isResidence, int propertiesInSet, bool ownable, int row, int col);
         bool isOwnable(); //gets if it is an ownable property or unownable
         bool isOwned(); //gets if it is owned 
         Player* getOwner();
@@ -46,6 +47,9 @@ class BoardPiece: public Subject{
         virtual bool sellImprovement(Player* p);
         virtual void landedOn(Player* p)=0;
         virtual ~BoardPiece()=0;
+
+        int getRow();
+        int getCol();
 
 };
 

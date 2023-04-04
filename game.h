@@ -16,14 +16,15 @@ class Game{
 
         int numPlayers; 
         std::vector<Player *> order;
-        BoardPiece * game[40];
-
+        std::vector<BoardPiece *> game;
+        
         bool testing = false;
 
     public:
         Game();     // Constructor initializer
         void start();   // starts the game
         int getNumPlayers();
+        int getPieces();
         bool getTesting();
         bool setTesting();
 

@@ -23,6 +23,7 @@ class Player{
         static int rollupCardsGiven;
         Player(std::string name, char character);
         std::string getName();
+        char getCharacter();
         int getPosition();
         int getMoney();
         bool isBankrupt();

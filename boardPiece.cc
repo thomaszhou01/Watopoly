@@ -1,7 +1,7 @@
 #include "boardPiece.h"
 
-BoardPiece::BoardPiece(std::string name, std::string id, int cost, int improvementCost, std::vector<int> tuition, int position, bool gym, bool residence, int propertiesInSet, bool ownable):
-    name{name}, id{id}, cost{cost}, improvementCost{improvementCost}, tuition{tuition}, position{position}, gym{gym}, residence{residence}, propertiesInSet{propertiesInSet}, ownable{ownable}, improvementTier{0}, ownedPlayer{nullptr}, owned{false}, mortgaged{false}, tuitionPaid{true}{}
+BoardPiece::BoardPiece(std::string name, std::string id, int cost, int improvementCost, std::vector<int> tuition, int position, bool gym, bool residence, int propertiesInSet, bool ownable, int row, int col):
+    name{name}, id{id}, cost{cost}, improvementCost{improvementCost}, tuition{tuition}, position{position}, gym{gym}, residence{residence}, propertiesInSet{propertiesInSet}, ownable{ownable}, improvementTier{0}, ownedPlayer{nullptr}, owned{false}, mortgaged{false}, tuitionPaid{true}, row{row}, col{col}{}
 
 bool BoardPiece::isOwnable(){
     return ownable;
@@ -75,3 +75,11 @@ bool BoardPiece::unmortgage(Player* p){}
 bool BoardPiece::improve(Player* p){}
 bool BoardPiece::sellImprovement(Player* p){}
 BoardPiece::~BoardPiece(){}
+
+int BoardPiece::getRow(){
+    return row;
+}
+
+int BoardPiece::getCol(){
+    return col;
+}

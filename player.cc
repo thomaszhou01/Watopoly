@@ -9,6 +9,10 @@ std::string Player::getName(){
     return name;
 }
 
+char Player::getCharacter(){
+    return character;
+}
+
 int Player::getPosition(){
     return position;
 }
