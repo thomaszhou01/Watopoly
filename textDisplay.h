@@ -12,7 +12,7 @@ class TextDisplay: public Observer{
     protected:
         Game * game;    // whole game which includes all board pieces
         std::vector<Player *> players;    // indicates which player is in which board piece
-        char board[55][88];
+        char board[56][89];
         void updateBoardPiece(BoardPiece * piece); // updates the allocated board pieces
     public:
         TextDisplay(Game * game, std::vector<Player*> players);   // Constructor

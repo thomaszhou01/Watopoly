@@ -87,8 +87,8 @@ void TextDisplay::notify(Subject * subject) {
 }
 
 void TextDisplay::display() {
-    for (int i = 0; i < 55; ++i) {
-        for (int j = 0; j < 88; ++j) {
+    for (int i = 0; i < 56; ++i) {
+        for (int j = 0; j < 89; ++j) {
             cout << board[i][j];
         }
         cout << endl;

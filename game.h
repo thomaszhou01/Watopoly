@@ -7,6 +7,8 @@
 #include "ownableProperty.h"
 #include "subject.h"
 
+class TextDisplay;
+
 class Game{
     protected:
         const int minPlayers = 6;
