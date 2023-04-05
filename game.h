@@ -28,7 +28,6 @@ class Game{
 
         //int roll(Player * p);
         //void next(Player * p);
-        void trade(Player * p, std::string give, std::string recieve); 
         //void buyImprovement(Player * p);
         //void sellImprovement(Player * p);
         //void mortgage(Player * p);
