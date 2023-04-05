@@ -16,6 +16,7 @@ class Game{
         int rollUpTheRimCards = 0;
         const int ownable = 28;
         const int unownable = 12;
+        bool testing = false;
 
         int numPlayers; 
         std::vector<Player *> order;
@@ -23,9 +24,8 @@ class Game{
         TextDisplay * textDisplay;
         bool playerCharTaken[8] = {false, false, false, false, false, false, false, false};
         
-        bool testing = false;
-
-        //int roll(Player * p);
+        std::vector<int> testRoll(int die1, int die2);
+        std::vector<int> rollDie();
         //void next(Player * p);
         //void buyImprovement(Player * p);
         //void sellImprovement(Player * p);
@@ -45,7 +45,6 @@ class Game{
         int getPieces();
         bool getTesting();
         void setTesting();
-        int testRoll(int die1, int die2);
         std::vector<Player *> getOrder();
         std::vector<BoardPiece *> getGame();
 

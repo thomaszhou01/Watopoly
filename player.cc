@@ -190,3 +190,7 @@ int Player::getTurnsInTims() {
 void Player::setTurnsInTims(int i) {
     turnsInTims = i;
 }
+
+int Player::setInTims(bool option) {
+    inTims = option;
+}

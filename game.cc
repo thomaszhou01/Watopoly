@@ -139,8 +139,14 @@ void Game::setTesting() {
     testing = true;
 }
 
-int Game::testRoll(int die1, int die2) {
-    return die1 + die2;
+vector<int> Game::testRoll(int die1, int die2) {
+    return vector<int> {die1, die2};
+}
+
+vector<int> Game::rollDie() {
+    int die1 = rand() % 6 + 1;
+    int die2 = rand() % 6 + 1;
+    return vector<int> {die1, die2};
 }
 
 std::vector<BoardPiece *> Game::getGame(){
@@ -153,6 +159,12 @@ std::vector<Player *> Game::getOrder() {
 
 void Game::commands(Player * p) {
     cout << p->getName() << "'s turn. Here are your following options: ";
+    if (p->isInTims() == true) {
+        cout << "You are currently in DC Tims Line. Your turns here are: " << p->getTurnsInTims() << endl;
+        cout << "To leave you must pay $50, use a Roll Up the Rim cup, or roll doubles" << endl;
+        cout << "pay $50" << endl;
+        cout << "use RUTRC" << endl;
+    }  
     if (testing == true) {
         cout << "roll <die1> <die2>  where die1, die2 > 0" << endl;
     }
@@ -174,6 +186,7 @@ void Game::commands(Player * p) {
 
 void Game::start(){
     bool ended = false;
+    int playerIndex = 0;
     
     cout << "Welcome to WATOPOLY" << endl;
     cout << "We have the following players: " << endl;
@@ -181,7 +194,7 @@ void Game::start(){
         cout << order[i]->getName() << ": " << order[i]->getCharacter() << endl;
     }
     textDisplay->display();
-    commands(order[0])
+    commands(order[playerIndex]);
     cout << "Please enter an option:" << endl;
 
     while (ended == false) {
@@ -193,46 +206,96 @@ void Game::start(){
         while (ss >> s1) {
             cmd.push_back(s1);
         }
-
+        
         if (cmd.size() == 1) {
             if (cmd[0] == "roll") {
+                int pos = order[playerIndex]->getPosition();
+                int newPos;
+                vector<int> roll = rollDie();
+                int totalRoll = roll[0] + roll[1];
+                cout << "You rolled: " << roll[0] << " & " << roll[1] << endl;
+                if (roll[0] == roll[1]) {
+                    ++consecutiveDoubles[playerIndex];
+                }
+
+                if (order[playerIndex]->isInTims() == true) {
+                    if (roll[0] == roll[1]) {
+                        newPos = (pos + totalRoll) % 40;
+                        cout << "Congrats you made it out of DC Tims Line" << endl;
+                        order[playerIndex]->setInTims(false);
+                    } else {
+                        newPos = pos;
+                        cout << "Unfortunately you did not roll doubles. You are still stuck in DC Tims Line" << endl;
+                        order[playerIndex]->reduceTimsTime();
+                    }
+
+                } else if (order[playerIndex]->isInTims() == false && consecutiveDoubles[playerIndex] == 3) {
+                    cout << "Unfortunately this is your third time rolling doubles, so you are send to Tims DC Line" << endl;
+                    order[playerIndex]->sendToTims();
+                    newPos = 10;
+                    consecutiveDoubles[playerIndex] = 0;
+                } else {
+                    newPos = (pos + totalRoll) % 40;
+                }
+                order[playerIndex]->setPosition(newPos);
+                game[pos]->notifyObservers();
+                game[newPos]->notifyObservers();
+
+                textDisplay->display();
+                cout << "You are currently on: " << game[newPos]->getName() << endl;
+                //game[newPos]->landedOn(order[playerIndex]);
 
             } else if (cmd[0] == "next") {
 
             } else if (cmd[0] == "bankrupt") {
 
             } else if (cmd[0] == "assets") {
-                
+                    
             } else if (cmd[0] == "all") {
-                
+                    
             } else {
-                cout < "Invalid option" << endl;
+                cout << "Invalid option" << endl;
             }
         } else if (cmd.size() == 2) {
-            if (cmd[0] == "mortgage") {
+            if (order[playerIndex]->isInTims() == true) {
+                if (s == "pay $50") {
+
+                } else if (s == "use RUTRC") {
+
+                } else {
+                    cout << "Invalid option" << endl;
+                }
+            } else if (cmd[0] == "mortgage") {
 
             } else if (cmd[0] == "unmortgage") {
 
             } else if (cmd[0] == "save") {
 
             } else {
-                cout < "Invalid option" << endl;
+                cout << "Invalid option" << endl;
             }
         } else if (cmd.size() == 3) {
             if (cmd[0] == "improve") {
 
+             } else if (cmd[0] == "roll") {
+                if (order[playerIndex]->isInTims() == true) {
+
+                } else {
+
+                }
             } else {
-                cout < "Invalid option" << endl;
+                cout << "Invalid option" << endl;
             }
         } else if (cmd.size() == 4) {
             if (cmd[0] == "trade") {
 
             } else {
-                cout < "Invalid option" << endl;
+                cout << "Invalid option" << endl;
             }
         } else {
-            cout << "Please enter an option:" << endl;
+            cout << "Invalid option" << endl;
         }
+        cout << "Please enter an option:" << endl;
     }
 }
 
