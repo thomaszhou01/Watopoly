@@ -181,7 +181,7 @@ void Game::start(){
         cout << order[i]->getName() << ": " << order[i]->getCharacter() << endl;
     }
     textDisplay->display();
-    commands(order[0])
+    commands(order[0]);
     cout << "Please enter an option:" << endl;
 
     while (ended == false) {
@@ -206,7 +206,7 @@ void Game::start(){
             } else if (cmd[0] == "all") {
                 
             } else {
-                cout < "Invalid option" << endl;
+                cout << "Invalid option" << endl;
             }
         } else if (cmd.size() == 2) {
             if (cmd[0] == "mortgage") {
@@ -216,19 +216,19 @@ void Game::start(){
             } else if (cmd[0] == "save") {
 
             } else {
-                cout < "Invalid option" << endl;
+                cout << "Invalid option" << endl;
             }
         } else if (cmd.size() == 3) {
             if (cmd[0] == "improve") {
 
             } else {
-                cout < "Invalid option" << endl;
+                cout << "Invalid option" << endl;
             }
         } else if (cmd.size() == 4) {
             if (cmd[0] == "trade") {
 
             } else {
-                cout < "Invalid option" << endl;
+                cout << "Invalid option" << endl;
             }
         } else {
             cout << "Please enter an option:" << endl;

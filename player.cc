@@ -112,7 +112,7 @@ bool Player::trade(Player* p, std::string give, std::string recieve){
     //check if player has the property to give
     if(!giveTransform){
         for(auto & i : this->properties){
-            if(i->getId() == give){
+            if(i->getName() == give){
                 hasGive = true;
                 giveProperty = i;
                 break;
@@ -127,7 +127,7 @@ bool Player::trade(Player* p, std::string give, std::string recieve){
     if(!recieveTransform){
         std::vector<BoardPiece*> otherProperties = p->getProperties();
         for(auto & i : otherProperties){
-            if(i->getId() == recieve){
+            if(i->getName() == recieve){
                 hasRecieve = true;
                 recieveProperty = i;
                 break;
@@ -157,6 +157,9 @@ bool Player::trade(Player* p, std::string give, std::string recieve){
             addMoney(recieveInt);
             return true;
         }
+        else{
+            std::cout << p->getName() << " does not the money to give" << std::endl;
+        }
     }
     else if(giveTransform && hasRecieve){
         if(getMoney() >= giveInt){
@@ -166,6 +169,9 @@ bool Player::trade(Player* p, std::string give, std::string recieve){
             p->removeProperty(recieveProperty);
             addProperty(recieveProperty);
             return true;
+        }
+        else{
+            std::cout << getName() << " does not the money to give" << std::endl;
         }
         
     }
@@ -181,7 +187,13 @@ void Player::setPosition(int pos){
 }
 
 void Player::showAssets(){
-
+    std::cout << name << "'s assets" << std::endl;
+    std::cout <<"Money: " << this->money << std::endl;
+    std::cout << "Properties: ";
+    for(auto & i : this->properties){
+        std::cout << i->getName() << " ";
+    }
+    std::cout << std::endl << "RollUpTheRim Cards: " << rollUpTheRimCards << std::endl;
 }
 
 int Player::getTurnsInTims() {
