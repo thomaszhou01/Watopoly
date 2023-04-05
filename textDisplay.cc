@@ -47,15 +47,15 @@ void TextDisplay::updateBoardPiece(BoardPiece * piece) {
     for (int i = 0; i < game->getNumPlayers(); ++i) {
         if (players[i]->getPosition() == piece->getPosition()) {
             if (playerNum < 4) {
-                board[row+1][col+3+playerNum] = players[i]->getCharacter();
+                board[row+3][col+4+playerNum] = players[i]->getCharacter();
             } else {
-                board[row+2][col+playerNum-1] = players[i]->getCharacter();
+                board[row+4][col+playerNum] = players[i]->getCharacter();
             }
         } else {
             if (playerNum < 4) {
-                board[row+1][col+3+playerNum] = ' ';
+                board[row+3][col+4+playerNum] = ' ';
             } else {
-                board[row+2][col+playerNum-1] = ' ';
+                board[row+4][col+playerNum] = ' ';
             }
         }
         ++playerNum;
