@@ -12,7 +12,6 @@ class Game{
     protected:
         const int maxPlayers = 8;
         const int pieces = 40;
-        const int initialMoney = 1500;
         const char playerChar[8] = {'G', 'B', 'D', 'P', 'S', '$', 'L', 'T'};
         int rollUpTheRimCards = 0;
         const int ownable = 28;
