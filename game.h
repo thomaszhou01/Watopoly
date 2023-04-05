@@ -35,14 +35,17 @@ class Game{
         //void assets(Player * p);
         //void all();
         //void auction();
+        void commands(Player * p);
     public:
         Game();     // Constructor initializer
         ~Game();
+        void InitializeOrder();
         void start();   // starts the game
         int getNumPlayers();
         int getPieces();
         bool getTesting();
         void setTesting();
+        int testRoll(int die1, int die2);
         std::vector<Player *> getOrder();
         std::vector<BoardPiece *> getGame();
 

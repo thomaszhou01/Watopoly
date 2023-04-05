@@ -7,8 +7,6 @@
 #include <string>
 using namespace std;
 
-// OwnableProperty(std::string name, std::string id, int cost, int improvementCost, std::vector<int> tuition, int position, bool isGym, bool isResidence, int propertiesInSet, int row, int col);
-// UnownableProperty(std::string name, int position, int row, int col);
 Game::Game(){
     game.push_back(new UnownableProperty{"COLLECT OSAP", 0, 51, 81});
     game.push_back(new OwnableProperty{"AL", "Arts1", 40, 50, {2,10,30,90,160,250}, 1, false, false, 2, 51, 73});
@@ -51,6 +49,23 @@ Game::Game(){
     game.push_back(new UnownableProperty{"COOP FEE", 38, 41, 81});
     game.push_back(new OwnableProperty{"DC", "Math", 400, 200, {50,200,600,1400,1700,2000}, 39, false, false, 2, 46, 81});
 
+    textDisplay = new TextDisplay{this, order};
+    for (int i = 0; i < pieces; ++i) {
+        game[i]->attach(textDisplay);
+        game[i]->notifyObservers();
+    }
+}
+
+Game::~Game() {
+    for (int i = 0; i < pieces; ++i) {
+        delete game[i];
+    }
+    for (int i = 0; i < numPlayers; ++i) {
+        delete order[i];
+    }
+}
+
+void Game::InitializeOrder() {
     cout << "How many players are playing?" << endl;
     cin >> numPlayers;
     while (true) {
@@ -110,21 +125,6 @@ Game::Game(){
         }
         order.push_back(new Player{name, character});
     }
-
-    textDisplay = new TextDisplay{this, order};
-    for (int i = 0; i < pieces; ++i) {
-        game[i]->attach(textDisplay);
-        game[i]->notifyObservers();
-    }
-}
-
-Game::~Game() {
-    for (int i = 0; i < pieces; ++i) {
-        delete game[i];
-    }
-    for (int i = 0; i < numPlayers; ++i) {
-        delete order[i];
-    }
 }
 
 int Game::getPieces(){
@@ -139,6 +139,10 @@ void Game::setTesting() {
     testing = true;
 }
 
+int Game::testRoll(int die1, int die2) {
+    return die1 + die2;
+}
+
 std::vector<BoardPiece *> Game::getGame(){
     return game;
 }
@@ -147,10 +151,89 @@ std::vector<Player *> Game::getOrder() {
     return order;
 }
 
-void Game::start(){
-    textDisplay->display();
-    bool ended = false;
+void Game::commands(Player * p) {
+    cout << p->getName() << "'s turn. Here are your following options: ";
+    if (testing == true) {
+        cout << "roll <die1> <die2>  where die1, die2 > 0" << endl;
+    }
+    cout << "roll" << endl;
+    cout << "next" << endl;
+    cout << "trade <name> <money> <property>" << endl;
+    cout << "trade <name> <property> <property>" << endl;
+    cout << "trade <name> <property> <money>" << endl;
+    cout << "improve <property> buy" << endl;
+    cout << "improve <property> sell" << endl;
+    cout << "mortgage <property>" << endl;
+    cout << "unmortgage <property>" << endl;
+    cout << "bankrupt" << endl;
+    cout << "assets" << endl;
+    cout << "all" << endl;
+    cout << "save <filename>" << endl;
+    cout << "Please understand that if you enter \"next\" or \"roll\" you are not able to enter any other options" << endl;
+}
 
+void Game::start(){
+    bool ended = false;
+    
+    cout << "Welcome to WATOPOLY" << endl;
+    cout << "We have the following players: " << endl;
+    for (int i = 0; i < numPlayers; ++i) {
+        cout << order[i]->getName() << ": " << order[i]->getCharacter() << endl;
+    }
+    textDisplay->display();
+    commands(order[0])
+    cout << "Please enter an option:" << endl;
+
+    while (ended == false) {
+        string s;
+        string s1;
+        vector<string> cmd;
+        getline(cin, s);
+        stringstream ss(s);
+        while (ss >> s1) {
+            cmd.push_back(s1);
+        }
+
+        if (cmd.size() == 1) {
+            if (cmd[0] == "roll") {
+
+            } else if (cmd[0] == "next") {
+
+            } else if (cmd[0] == "bankrupt") {
+
+            } else if (cmd[0] == "assets") {
+                
+            } else if (cmd[0] == "all") {
+                
+            } else {
+                cout < "Invalid option" << endl;
+            }
+        } else if (cmd.size() == 2) {
+            if (cmd[0] == "mortgage") {
+
+            } else if (cmd[0] == "unmortgage") {
+
+            } else if (cmd[0] == "save") {
+
+            } else {
+                cout < "Invalid option" << endl;
+            }
+        } else if (cmd.size() == 3) {
+            if (cmd[0] == "improve") {
+
+            } else {
+                cout < "Invalid option" << endl;
+            }
+        } else if (cmd.size() == 4) {
+            if (cmd[0] == "trade") {
+
+            } else {
+                cout < "Invalid option" << endl;
+            }
+        } else {
+            cout << "Please enter an option:" << endl;
+        }
+    }
 }
 
 int Game::getNumPlayers(){
