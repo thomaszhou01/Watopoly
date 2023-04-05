@@ -81,6 +81,7 @@ Game::Game(){
         }
 
         cout << "The playable Characters are: G: Goose, B: GRT Bus, D: Tim Hortons Doughnut, P: Professor, S: Student, $: Money, L: Laptop, T: Pink tie" << endl;
+        bool success = false;
         while (true) {
             cout << "Please choose from the options:";
             for (int j = 0; j < 8; ++j) {
@@ -93,6 +94,7 @@ Game::Game(){
                 for (int j = 0; j < 8; ++j) {
                     if (playerChar[j] == character && playerCharTaken[j] == false) {
                         playerCharTaken[j] = true;
+                        success = true;
                         break;
                     }
                 }
@@ -104,8 +106,9 @@ Game::Game(){
                 }
                 cout << "Incorrect type" << endl;
             }
+            if(success) break;
         }
-        order[i] = new Player{name, character};
+        order.push_back(new Player{name, character});
     }
 
     textDisplay = new TextDisplay{this, order};
@@ -117,7 +120,10 @@ Game::Game(){
 
 Game::~Game() {
     for (int i = 0; i < pieces; ++i) {
-        delete [] game[i];
+        delete game[i];
+    }
+    for (int i = 0; i < numPlayers; ++i) {
+        delete order[i];
     }
 }
 
