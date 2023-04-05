@@ -3,7 +3,7 @@
 
 int Player::rollupCardsGiven = 0;
 
-Player::Player(std::string name, char character): name{name}, character{character}{}
+Player::Player(std::string name, char character): name{name}, character{character}, position{0}, money{1500}, bankrupt{false}, inTims{false}, turnsInTims{0}, rollUpTheRimCards{0}{}
 
 std::string Player::getName(){
     return name;
