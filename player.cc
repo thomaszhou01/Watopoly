@@ -187,11 +187,6 @@ void Player::showAssets(){
 int Player::getTurnsInTims() {
     return turnsInTims;
 }
-
-void Player::setInTims(bool option) {
-    inTims = option;
-}
-
 void Player::setTurnsInTims(int i) {
     turnsInTims = i;
 }

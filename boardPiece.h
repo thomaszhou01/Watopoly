@@ -33,6 +33,7 @@ class BoardPiece: public Subject{
         bool isOwned(); //gets if it is owned 
         Player* getOwner();
         void setOwner(Player* p);
+        void setOwned(bool option);
         bool isGym();
         bool isResidence();
         int getPosition();
@@ -40,6 +41,7 @@ class BoardPiece: public Subject{
         int getPropertiesInSet();
         int getImprovementCost();
         int getImprovementLevel();
+        void setImprovementLevel(int i);
         bool isTuitionPaid();
         bool isMortgaged();
         std::string getName() override;

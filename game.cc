@@ -148,7 +148,11 @@ void Game::trade(Player * p, string give, string recieve) {
 void Game::start(){
     textDisplay->display();
     bool ended = false;
-     
+
+}
+
+int Game::getNumPlayers(){
+    return numPlayers;
 }
 
 void Game::save(string file, int playerOrderIndex) {

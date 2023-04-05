@@ -28,7 +28,7 @@ class Game{
 
         //int roll(Player * p);
         //void next(Player * p);
-        void trade(Player * p, string give, string recieve); 
+        void trade(Player * p, std::string give, std::string recieve); 
         //void buyImprovement(Player * p);
         //void sellImprovement(Player * p);
         //void mortgage(Player * p);
@@ -41,6 +41,7 @@ class Game{
         Game();     // Constructor initializer
         ~Game();
         void start();   // starts the game
+        int getNumPlayers();
         int getPieces();
         bool getTesting();
         void setTesting();
