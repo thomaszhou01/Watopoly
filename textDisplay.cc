@@ -4,8 +4,8 @@ using namespace std;
 
 // we have to update a boardPiece if it is owned(O), improved(I), and mortgaged(M) 
 void TextDisplay::updateBoardPiece(BoardPiece * piece) {
-    int row = piece->getRow();
-    int col = piece->getCol();
+    int row = piece->getRow()-1;
+    int col = piece->getCol()-1;
 
     if (piece->getOwner() != nullptr) {
         board[row][col] = 'O';
