@@ -4,7 +4,6 @@
 #include <vector>
 #include "player.h"
 #include "boardPiece.h"
-#include "ownableProperty.h"
 #include "subject.h"
 
 class TextDisplay;

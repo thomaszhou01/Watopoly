@@ -68,7 +68,8 @@ TextDisplay::TextDisplay(Game * game, vector<Player *> players): game{game}, pla
     string s;
     int row = 0;
     while (getline(f, s)) {
-        for (int i = 0; i < s.length(); ++i) {
+        int len = s.length();
+        for (int i = 0; i < len; ++i) {
             board[row][i] = s[i];
         }
         ++row;
@@ -77,7 +78,7 @@ TextDisplay::TextDisplay(Game * game, vector<Player *> players): game{game}, pla
 
 void TextDisplay::notify(Subject * subject) {
     BoardPiece * piece = nullptr;
-    for (int i = 0; i < game->getPieces(); i++) {
+    for (int i = 0; i < game->getPieces(); ++i) {
         if (game->getGame()[i]->getName() == subject->getName()) {
             piece = game->getGame()[i];
             break;
