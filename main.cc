@@ -10,7 +10,6 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    Game g;
     bool testing = false;
     string loadFile = "";
     for(int i = 0; i < argc; i++){
@@ -24,6 +23,7 @@ int main(int argc, char *argv[])
             }
         }
     }
+    Game g;
     g.start();
 
 }
