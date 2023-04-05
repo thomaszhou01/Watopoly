@@ -17,6 +17,11 @@ Player* BoardPiece::getOwner(){
 
 void BoardPiece::setOwner(Player* p){
     ownedPlayer = p;
+    owned = true;
+}
+
+void BoardPiece::setOwned(bool option) {
+    owned = option;
 }
 
 bool BoardPiece::isGym(){
@@ -45,6 +50,10 @@ int BoardPiece::getImprovementCost(){
 
 int BoardPiece::getImprovementLevel(){
     return improvementTier;
+}
+
+void BoardPiece::setImprovementLevel(int i) {
+    improvementTier = i;
 }
 
 bool BoardPiece::isTuitionPaid(){

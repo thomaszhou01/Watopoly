@@ -49,13 +49,13 @@ bool Player::isInTims(){
 }
 
 void Player::reduceTimsTime(){
-    turnsInTims = turnsInTims-1;
+    turnsInTims = turnsInTims+1;
 }
 
 void Player::sendToTims(){
     position = 10;
     inTims = true;
-    turnsInTims = 3;
+    turnsInTims = 0;
 }
 
 int Player::getRollUpTheRimCards(){
@@ -64,6 +64,10 @@ int Player::getRollUpTheRimCards(){
 
 void Player::setRollUpTheRimCards(int number){
     rollUpTheRimCards = number;
+}
+
+void Player::setMoney(int newMoney) {
+    money = newMoney;
 }
 
 void Player::addMoney(int newMoney){
@@ -178,4 +182,16 @@ void Player::setPosition(int pos){
 
 void Player::showAssets(){
 
+}
+
+int Player::getTurnsInTims() {
+    return turnsInTims;
+}
+
+void Player::setInTims(bool option) {
+    inTims = option;
+}
+
+void Player::setTurnsInTims(int i) {
+    turnsInTims = i;
 }

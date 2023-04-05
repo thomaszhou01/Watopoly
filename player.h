@@ -33,6 +33,7 @@ class Player{
         void sendToTims();
         int getRollUpTheRimCards();
         void setRollUpTheRimCards(int number);
+        void setMoney(int newMoney);
         void addMoney(int newMoney);
         void subtractMoney(int newMoney);
         void addProperty(BoardPiece* bp);
@@ -41,6 +42,8 @@ class Player{
         bool trade(Player* p, std::string give, std::string recieve);
         void setPosition(int pos);
         void showAssets();
+        int getTurnsInTims();
+        void setTurnsInTims(int i);
 };
 
 #endif
