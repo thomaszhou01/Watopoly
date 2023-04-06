@@ -569,7 +569,7 @@ void Game::makeMoney(int& playerIndex, int& newPos, bool& over, bool& hasRolled)
                 {
                     cout << "You have sucessfulled traded with " << cmd[1] << endl;
                     for (int i = 0; i < pieces; ++i){
-                        if (game[i]->getName() == cmd[1] || game[i]->getName() == cmd[2]){
+                        if (game[i]->getName() == cmd[2] || game[i]->getName() == cmd[3]){
                             game[i]->notifyObservers();
                         }
                     }
@@ -928,7 +928,7 @@ void Game::start()
                     {
                         cout << "You have sucessfulled traded with " << cmd[1] << endl;
                         for (int i = 0; i < pieces; ++i){
-                            if (game[i]->getName() == cmd[1] || game[i]->getName() == cmd[2]){
+                            if (game[i]->getName() == cmd[2] || game[i]->getName() == cmd[3]){
                                 game[i]->notifyObservers();
                             }
                         }
