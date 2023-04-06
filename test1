@@ -1,6 +1,6 @@
 2
 asdasd G 0 1420 6 
-bqweioryqwoe B 0 100 39 
+bqweioryqwoe B 0 0 38
 AL BANK 0
 ML BANK 0
 MKV BANK 0
@@ -20,7 +20,7 @@ EV2 BANK 0
 EV3 BANK 0
 V1 BANK 0
 PHYS BANK 0
-B1 bqweioryqwoe 0
+B1 asdasd 0
 PAC BANK 0
 B2 BANK 0
 EIT BANK 0
@@ -28,4 +28,4 @@ ESC BANK 0
 C2 BANK 0
 REV BANK 0
 MC BANK 0
-DC bqweioryqwoe 0
+DC asdasd 0

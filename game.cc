@@ -326,15 +326,14 @@ void Game::start()
         cout << order[i]->getName() << ": " << order[i]->getCharacter() << endl;
     }
     textDisplay->display();
-    commands(order[playerIndex]);
     while (over == false)
     {
         string s= "";
         string s1 = "";
         vector<string> cmd;
         cmd.clear();
-
-        cout << "It is "<< order[playerIndex]->getName() << "'s turn. Please enter a command:" << endl;
+        commands(order[playerIndex]);
+        cout << "Please enter a command:" << endl;
         getline(cin, s);
         stringstream ss(s);
         while (ss >> s1)
@@ -451,18 +450,20 @@ void Game::start()
                 if (game[newPos]->isTuitionPaid() == false)
                 {
                     cout << "You do not have enough money to pay." << endl;
-                    cout << "Here are your following options:";
-                    cout << "bankrupt" << endl;
-                    cout << "trade <name> <money> <property>" << endl;
-                    cout << "trade <name> <property> <property>" << endl;
-                    cout << "trade <name> <property> <money>" << endl;
-                    cout << "mortgage <property>" << endl;
-                    cout << "improve <property> sell" << endl;
+                    cout << "Here are your following options:" << endl;
+                    cout << "-bankrupt" << endl;
+                    cout << "-trade <name> <money> <property>" << endl;
+                    cout << "-trade <name> <property> <property>" << endl;
+                    cout << "-trade <name> <property> <money>" << endl;
+                    cout << "-mortgage <property>" << endl;
+                    cout << "-improve <property> sell" << endl;
                 }
                 while (game[newPos]->isTuitionPaid() == false)
                 {
                     cout << "Please enter an option to get enough money:" << endl;
                     getline(cin, s);
+                    stringstream ss(s);
+                    cmd.clear();
                     while (ss >> s1)
                     {
                         cmd.push_back(s1);
@@ -840,18 +841,20 @@ void Game::start()
                     if (game[newPos]->isTuitionPaid() == false)
                     {
                         cout << "You do not have enough money to pay." << endl;
-                        cout << "Here are your following options:";
-                        cout << "bankrupt" << endl;
-                        cout << "trade <name> <money> <property>" << endl;
-                        cout << "trade <name> <property> <property>" << endl;
-                        cout << "trade <name> <property> <money>" << endl;
-                        cout << "mortgage <property>" << endl;
-                        cout << "improve <property> sell" << endl;
+                        cout << "Here are your following options:" << endl;
+                        cout << "-bankrupt" << endl;
+                        cout << "-trade <name> <money> <property>" << endl;
+                        cout << "-trade <name> <property> <property>" << endl;
+                        cout << "-trade <name> <property> <money>" << endl;
+                        cout << "-mortgage <property>" << endl;
+                        cout << "-improve <property> sell" << endl;
                     }
                     while (game[newPos]->isTuitionPaid() == false)
                     {
                         cout << "Please enter an option to get enough money:" << endl;
                         getline(cin, s);
+                        stringstream ss(s);
+                        cmd.clear();
                         while (ss >> s1)
                         {
                             cmd.push_back(s1);
@@ -1015,6 +1018,7 @@ void Game::start()
 
         if(hasRolled && (!rolledDouble || order[playerIndex]->isInTims())){
             cout << "Your turn has ended" << endl;
+            cout << "_____________________________________________________" << endl;
             consecutiveDoubles[playerIndex] = 0;
             playerIndex++;
             if(playerIndex == numPlayers){
