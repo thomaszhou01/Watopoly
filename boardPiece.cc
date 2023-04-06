@@ -74,6 +74,8 @@ std::string BoardPiece::getId(){
 
 void BoardPiece::reset(){
     ownedPlayer = nullptr;
+    mortgaged = false;
+    improvementTier = 0;
     owned = false;
 }
 
