@@ -195,6 +195,313 @@ std::vector<Player *> Game::getOrder()
     return order;
 }
 
+void Game::rollLogic(vector<int>& roll, bool& hasRolled, bool& rolledDouble, int& playerIndex, bool& over){
+    int totalRoll = roll[0] + roll[1];
+    int pos = order[playerIndex]->getPosition();
+    int newPos;
+    hasRolled = true;
+    rolledDouble = false;
+    cout << "You rolled: " << roll[0] << " & " << roll[1] << endl;
+    if (roll[0] == roll[1])
+    {
+        consecutiveDoubles[orderIndex[playerIndex]]++;
+        rolledDouble = true;
+    }
+    else{
+        rolledDouble = false;
+    }
+    
+    if (order[playerIndex]->isInTims() == true)
+    {
+        if (roll[0] == roll[1])
+        {
+            newPos = pos + totalRoll;
+            if(newPos >= 40){
+                order[playerIndex]->addMoney(200);
+                cout << "You passed the DC Tims Line. You gained $200" << endl;
+                newPos = newPos % 40;
+            }
+            cout << "Congrats you made it out of DC Tims Line" << endl;
+            order[playerIndex]->setInTims(false);
+        }
+        else
+        {
+            newPos = pos;
+            cout << "Unfortunately you did not roll doubles. You are still stuck in DC Tims Line" << endl;
+            order[playerIndex]->reduceTimsTime();
+
+            string input;
+            bool canPass = true;
+            if(order[playerIndex]->getTurnsInTims() >= 3){
+                cout << "Its your third turn in the Tims line. You must pay $50 or use a RollUpTheRimCard (you have " << order[playerIndex]->getRollUpTheRimCards() << " cards) Options:"<< endl;
+                cout << "-pay" << endl << "-card" << endl;
+                canPass = false;
+            }
+            else{
+                cout << "Would you like to pay $50 or use a RollUpTheRimCard (you have " << order[playerIndex]->getRollUpTheRimCards() << " cards)"<< endl;
+                cout << "-pay" << endl << "-card" << endl << "-pass" << endl;
+            }
+
+            while(getline(cin, input)){
+                if(canPass && input == "pass"){
+                    cout << "You have passed" << endl;
+                    break;
+                }
+                else if(input == "pay"){
+                    order[playerIndex]->subtractMoney(50);
+                    cout << "You have paid $50" << endl;
+
+                    order[playerIndex]->setInTims(false);
+                    newPos = pos + totalRoll;
+                    if(newPos >= 40){
+                        order[playerIndex]->addMoney(200);
+                        cout << "You passed the DC Tims Line. You gained $200" << endl;
+                        newPos = newPos % 40;
+                    }
+                }
+                else if(input == "card"){
+                    if(order[playerIndex]->getRollUpTheRimCards() > 0){
+                        order[playerIndex]->setRollUpTheRimCards(order[playerIndex]->getRollUpTheRimCards() - 1);
+                        cout << "You used a RollUpTheRim card and left the DC Tims Line" << endl;
+
+                        order[playerIndex]->setInTims(false);
+                        newPos = pos + totalRoll;
+                        if(newPos >= 40){
+                            order[playerIndex]->addMoney(200);
+                            cout << "You passed the DC Tims Line. You gained $200" << endl;
+                            newPos = newPos % 40;
+                        }
+                        break;
+                    }
+                    else{
+                        cout << "You dont have a RollUpTheRim card" << endl;
+                    }
+                }
+                else{
+                    cout << "Invalid Option" << endl;
+                }
+            }
+        }
+    }
+    else if (order[playerIndex]->isInTims() == false && consecutiveDoubles[orderIndex[playerIndex]] == 3)
+    {
+        cout << "Unfortunately this is your third time rolling doubles, so you are send to Tims DC Line" << endl;
+        order[playerIndex]->sendToTims();
+        newPos = 10;
+        consecutiveDoubles[orderIndex[playerIndex]] = 0;
+    }
+    else
+    {
+        newPos = pos + totalRoll;
+        if(newPos >= 40){
+            order[playerIndex]->addMoney(200);
+            cout << "You passed the DC Tims Line. You gained $200" << endl;
+            newPos = newPos % 40;
+        }
+    }
+    order[playerIndex]->setPosition(newPos);
+    game[pos]->notifyObservers();
+    game[newPos]->notifyObservers();
+    pos = newPos;
+    textDisplay->display();
+    cout << "You are currently on: " << game[newPos]->getName() << endl;
+    game[newPos]->landedOn(order[playerIndex]);
+    game[newPos]->notifyObservers();
+    
+    while (newPos != order[playerIndex]->getPosition())
+    {
+        newPos = order[playerIndex]->getPosition();
+        game[newPos]->landedOn(order[playerIndex]);
+        game[newPos]->notifyObservers();
+        game[pos]->notifyObservers();
+        textDisplay->display();
+        cout << "You are currently on: " << game[newPos]->getName() << endl;
+    }
+
+    // buy/auction
+    if (game[newPos]->isOwnable() == true && game[newPos]->isOwned() == false)
+    {
+        char c;
+        cout << "You are given the option to BUY the property for: $" << game[newPos]->getPrice() << " else the property will be AUCTIONED" << endl;
+
+        while (true)
+        {
+            cout << "Would you like to buy the property? (Y/N)" << endl;
+            cin >> c;
+            cin.ignore();
+            if (c == 'Y')
+            {
+                game[newPos]->setOwned(true);
+                game[newPos]->setOwner(order[playerIndex]);
+                order[playerIndex]->addProperty(game[newPos]);
+                game[newPos]->notifyObservers();
+                cout << "You have succesfully purchased property: " << game[newPos]->getName() << endl;
+                break;
+            }
+            else if (c == 'N')
+            {
+                auction(game[newPos]);
+                break;
+            }
+            else
+            {
+                cout << "Invalid option" << endl;
+            }
+        }
+    }
+
+    if (game[newPos]->isTuitionPaid() == false)
+    {
+        cout << "You do not have enough money to pay." << endl;
+        cout << "Here are your following options:" << endl;
+        cout << "-bankrupt" << endl;
+        cout << "-trade <name> <money> <property>" << endl;
+        cout << "-trade <name> <property> <property>" << endl;
+        cout << "-trade <name> <property> <money>" << endl;
+        cout << "-mortgage <property>" << endl;
+        cout << "-improve <property> sell" << endl;
+    }
+    while (game[newPos]->isTuitionPaid() == false && !over)
+    {
+        makeMoney(playerIndex, newPos, over, hasRolled);
+        game[newPos]->landedOn(order[playerIndex]);
+    }
+}
+
+void Game::makeMoney(int& playerIndex, int& newPos, bool& over, bool& hasRolled){
+    cout << "Please enter an option to get enough money:" << endl;
+    string s;
+    string s1 = "";
+    getline(cin, s);
+    stringstream ss(s);
+    vector<string> cmd;
+    cmd.clear();
+    while (ss >> s1)
+    {
+        cmd.push_back(s1);
+    }
+    if (cmd.size() == 1)
+    {
+        if (cmd[0] == "bankrupt")
+        {
+            int oldPos = order[playerIndex]->getPosition();
+            order[playerIndex]->setPosition(-1);
+            bool bankruptToPlayer = order[playerIndex]->setBankrupt(game[newPos]->getOwner());
+            if(bankruptToPlayer == false){
+                std::vector<BoardPiece*> propertiesOwnedByBankruptPlayer = order[playerIndex]->getProperties();
+                for (auto i : propertiesOwnedByBankruptPlayer) {
+                    auction(i);
+                }
+            }
+            game[oldPos]->notifyObservers();
+            order.erase(order.begin() + playerIndex);
+            orderIndex.erase(orderIndex.begin() + playerIndex);
+            --numPlayers;
+
+            if (numPlayers == 1)
+            {
+                cout << "The game is over. The winner of WATOPOLY is: " << order[0]->getName() << "!!!" << endl;
+                over = true;
+            }
+            else
+            {
+                cout << "You gave control to the next player" << endl;
+                consecutiveDoubles[orderIndex[playerIndex]] = 0;
+                if(playerIndex >= numPlayers){
+                    playerIndex = 0;
+                }
+                hasRolled = false;
+            }
+        }
+        else
+        {
+            cout << "Invalid option" << endl;
+        }
+    }
+    else if (cmd.size() == 2)
+    {
+        if (cmd[0] == "mortgage")
+        {
+            for (int i = 0; i < pieces; ++i)
+            {
+                if (game[i]->getName() == cmd[1])
+                {
+                    if (!game[i]->mortgage(order[playerIndex]))
+                    {
+                        cout << "This property does not belong to you" << endl;
+                    }
+                    else
+                    {
+                        cout << "You have sucessfully mortgaged " << cmd[1] << endl;
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            cout << "Invalid option" << endl;
+        }
+    }
+    else if (cmd.size() == 3)
+    {
+        if (cmd[0] == "improve" && cmd[2] == "sell")
+        {
+            for (int i = 0; i < pieces; ++i)
+            {
+                if (game[i]->getName() == cmd[1])
+                {
+                    if (game[i]->sellImprovement(order[playerIndex]))
+                    {
+                        cout << "You have sucessfully sold " << cmd[1] << endl;
+                    }
+                    break;
+                }
+            }
+        }
+        else
+        {
+            cout << "Invalid option" << endl;
+        }
+    }
+    else if (cmd.size() == 4)
+    {
+        bool trade(Player * p, std::string give, std::string recieve);
+        if (cmd[0] == "trade")
+        {
+            Player *p;
+            bool flag = false;
+            for (int i = 0; i < numPlayers; ++i)
+            {
+                if (order[i]->getName() == cmd[1])
+                {
+                    p = order[i];
+                    flag = true;
+                }
+            }
+            if (flag == true)
+            {
+                if (order[playerIndex]->trade(p, cmd[2], cmd[3]))
+                {
+                    cout << "You have sucessfulled traded with " << cmd[1] << endl;
+                }
+            }
+            else
+            {
+                cout << "Invalid <name>" << endl;
+            }
+        }
+        else
+        {
+            cout << "Invalid option" << endl;
+        }
+    }
+    else
+    {
+        cout << "Invalid option" << endl;
+    }
+}
+
 void Game::commands(Player *p)
 {
     cout << p->getName() << "'s turn. Here are your following options: " << endl;
@@ -344,253 +651,8 @@ void Game::start()
         {
             if (cmd[0] == "roll")
             {
-                int pos = order[playerIndex]->getPosition();
-                int newPos;
                 vector<int> roll = rollDie();
-                int totalRoll = roll[0] + roll[1];
-                hasRolled = true;
-                rolledDouble = false;
-                cout << "You rolled: " << roll[0] << " & " << roll[1] << endl;
-                if (roll[0] == roll[1])
-                {
-                    consecutiveDoubles[orderIndex[playerIndex]]++;
-                    rolledDouble = true;
-                }
-                else{
-                    rolledDouble = false;
-                }
-
-                if (order[playerIndex]->isInTims() == true)
-                {
-                    if (roll[0] == roll[1])
-                    {
-                        newPos = pos + totalRoll;
-                        if(newPos >= 40){
-                            order[playerIndex]->addMoney(200);
-                            cout << "You passed the DC Tims Line. You gained $200" << endl;
-                            newPos = newPos % 40;
-                        }
-                        cout << "Congrats you made it out of DC Tims Line" << endl;
-                        order[playerIndex]->setInTims(false);
-                    }
-                    else
-                    {
-                        newPos = pos;
-                        cout << "Unfortunately you did not roll doubles. You are still stuck in DC Tims Line" << endl;
-                        order[playerIndex]->reduceTimsTime();
-                    }
-                }
-                else if (order[playerIndex]->isInTims() == false && consecutiveDoubles[orderIndex[playerIndex]] == 3)
-                {
-                    cout << "Unfortunately this is your third time rolling doubles, so you are send to Tims DC Line" << endl;
-                    order[playerIndex]->sendToTims();
-                    newPos = 10;
-                    consecutiveDoubles[orderIndex[playerIndex]] = 0;
-                }
-                else
-                {
-                    newPos = pos + totalRoll;
-                    if(newPos >= 40){
-                        order[playerIndex]->addMoney(200);
-                        cout << "You passed the DC Tims Line. You gained $200" << endl;
-                        newPos = newPos % 40;
-                    }
-                }
-                order[playerIndex]->setPosition(newPos);
-                game[pos]->notifyObservers();
-                game[newPos]->notifyObservers();
-                pos = newPos;
-                textDisplay->display();
-                cout << "You are currently on: " << game[newPos]->getName() << endl;
-                game[newPos]->landedOn(order[playerIndex]);
-                game[newPos]->notifyObservers();
-
-                while (newPos != order[playerIndex]->getPosition())
-                {
-                    newPos = order[playerIndex]->getPosition();
-                    game[newPos]->landedOn(order[playerIndex]);
-                    game[newPos]->notifyObservers();
-                    game[pos]->notifyObservers();
-                    textDisplay->display();
-                    cout << "You are currently on: " << game[newPos]->getName() << endl;
-                }
-
-                // buy/auction
-                if (game[newPos]->isOwnable() == true && game[newPos]->isOwned() == false)
-                {
-                    char c;
-                    cout << "You are given the option to BUY the property for: $" << game[newPos]->getPrice() << " else the property will be AUCTIONED" << endl;
-
-                    while (true)
-                    {
-                        cout << "Would you like to buy the property? (Y/N)" << endl;
-                        cin >> c;
-                        cin.ignore();
-                        if (c == 'Y')
-                        {
-                            game[newPos]->setOwned(true);
-                            game[newPos]->setOwner(order[playerIndex]);
-                            order[playerIndex]->addProperty(game[newPos]);
-                            game[newPos]->notifyObservers();
-                            cout << "You have succesfully purchased property: " << game[newPos]->getName() << endl;
-                            break;
-                        }
-                        else if (c == 'N')
-                        {
-                            auction(game[newPos]);
-                            break;
-                        }
-                        else
-                        {
-                            cout << "Invalid option" << endl;
-                        }
-                    }
-                }
-
-                if (game[newPos]->isTuitionPaid() == false)
-                {
-                    cout << "You do not have enough money to pay." << endl;
-                    cout << "Here are your following options:" << endl;
-                    cout << "-bankrupt" << endl;
-                    cout << "-trade <name> <money> <property>" << endl;
-                    cout << "-trade <name> <property> <property>" << endl;
-                    cout << "-trade <name> <property> <money>" << endl;
-                    cout << "-mortgage <property>" << endl;
-                    cout << "-improve <property> sell" << endl;
-                }
-                while (game[newPos]->isTuitionPaid() == false)
-                {   
-                    cout << "Please enter an option to get enough money:" << endl;
-                    getline(cin, s);
-                    stringstream ss(s);
-                    cmd.clear();
-                    while (ss >> s1)
-                    {
-                        cmd.push_back(s1);
-                    }
-                    if (cmd.size() == 1)
-                    {
-                        if (cmd[0] == "bankrupt")
-                        {
-                            int oldPos = order[playerIndex]->getPosition();
-                            order[playerIndex]->setPosition(-1);
-                            bool bankruptToPlayer = order[playerIndex]->setBankrupt(game[newPos]->getOwner());
-                            if(bankruptToPlayer == false){
-                                std::vector<BoardPiece*> propertiesOwnedByBankruptPlayer = order[playerIndex]->getProperties();
-                                for (auto i : propertiesOwnedByBankruptPlayer) {
-                                    auction(i);
-                                }
-                            }
-                            game[oldPos]->notifyObservers();
-                            order.erase(order.begin() + playerIndex);
-                            orderIndex.erase(orderIndex.begin() + playerIndex);
-                            --numPlayers;
-
-                            if (numPlayers == 1)
-                            {
-                                cout << "The game is over. The winner of WATOPOLY is: " << order[0]->getName() << "!!!" << endl;
-                                over = true;
-                                break;
-                            }
-                            else
-                            {
-                                cout << "You gave control to the next player" << endl;
-                                consecutiveDoubles[orderIndex[playerIndex]] = 0;
-                                if(playerIndex >= numPlayers){
-                                    playerIndex = 0;
-                                }
-                                hasRolled = false;
-                            }
-                        }
-                        else
-                        {
-                            cout << "Invalid option" << endl;
-                        }
-                    }
-                    else if (cmd.size() == 2)
-                    {
-                        if (cmd[0] == "mortgage")
-                        {
-                            for (int i = 0; i < pieces; ++i)
-                            {
-                                if (game[i]->getName() == cmd[1])
-                                {
-                                    if (!game[i]->mortgage(order[playerIndex]))
-                                    {
-                                        cout << "This property does not belong to you" << endl;
-                                    }
-                                    else
-                                    {
-                                        cout << "You have sucessfully mortgaged " << cmd[1] << endl;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            cout << "Invalid option" << endl;
-                        }
-                    }
-                    else if (cmd.size() == 3)
-                    {
-                        if (cmd[0] == "improve" && cmd[2] == "sell")
-                        {
-                            for (int i = 0; i < pieces; ++i)
-                            {
-                                if (game[i]->getName() == cmd[1])
-                                {
-                                    if (game[i]->sellImprovement(order[playerIndex]))
-                                    {
-                                        cout << "You have sucessfully sold " << cmd[1] << endl;
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            cout << "Invalid option" << endl;
-                        }
-                    }
-                    else if (cmd.size() == 4)
-                    {
-                        bool trade(Player * p, std::string give, std::string recieve);
-                        if (cmd[0] == "trade")
-                        {
-                            Player *p;
-                            bool flag = false;
-                            for (int i = 0; i < numPlayers; ++i)
-                            {
-                                if (order[i]->getName() == cmd[1])
-                                {
-                                    p = order[i];
-                                    flag = true;
-                                }
-                            }
-                            if (flag == true)
-                            {
-                                if (order[playerIndex]->trade(p, cmd[2], cmd[3]))
-                                {
-                                    cout << "You have sucessfulled traded with " << cmd[1] << endl;
-                                }
-                            }
-                            else
-                            {
-                                cout << "Invalid <name>" << endl;
-                            }
-                        }
-                        else
-                        {
-                            cout << "Invalid option" << endl;
-                        }
-                    }
-                    else
-                    {
-                        cout << "Invalid option" << endl;
-                    }
-                    game[newPos]->landedOn(order[playerIndex]);
-                }
+                rollLogic(roll, hasRolled, rolledDouble, playerIndex, over);
             }
             else if (cmd[0] == "next")
             {
@@ -744,253 +806,8 @@ void Game::start()
                 }
                 else
                 {
-                    int pos = order[playerIndex]->getPosition();
-                    int newPos;
                     vector<int> roll = testRoll(stoi(cmd[1]), stoi(cmd[2]));
-                    int totalRoll = roll[0] + roll[1];
-                    hasRolled = true;
-                    rolledDouble = false;
-                    cout << "You rolled: " << roll[0] << " & " << roll[1] << endl;
-                    if (roll[0] == roll[1])
-                    {
-                        consecutiveDoubles[orderIndex[playerIndex]]++;
-                        rolledDouble = true;
-                    }
-                    else{
-                        rolledDouble = false;
-                    }
-                    
-                    if (order[playerIndex]->isInTims() == true)
-                    {
-                        if (roll[0] == roll[1])
-                        {
-                            newPos = pos + totalRoll;
-                            if(newPos >= 40){
-                                order[playerIndex]->addMoney(200);
-                                cout << "You passed the DC Tims Line. You gained $200" << endl;
-                                newPos = newPos % 40;
-                            }
-                            cout << "Congrats you made it out of DC Tims Line" << endl;
-                            order[playerIndex]->setInTims(false);
-                        }
-                        else
-                        {
-                            newPos = pos;
-                            cout << "Unfortunately you did not roll doubles. You are still stuck in DC Tims Line" << endl;
-                            order[playerIndex]->reduceTimsTime();
-                        }
-                    }
-                    else if (order[playerIndex]->isInTims() == false && consecutiveDoubles[orderIndex[playerIndex]] == 3)
-                    {
-                        cout << "Unfortunately this is your third time rolling doubles, so you are send to Tims DC Line" << endl;
-                        order[playerIndex]->sendToTims();
-                        newPos = 10;
-                        consecutiveDoubles[orderIndex[playerIndex]] = 0;
-                    }
-                    else
-                    {
-                        newPos = pos + totalRoll;
-                        if(newPos >= 40){
-                            order[playerIndex]->addMoney(200);
-                            cout << "You passed the DC Tims Line. You gained $200" << endl;
-                            newPos = newPos % 40;
-                        }
-                    }
-                    order[playerIndex]->setPosition(newPos);
-                    game[pos]->notifyObservers();
-                    game[newPos]->notifyObservers();
-                    pos = newPos;
-                    textDisplay->display();
-                    cout << "You are currently on: " << game[newPos]->getName() << endl;
-                    game[newPos]->landedOn(order[playerIndex]);
-                    game[newPos]->notifyObservers();
-                    
-                    while (newPos != order[playerIndex]->getPosition())
-                    {
-                        newPos = order[playerIndex]->getPosition();
-                        game[newPos]->landedOn(order[playerIndex]);
-                        game[newPos]->notifyObservers();
-                        game[pos]->notifyObservers();
-                        textDisplay->display();
-                        cout << "You are currently on: " << game[newPos]->getName() << endl;
-                    }
-
-                    // buy/auction
-                    if (game[newPos]->isOwnable() == true && game[newPos]->isOwned() == false)
-                    {
-                        char c;
-                        cout << "You are given the option to BUY the property for: $" << game[newPos]->getPrice() << " else the property will be AUCTIONED" << endl;
-
-                        while (true)
-                        {
-                            cout << "Would you like to buy the property? (Y/N)" << endl;
-                            cin >> c;
-                            cin.ignore();
-                            if (c == 'Y')
-                            {
-                                game[newPos]->setOwned(true);
-                                game[newPos]->setOwner(order[playerIndex]);
-                                order[playerIndex]->addProperty(game[newPos]);
-                                game[newPos]->notifyObservers();
-                                cout << "You have succesfully purchased property: " << game[newPos]->getName() << endl;
-                                break;
-                            }
-                            else if (c == 'N')
-                            {
-                                auction(game[newPos]);
-                                break;
-                            }
-                            else
-                            {
-                                cout << "Invalid option" << endl;
-                            }
-                        }
-                    }
-
-                    if (game[newPos]->isTuitionPaid() == false)
-                    {
-                        cout << "You do not have enough money to pay." << endl;
-                        cout << "Here are your following options:" << endl;
-                        cout << "-bankrupt" << endl;
-                        cout << "-trade <name> <money> <property>" << endl;
-                        cout << "-trade <name> <property> <property>" << endl;
-                        cout << "-trade <name> <property> <money>" << endl;
-                        cout << "-mortgage <property>" << endl;
-                        cout << "-improve <property> sell" << endl;
-                    }
-                    while (game[newPos]->isTuitionPaid() == false)
-                    {
-                        cout << "Please enter an option to get enough money:" << endl;
-                        getline(cin, s);
-                        stringstream ss(s);
-                        cmd.clear();
-                        while (ss >> s1)
-                        {
-                            cmd.push_back(s1);
-                        }
-                        if (cmd.size() == 1)
-                        {
-                            if (cmd[0] == "bankrupt")
-                            {
-                                int oldPos = order[playerIndex]->getPosition();
-                                order[playerIndex]->setPosition(-1);
-                                bool bankruptToPlayer = order[playerIndex]->setBankrupt(game[newPos]->getOwner());
-                                if(bankruptToPlayer == false){
-                                    std::vector<BoardPiece*> propertiesOwnedByBankruptPlayer = order[playerIndex]->getProperties();
-                                    for (auto i : propertiesOwnedByBankruptPlayer) {
-                                        auction(i);
-                                    }
-                                }
-                                game[oldPos]->notifyObservers();
-                                order.erase(order.begin() + playerIndex);
-                                orderIndex.erase(orderIndex.begin() + playerIndex);
-                                --numPlayers;
-
-                                if (numPlayers == 1)
-                                {
-                                    cout << "The game is over. The winner of WATOPOLY is: " << order[0]->getName() << "!!!" << endl;
-                                    over = true;
-                                    break;
-                                }
-                                else
-                                {
-                                    cout << "You gave control to the next player" << endl;
-                                    consecutiveDoubles[orderIndex[playerIndex]] = 0;
-                                    if(playerIndex >= numPlayers){
-                                        playerIndex = 0;
-                                    }
-                                    hasRolled = false;
-                                }
-                            }
-                            else
-                            {
-                                cout << "Invalid option" << endl;
-                            }
-                        }
-                        else if (cmd.size() == 2)
-                        {
-                            if (cmd[0] == "mortgage")
-                            {
-                                for (int i = 0; i < pieces; ++i)
-                                {
-                                    if (game[i]->getName() == cmd[1])
-                                    {
-                                        if (!game[i]->mortgage(order[playerIndex]))
-                                        {
-                                            cout << "This property does not belong to you" << endl;
-                                        }
-                                        else
-                                        {
-                                            cout << "You have sucessfully mortgaged " << cmd[1] << endl;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                cout << "Invalid option" << endl;
-                            }
-                        }
-                        else if (cmd.size() == 3)
-                        {
-                            if (cmd[0] == "improve" && cmd[2] == "sell")
-                            {
-                                for (int i = 0; i < pieces; ++i)
-                                {
-                                    if (game[i]->getName() == cmd[1])
-                                    {
-                                        if (game[i]->sellImprovement(order[playerIndex]))
-                                        {
-                                            cout << "You have sucessfully sold " << cmd[1] << endl;
-                                        }
-                                        break;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                cout << "Invalid option" << endl;
-                            }
-                        }
-                        else if (cmd.size() == 4)
-                        {
-                            bool trade(Player * p, std::string give, std::string recieve);
-                            if (cmd[0] == "trade")
-                            {
-                                Player *p;
-                                bool flag = false;
-                                for (int i = 0; i < numPlayers; ++i)
-                                {
-                                    if (order[i]->getName() == cmd[1])
-                                    {
-                                        p = order[i];
-                                        flag = true;
-                                    }
-                                }
-                                if (flag == true)
-                                {
-                                    if (order[playerIndex]->trade(p, cmd[2], cmd[3]))
-                                    {
-                                        cout << "You have sucessfulled traded with " << cmd[1] << endl;
-                                    }
-                                }
-                                else
-                                {
-                                    cout << "Invalid <name>" << endl;
-                                }
-                            }
-                            else
-                            {
-                                cout << "Invalid option" << endl;
-                            }
-                        }
-                        else
-                        {
-                            cout << "Invalid option" << endl;
-                        }
-                        game[newPos]->landedOn(order[playerIndex]);
-                    }
+                    rollLogic(roll, hasRolled, rolledDouble, playerIndex, over);
                 }
             }
             else

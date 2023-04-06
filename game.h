@@ -29,15 +29,8 @@ class Game{
         
         std::vector<int> testRoll(int die1, int die2);
         std::vector<int> rollDie();
-        //void next(Player * p);
-        //void buyImprovement(Player * p);
-        //void sellImprovement(Player * p);
-        //void mortgage(Player * p);
-        //void unmortgage(Player * p);
-        //void bankrupt(Player * p);
-        //void assets(Player * p);
-        //void all();
-        //void auction();
+        void rollLogic(std::vector<int>& roll, bool& hasRolled, bool& rolledDouble, int& playerIndex, bool& over);
+        void makeMoney(int& playerIndex, int& newPos, bool& over, bool& hasRolled);
         void commands(Player * p);
         void auction(BoardPiece * b);
     public:
