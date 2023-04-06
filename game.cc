@@ -1112,9 +1112,8 @@ void Game::load(string file)
 {
     ifstream f(file);
     string s;
-    f >> s;
+    getline(f, s);
     numPlayers = stoi(s);
-    f.ignore();
 
     for (int i = 0; i < numPlayers; ++i)
     {
