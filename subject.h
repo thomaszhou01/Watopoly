@@ -11,6 +11,8 @@ class Subject{
         void attach(Observer* ob);
         void notifyObservers();
         virtual std::string getName()=0;
+        virtual int getRow()=0;
+        virtual int getCol()=0;
         virtual ~Subject()=0;
 };
 

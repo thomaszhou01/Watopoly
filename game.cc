@@ -366,7 +366,12 @@ void Game::start()
                 {
                     if (roll[0] == roll[1])
                     {
-                        newPos = (pos + totalRoll) % 40;
+                        newPos = pos + totalRoll;
+                        if(newPos >= 40){
+                            order[playerIndex]->addMoney(200);
+                            cout << "You passed the DC Tims Line. You gained $200" << endl;
+                            newPos = newPos % 40;
+                        }
                         cout << "Congrats you made it out of DC Tims Line" << endl;
                         order[playerIndex]->setInTims(false);
                     }
@@ -386,7 +391,12 @@ void Game::start()
                 }
                 else
                 {
-                    newPos = (pos + totalRoll) % 40;
+                    newPos = pos + totalRoll;
+                    if(newPos >= 40){
+                        order[playerIndex]->addMoney(200);
+                        cout << "You passed the DC Tims Line. You gained $200" << endl;
+                        newPos = newPos % 40;
+                    }
                 }
                 order[playerIndex]->setPosition(newPos);
                 game[pos]->notifyObservers();
@@ -395,6 +405,7 @@ void Game::start()
                 textDisplay->display();
                 cout << "You are currently on: " << game[newPos]->getName() << endl;
                 game[newPos]->landedOn(order[playerIndex]);
+                game[newPos]->notifyObservers();
 
                 while (newPos != order[playerIndex]->getPosition())
                 {
@@ -744,7 +755,12 @@ void Game::start()
                     {
                         if (roll[0] == roll[1])
                         {
-                            newPos = (pos + totalRoll) % 40;
+                            newPos = pos + totalRoll;
+                            if(newPos >= 40){
+                                order[playerIndex]->addMoney(200);
+                                cout << "You passed the DC Tims Line. You gained $200" << endl;
+                                newPos = newPos % 40;
+                            }
                             cout << "Congrats you made it out of DC Tims Line" << endl;
                             order[playerIndex]->setInTims(false);
                         }
@@ -764,7 +780,12 @@ void Game::start()
                     }
                     else
                     {
-                        newPos = (pos + totalRoll) % 40;
+                        newPos = pos + totalRoll;
+                        if(newPos >= 40){
+                            order[playerIndex]->addMoney(200);
+                            cout << "You passed the DC Tims Line. You gained $200" << endl;
+                            newPos = newPos % 40;
+                        }
                     }
                     order[playerIndex]->setPosition(newPos);
                     game[pos]->notifyObservers();
@@ -773,7 +794,8 @@ void Game::start()
                     textDisplay->display();
                     cout << "You are currently on: " << game[newPos]->getName() << endl;
                     game[newPos]->landedOn(order[playerIndex]);
-
+                    game[newPos]->notifyObservers();
+                    
                     while (newPos != order[playerIndex]->getPosition())
                     {
                         newPos = order[playerIndex]->getPosition();
@@ -992,7 +1014,7 @@ void Game::start()
             cout << "Invalid option" << endl;
         }
 
-        if(!rolledDouble || order[playerIndex]->isInTims()){
+        if(hasRolled && (!rolledDouble || order[playerIndex]->isInTims())){
             cout << "Your turn has ended" << endl;
             consecutiveDoubles[playerIndex] = 0;
             playerIndex++;

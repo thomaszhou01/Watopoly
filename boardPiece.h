@@ -54,8 +54,8 @@ class BoardPiece: public Subject{
         virtual void landedOn(Player* p)=0;
         virtual ~BoardPiece()=0;
 
-        int getRow();
-        int getCol();
+        int getRow() override;
+        int getCol() override;
 
 };
 

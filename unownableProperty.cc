@@ -65,31 +65,40 @@ void UnownableProperty::SLC(Player* p){
     if(getRollUptheRim == 0  && Player::rollupCardsGiven < 4){
         p->setRollUpTheRimCards(p->getRollUpTheRimCards()+1);
         Player::rollupCardsGiven++;
+        std::cout << "You recieved a Roll Up The Rim Card. You have " << p->getRollUpTheRimCards() << " cards." << std::endl;
     }
     else if(randomNum >= 0 && randomNum < 3){
         p->setPosition(p->getPosition()-3 >= 0 ? p->getPosition()-3 : p->getPosition()-3 + 40);
+        std::cout << "You were moved back 3 spaces" << std::endl;
     }
     else if(randomNum >= 3 && randomNum < 7){
         p->setPosition(p->getPosition()-2 >= 0 ? p->getPosition()-2 : p->getPosition()-2 + 40);
+        std::cout << "You were moved back 2 spaces" << std::endl;
     }
     else if(randomNum >= 7 && randomNum < 11){
         p->setPosition(p->getPosition()-1 >= 0 ? p->getPosition()-1 : p->getPosition()-1 + 40);
+        std::cout << "You were moved back 1 space" << std::endl;
     }
     else if(randomNum >= 11 && randomNum < 14){
         p->setPosition(p->getPosition()+1 < 40 ? p->getPosition()+1 : p->getPosition()+1 - 40);
+        std::cout << "You were moved forward 1 space" << std::endl;
     }
     else if(randomNum >= 14 && randomNum < 18){
         p->setPosition(p->getPosition()+2 < 40 ? p->getPosition()+2 : p->getPosition()+2 - 40);
+        std::cout << "You were moved forward 2 spaces" << std::endl;
     }
     else if(randomNum >= 18 && randomNum < 22){
         p->setPosition(p->getPosition()+3 < 40 ? p->getPosition()+3 : p->getPosition()+3 - 40);
+        std::cout << "You were moved forward 3 spaces" << std::endl;
     }
     else if(randomNum >= 22 && randomNum < 23){
         p->sendToTims();
+        std::cout << "You were sent to the DC Tims Line" << std::endl;
     }
     else{
         p->setPosition(0);
         p->addMoney(200);
+        std::cout << "You were advanced to Collect OSAP and gained $200" << std::endl;
     }
 
 }
@@ -101,6 +110,7 @@ void UnownableProperty::NeedlesHall(Player* p){
     bool gain = false;
     if(getRollUptheRim == 0  && Player::rollupCardsGiven < 4){
         p->setRollUpTheRimCards(p->getRollUpTheRimCards()+1);
+        std::cout << "You recieved a Roll Up The Rim Card. You have " << p->getRollUpTheRimCards() << " cards." << std::endl;
     }
     else if(randomNum >= 0 && randomNum < 1){
         valueRequired = 200;
@@ -133,6 +143,7 @@ void UnownableProperty::NeedlesHall(Player* p){
     
     if(gain){
         p->addMoney(valueRequired);
+        std::cout << "You recieved $" << valueRequired << std::endl;
     }
     else{
         if(p->getMoney() >= valueRequired){
@@ -141,6 +152,7 @@ void UnownableProperty::NeedlesHall(Player* p){
         else{
             p->subtractMoney(p->getMoney());
         }
+        std::cout << "You lost $" << valueRequired << ". Your balance now is $" << p->getMoney() << std::endl;
     }
 
 }

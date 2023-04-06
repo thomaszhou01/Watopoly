@@ -79,7 +79,7 @@ TextDisplay::TextDisplay(Game * game, vector<Player *> players): game{game}, pla
 void TextDisplay::notify(Subject * subject) {
     BoardPiece * piece = nullptr;
     for (int i = 0; i < game->getPieces(); ++i) {
-        if (game->getGame()[i]->getName() == subject->getName()) {
+        if (game->getGame()[i]->getName() == subject->getName() && game->getGame()[i]->getRow() == subject->getRow() && game->getGame()[i]->getCol() == subject->getCol()) {
             piece = game->getGame()[i];
             break;
         }
