@@ -565,7 +565,25 @@ void Game::makeMoney(int& playerIndex, int& newPos, bool& over, bool& hasRolled)
             }
             if (flag == true)
             {
-                if (order[playerIndex]->trade(p, cmd[2], cmd[3]))
+                cout << cmd[1] << " do you accept this trade? (y or n)" << endl;
+                string temp;
+                bool acceptedTrade = false;
+                getline(cin, temp);
+                while(true){
+                    if(temp == "y"){
+                        acceptedTrade = true;
+                        break;
+                    }
+                    else if(temp == "n"){
+                        acceptedTrade = false;
+                        break;
+                    }
+                    else{
+                        cout << "Invalid input" << endl;
+                    }
+                }
+                
+                if (acceptedTrade && order[playerIndex]->trade(p, cmd[2], cmd[3]))
                 {
                     cout << "You have sucessfulled traded with " << cmd[1] << endl;
                     for (int i = 0; i < pieces; ++i){
@@ -573,6 +591,9 @@ void Game::makeMoney(int& playerIndex, int& newPos, bool& over, bool& hasRolled)
                             game[i]->notifyObservers();
                         }
                     }
+                }
+                else{
+                    cout << "Trade failed" << endl;
                 }
             }
             else
@@ -924,7 +945,25 @@ void Game::start()
                 }
                 if (flag == true)
                 {
-                    if (order[playerIndex]->trade(p, cmd[2], cmd[3]))
+                    cout << cmd[1] << " do you accept this trade? (y or n)" << endl;
+                    string temp;
+                    bool acceptedTrade = false;
+                    getline(cin, temp);
+                    while(true){
+                        if(temp == "y"){
+                            acceptedTrade = true;
+                            break;
+                        }
+                        else if(temp == "n"){
+                            acceptedTrade = false;
+                            break;
+                        }
+                        else{
+                            cout << "Invalid input" << endl;
+                        }
+                    }
+                    
+                    if (acceptedTrade && order[playerIndex]->trade(p, cmd[2], cmd[3]))
                     {
                         cout << "You have sucessfulled traded with " << cmd[1] << endl;
                         for (int i = 0; i < pieces; ++i){
@@ -932,6 +971,9 @@ void Game::start()
                                 game[i]->notifyObservers();
                             }
                         }
+                    }
+                    else{
+                        cout << "Trade failed" << endl;
                     }
                 }
                 else
