@@ -489,7 +489,7 @@ void Game::start()
                                 cout << "You gave control to the next player" << endl;
                                 consecutiveDoubles[playerIndex] = 0;
                                 playerIndex++;
-                                if(playerIndex == numPlayers){
+                                if(playerIndex >= numPlayers){
                                     playerIndex = 0;
                                 }
                                 hasRolled = false;
@@ -592,7 +592,7 @@ void Game::start()
                     cout << "You gave control to the next player" << endl;
                     consecutiveDoubles[playerIndex] = 0;
                     playerIndex++;
-                    if(playerIndex == numPlayers){
+                    if(playerIndex >= numPlayers){
                         playerIndex = 0;
                     }
                     hasRolled = false;
@@ -882,7 +882,7 @@ void Game::start()
                                     cout << "You gave control to the next player" << endl;
                                     consecutiveDoubles[playerIndex] = 0;
                                     playerIndex++;
-                                    if(playerIndex == numPlayers){
+                                    if(playerIndex >= numPlayers){
                                         playerIndex = 0;
                                     }
                                     hasRolled = false;
@@ -1025,7 +1025,7 @@ void Game::start()
             cout << "_____________________________________________________" << endl;
             consecutiveDoubles[playerIndex] = 0;
             playerIndex++;
-            if(playerIndex == numPlayers){
+            if(playerIndex >= numPlayers){
                 playerIndex = 0;
             }
             hasRolled = false;
