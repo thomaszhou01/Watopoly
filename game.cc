@@ -830,7 +830,6 @@ void Game::start()
                     while (game[newPos]->isTuitionPaid() == false)
                     {
                         cout << "Please enter an option to get enough money:" << endl;
-                        cin.ignore();
                         getline(cin, s);
                         while (ss >> s1)
                         {
