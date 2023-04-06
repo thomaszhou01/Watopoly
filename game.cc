@@ -423,7 +423,7 @@ void Game::start()
 
                     while (true)
                     {
-                        cout << "Would you like to buy the propert? (Y/N)" << endl;
+                        cout << "Would you like to buy the property? (Y/N)" << endl;
                         cin >> c;
                         cin.ignore();
                         if (c == 'Y')
@@ -432,7 +432,7 @@ void Game::start()
                             game[newPos]->setOwner(order[playerIndex]);
                             order[playerIndex]->addProperty(game[newPos]);
                             game[newPos]->notifyObservers();
-                            cout << "You have succesfully purchased propert: " << game[newPos]->getName() << endl;
+                            cout << "You have succesfully purchased property: " << game[newPos]->getName() << endl;
                             break;
                         }
                         else if (c == 'N')
@@ -822,7 +822,7 @@ void Game::start()
 
                         while (true)
                         {
-                            cout << "Would you like to buy the propert? (Y/N)" << endl;
+                            cout << "Would you like to buy the property? (Y/N)" << endl;
                             cin >> c;
                             cin.ignore();
                             if (c == 'Y')
@@ -831,7 +831,7 @@ void Game::start()
                                 game[newPos]->setOwner(order[playerIndex]);
                                 order[playerIndex]->addProperty(game[newPos]);
                                 game[newPos]->notifyObservers();
-                                cout << "You have succesfully purchased propert: " << game[newPos]->getName() << endl;
+                                cout << "You have succesfully purchased property: " << game[newPos]->getName() << endl;
                                 break;
                             }
                             else if (c == 'N')
@@ -876,7 +876,9 @@ void Game::start()
                                 bool bankruptToPlayer = order[playerIndex]->setBankrupt(game[newPos]->getOwner());
                                 if(bankruptToPlayer == false){
                                     std::vector<BoardPiece*> propertiesOwnedByBankruptPlayer = order[playerIndex]->getProperties();
-                                    //implement auction for all properties owned by bankrupt player
+                                    for (auto i : propertiesOwnedByBankruptPlayer) {
+                                        auction(i);
+                                    }
                                 }
                                 game[oldPos]->notifyObservers();
                                 order.erase(order.begin() + playerIndex);
