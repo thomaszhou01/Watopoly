@@ -264,17 +264,52 @@ void Game::rollLogic(vector<int>& roll, bool& hasRolled, bool& rolledDouble, int
                     else{
                         cout << "You don't have $50. ";
                         if(canPass){
-                            cout << "Would you like to pass, or make the money?" << endl;
+                            //continue here
+                            while(!passed){
+                                cout << "Would you like to pass, or make the money? (pass, pay)" << endl;
+                                getline(cin, input);
+                                if(input == "pass"){
+                                    cout << "You have passed" << endl;
+                                    passed = true;
+                                    break;
+                                }
+                                else if(input == "pay"){
+                                    int initialPlayers = numPlayers;
+                                    makeMoney(playerIndex, newPos, over, hasRolled);
+                                    if(initialPlayers == numPlayers){
+                                        if(order[playerIndex]->getMoney() >= 50){
+                                            passed = true;
+                                            order[playerIndex]->subtractMoney(50);
+                                            cout << "You have paid $50" << endl;
+                                            order[playerIndex]->setInTims(false);
+                                            newPos = pos + totalRoll;
+                                            if(newPos >= 40){
+                                                order[playerIndex]->addMoney(200);
+                                                cout << "You passed the DC Tims Line. You gained $200" << endl;
+                                                newPos = newPos % 40;
+                                            }
+                                        }
+                                        else{
+                                            cout << "You did not make enough, you have $" << order[playerIndex]->getMoney() << endl;
+                                        }
+                                    }
+                                    else{
+                                        passed = true;
+                                    }
+                                }
+                                else{
+                                    cout << "Invalid Option" << endl;
+                                }
+                            }
                         }
                         else{
                             cout << "Since it is your third turn in the DC Tims line, you must pay 50$" << endl;
-                            bool paidToLeave = false;
-                            while(!paidToLeave){
+                            while(!passed){
                                 int initialPlayers = numPlayers;
                                 makeMoney(playerIndex, newPos, over, hasRolled);
                                 if(initialPlayers == numPlayers){
                                     if(order[playerIndex]->getMoney() >= 50){
-                                        paidToLeave = true;
+                                        passed = true;
                                         order[playerIndex]->subtractMoney(50);
                                         cout << "You have paid $50" << endl;
                                         order[playerIndex]->setInTims(false);
