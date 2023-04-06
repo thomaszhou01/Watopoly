@@ -26,19 +26,38 @@ bool Player::isBankrupt(){
 }
 
 //argument is the Player they got bankrupt from
-void Player::setBankrupt(Player* p){
+bool Player::setBankrupt(Player* p){
     if(p != nullptr){
         p->addMoney(this->money);
         for(auto & i : this->properties){
             i->setOwner(p);
             p->addProperty(i);
+            if(i->isMortgaged()){
+                std::cout << "Would you like to unmortgage " << i->getName() << "? (y or n)" << std::endl;
+                std::string input;
+                while(true){
+                    std::cin >> input;
+                    if(input == "y" || input == "n"){
+                        break;
+                    }
+                    else{
+                        std::cout << "Please enter y or n" << std::endl;
+                    }
+                }
+                std::cin.ignore();
+                if(input == "y"){
+                    i->unmortgage(p);
+                }
+            }
         }
         p->setRollUpTheRimCards(p->getRollUpTheRimCards() + rollUpTheRimCards);
+        return true;
     }
     else{
         for(auto & i : this->properties){
             i->reset();
         }
+        return false;
     }
 
     bankrupt = true;

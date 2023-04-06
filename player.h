@@ -27,7 +27,7 @@ class Player{
         int getPosition();
         int getMoney();
         bool isBankrupt();
-        void setBankrupt(Player* p);
+        bool setBankrupt(Player* p);
         bool isInTims();
         void reduceTimsTime();
         void sendToTims();
