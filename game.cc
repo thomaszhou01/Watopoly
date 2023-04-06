@@ -477,7 +477,9 @@ void Game::start()
                             bool bankruptToPlayer = order[playerIndex]->setBankrupt(game[newPos]->getOwner());
                             if(bankruptToPlayer == false){
                                 std::vector<BoardPiece*> propertiesOwnedByBankruptPlayer = order[playerIndex]->getProperties();
-                                //implement auction for all properties owned by bankrupt player
+                                for (auto i : propertiesOwnedByBankruptPlayer) {
+                                    auction(i);
+                                }
                             }
                             game[oldPos]->notifyObservers();
                             order.erase(order.begin() + playerIndex);
