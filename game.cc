@@ -30,7 +30,7 @@ Game::Game()
     game.push_back(new OwnableProperty{"BMH", "Health", 180, 100, {14, 70, 200, 550, 750, 950}, 18, false, false, 3, 11, 1});
     game.push_back(new OwnableProperty{"OPT", "Health", 200, 100, {16, 80, 220, 600, 800, 1000}, 19, false, false, 3, 6, 1});
     game.push_back(new UnownableProperty{"Goose Nesting", 20, 1, 1});
-    game.push_back(new OwnableProperty{"EV1", "Env", 220, 150, {18, 90, 250, 700, 875, 1050}, 21, false, false, 3, 1, 10});
+    game.push_back(new OwnableProperty{"EV1", "Env", 220, 150, {18, 90, 250, 700, 875, 1050}, 21, false, false, 3, 1, 9});
     game.push_back(new UnownableProperty{"NEEDLES HALL", 22, 1, 17});
     game.push_back(new OwnableProperty{"EV2", "Env", 220, 150, {18, 90, 250, 700, 875, 1050}, 23, false, false, 3, 1, 25});
     game.push_back(new OwnableProperty{"EV3", "Env", 240, 150, {20, 100, 300, 750, 925, 1100}, 24, false, false, 3, 1, 33});
