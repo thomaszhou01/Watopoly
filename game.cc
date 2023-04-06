@@ -148,7 +148,7 @@ void Game::InitializeOrder()
         order.push_back(new Player{name, character});
         orderIndex.push_back(i);
     }
-
+    cin.ignore();
     textDisplay = new TextDisplay{this, order};
     for (int i = 0; i < pieces; ++i)
     {
@@ -327,7 +327,6 @@ void Game::start()
     }
     textDisplay->display();
     commands(order[playerIndex]);
-    cin.ignore();
     while (over == false)
     {
         string s= "";
@@ -1110,6 +1109,7 @@ void Game::load(string file)
         string name = s2[0];
         char character = s2[1][0];
         order.push_back(new Player{name, character});
+        orderIndex.push_back(i);
         order[i]->setRollUpTheRimCards(stoi(s2[2]));
         order[i]->setMoney(stoi(s2[3]));
         int position = stoi(s2[4]);
