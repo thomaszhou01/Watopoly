@@ -44,7 +44,7 @@ void TextDisplay::updateBoardPiece(BoardPiece * piece) {
     }
 
     int playerNum = 0;
-    for (int i = 0; i < game->getNumPlayers(); ++i) {
+    for (int i = 0; i < players.size(); ++i) {
         if (players[i]->getPosition() == piece->getPosition()) {
             if (playerNum < 4) {
                 board[row+3][col+7-playerNum] = players[i]->getCharacter();

@@ -353,7 +353,7 @@ void Game::start()
                 cout << "You rolled: " << roll[0] << " & " << roll[1] << endl;
                 if (roll[0] == roll[1])
                 {
-                    consecutiveDoubles[playerIndex]++;
+                    consecutiveDoubles[orderIndex[playerIndex]]++;
                     rolledDouble = true;
                 }
                 else{
@@ -385,7 +385,7 @@ void Game::start()
                     cout << "Unfortunately this is your third time rolling doubles, so you are send to Tims DC Line" << endl;
                     order[playerIndex]->sendToTims();
                     newPos = 10;
-                    consecutiveDoubles[playerIndex] = 0;
+                    consecutiveDoubles[orderIndex[playerIndex]] = 0;
                 }
                 else
                 {
@@ -483,6 +483,7 @@ void Game::start()
                             }
                             game[oldPos]->notifyObservers();
                             order.erase(order.begin() + playerIndex);
+                            orderIndex.erase(orderIndex.begin() + playerIndex);
                             --numPlayers;
 
                             if (numPlayers == 1)
@@ -494,7 +495,7 @@ void Game::start()
                             else
                             {
                                 cout << "You gave control to the next player" << endl;
-                                consecutiveDoubles[playerIndex] = 0;
+                                consecutiveDoubles[orderIndex[playerIndex]] = 0;
                                 if(playerIndex >= numPlayers){
                                     playerIndex = 0;
                                 }
@@ -596,7 +597,7 @@ void Game::start()
                 if (hasRolled == true)
                 {
                     cout << "You gave control to the next player" << endl;
-                    consecutiveDoubles[playerIndex] = 0;
+                    consecutiveDoubles[orderIndex[playerIndex]] = 0;
                     playerIndex++;
                     if(playerIndex >= numPlayers){
                         playerIndex = 0;
@@ -752,7 +753,7 @@ void Game::start()
                     cout << "You rolled: " << roll[0] << " & " << roll[1] << endl;
                     if (roll[0] == roll[1])
                     {
-                        consecutiveDoubles[playerIndex]++;
+                        consecutiveDoubles[orderIndex[playerIndex]]++;
                         rolledDouble = true;
                     }
                     else{
@@ -784,7 +785,7 @@ void Game::start()
                         cout << "Unfortunately this is your third time rolling doubles, so you are send to Tims DC Line" << endl;
                         order[playerIndex]->sendToTims();
                         newPos = 10;
-                        consecutiveDoubles[playerIndex] = 0;
+                        consecutiveDoubles[orderIndex[playerIndex]] = 0;
                     }
                     else
                     {
@@ -882,6 +883,7 @@ void Game::start()
                                 }
                                 game[oldPos]->notifyObservers();
                                 order.erase(order.begin() + playerIndex);
+                                orderIndex.erase(orderIndex.begin() + playerIndex);
                                 --numPlayers;
 
                                 if (numPlayers == 1)
@@ -893,7 +895,7 @@ void Game::start()
                                 else
                                 {
                                     cout << "You gave control to the next player" << endl;
-                                    consecutiveDoubles[playerIndex] = 0;
+                                    consecutiveDoubles[orderIndex[playerIndex]] = 0;
                                     if(playerIndex >= numPlayers){
                                         playerIndex = 0;
                                     }
@@ -1035,7 +1037,7 @@ void Game::start()
         if(hasRolled && !over && (!rolledDouble || order[playerIndex]->isInTims())){
             cout << "Your turn has ended" << endl;
             cout << "_____________________________________________________" << endl;
-            consecutiveDoubles[playerIndex] = 0;
+            consecutiveDoubles[orderIndex[playerIndex]] = 0;
             playerIndex++;
             if(playerIndex >= numPlayers){
                 playerIndex = 0;
