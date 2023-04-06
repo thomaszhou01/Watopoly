@@ -683,7 +683,7 @@ void Game::start()
             }
             else if (cmd[0] == "save")
             {
-                save(cmd[1], playerIndex);
+                save(cmd[1]);
             }
             else
             {
@@ -1031,7 +1031,7 @@ int Game::getNumPlayers()
     return numPlayers;
 }
 
-void Game::save(string file, int playerOrderIndex)
+void Game::save(string file)
 {
     ofstream f;
     f.open(file);
@@ -1040,12 +1040,12 @@ void Game::save(string file, int playerOrderIndex)
 
     for (int i = 0; i < numPlayers; ++i)
     {
-        Player *p = order[(i + playerOrderIndex) / numPlayers];
+        Player *p = order[i];
         f << p->getName() << " ";
         f << p->getCharacter() << " ";
         f << p->getRollUpTheRimCards() << " ";
         f << p->getMoney() << " ";
-        f << p->getPosition() << endl;
+        f << p->getPosition() << " ";
         if (p->getPosition() == 10)
         {
             f << 0;
@@ -1058,29 +1058,31 @@ void Game::save(string file, int playerOrderIndex)
         f << endl;
     }
     // outputs ownable property info
-    for (int i = 0; i < ownable; ++i)
+    for (int i = 0; i < pieces; ++i)
     {
-        f << game[i]->getName() << " ";
-        if (game[i]->isOwned())
-        {
-            f << game[i]->getOwner() << " ";
-        }
-        else
-        {
-            f << "BANK"
-              << " ";
-        }
-        if (game[i]->isResidence() || game[i]->isGym())
-        {
-            f << 0;
-        }
-        else if (game[i]->isMortgaged())
-        {
-            f << -1;
-        }
-        else
-        {
-            f << game[i]->getImprovementLevel();
+        if(game[i]->isOwnable()){
+            f << game[i]->getName() << " ";
+            if (game[i]->isOwned())
+            {
+                f << game[i]->getOwner()->getName() << " ";
+            }
+            else
+            {
+                f << "BANK" << " ";
+            }
+            if (game[i]->isResidence() || game[i]->isGym())
+            {
+                f << 0;
+            }
+            else if (game[i]->isMortgaged())
+            {
+                f << -1;
+            }
+            else
+            {
+                f << game[i]->getImprovementLevel();
+            }
+            f << endl;
         }
     }
     f.close();
@@ -1093,6 +1095,7 @@ void Game::load(string file)
     string s;
     f >> s;
     numPlayers = stoi(s);
+    f.ignore();
 
     for (int i = 0; i < numPlayers; ++i)
     {
@@ -1106,7 +1109,7 @@ void Game::load(string file)
         }
         string name = s2[0];
         char character = s2[1][0];
-        order[i] = new Player{name, character};
+        order.push_back(new Player{name, character});
         order[i]->setRollUpTheRimCards(stoi(s2[2]));
         order[i]->setMoney(stoi(s2[3]));
         int position = stoi(s2[4]);
@@ -1121,10 +1124,7 @@ void Game::load(string file)
             }
         }
     }
-
-    for (int i = 0; i < ownable; ++i)
-    {
-        getline(f, s);
+    while(getline(f, s)){
         stringstream ss(s);
         string s1;
         vector<string> s2;
@@ -1165,9 +1165,10 @@ void Game::load(string file)
             }
         }
     }
-
-    for (int i = 0; i < pieces; i++)
+    textDisplay = new TextDisplay{this, order};
+    for (int i = 0; i < pieces; ++i)
     {
+        game[i]->attach(textDisplay);
         game[i]->notifyObservers();
     }
 

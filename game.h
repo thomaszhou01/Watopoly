@@ -52,7 +52,7 @@ class Game{
         std::vector<Player *> getOrder();
         std::vector<BoardPiece *> getGame();
 
-        void save(std::string file, int playerOrderIndex);
+        void save(std::string file);
         void load(std::string file);
 };
 

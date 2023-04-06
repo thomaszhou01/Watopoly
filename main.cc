@@ -27,7 +27,14 @@ int main(int argc, char *argv[])
     if(testing){
         g.setTesting();
     }
-    g.InitializeOrder();
+
+    if(loadFile == ""){
+        g.InitializeOrder();
+    }
+    else{
+        g.load(loadFile);
+    }
+    
     g.start();
 
 }
