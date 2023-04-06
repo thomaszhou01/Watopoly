@@ -326,14 +326,14 @@ void Game::start()
         cout << order[i]->getName() << ": " << order[i]->getCharacter() << endl;
     }
     textDisplay->display();
+    commands(order[playerIndex]);
     while (over == false)
     {
         string s= "";
         string s1 = "";
         vector<string> cmd;
         cmd.clear();
-        commands(order[playerIndex]);
-        cout << "Please enter a command:" << endl;
+        cout << "It is "<< order[playerIndex]->getName() << "'s turn. Please enter a command:" << endl;
         getline(cin, s);
         stringstream ss(s);
         while (ss >> s1)
@@ -459,7 +459,7 @@ void Game::start()
                     cout << "-improve <property> sell" << endl;
                 }
                 while (game[newPos]->isTuitionPaid() == false)
-                {
+                {   
                     cout << "Please enter an option to get enough money:" << endl;
                     getline(cin, s);
                     stringstream ss(s);
@@ -482,6 +482,7 @@ void Game::start()
                             {
                                 cout << "The game is over. The winner of WATOPOLY is: " << order[0]->getName() << "!!!" << endl;
                                 over = true;
+                                break;
                             }
                             else
                             {
@@ -581,6 +582,7 @@ void Game::start()
                     {
                         cout << "Invalid option" << endl;
                     }
+                    game[newPos]->landedOn(order[playerIndex]);
                 }
             }
             else if (cmd[0] == "next")
@@ -873,6 +875,7 @@ void Game::start()
                                 {
                                     cout << "The game is over. The winner of WATOPOLY is: " << order[0]->getName() << "!!!" << endl;
                                     over = true;
+                                    break;
                                 }
                                 else
                                 {
@@ -972,6 +975,7 @@ void Game::start()
                         {
                             cout << "Invalid option" << endl;
                         }
+                        game[newPos]->landedOn(order[playerIndex]);
                     }
                 }
             }
@@ -1016,7 +1020,7 @@ void Game::start()
             cout << "Invalid option" << endl;
         }
 
-        if(hasRolled && (!rolledDouble || order[playerIndex]->isInTims())){
+        if(hasRolled && !over && (!rolledDouble || order[playerIndex]->isInTims())){
             cout << "Your turn has ended" << endl;
             cout << "_____________________________________________________" << endl;
             consecutiveDoubles[playerIndex] = 0;

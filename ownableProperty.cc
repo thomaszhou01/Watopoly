@@ -9,6 +9,7 @@ bool OwnableProperty::mortgage(Player* p){
         int morgageMoney = this->cost/2;
         p->addMoney(morgageMoney);
         this->mortgaged = true;
+        return true;
     }
     return false;
 }
