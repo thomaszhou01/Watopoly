@@ -36,7 +36,7 @@ bool Player::setBankrupt(Player* p){
                 std::cout << "Would you like to unmortgage " << i->getName() << "? (y or n)" << std::endl;
                 std::string input;
                 while(true){
-                    std::cin >> input;
+                    getline(std::cin, input);
                     if(input == "y" || input == "n"){
                         break;
                     }
@@ -44,8 +44,8 @@ bool Player::setBankrupt(Player* p){
                         std::cout << "Please enter y or n" << std::endl;
                     }
                 }
-                std::cin.ignore();
                 if(input == "y"){
+                    std::cout << "Unmortgaged "<< i->getName() << std::endl;
                     i->unmortgage(p);
                 }
             }
@@ -224,4 +224,5 @@ void Player::setTurnsInTims(int i) {
 
 int Player::setInTims(bool option) {
     inTims = option;
+    return inTims;
 }

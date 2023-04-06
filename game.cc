@@ -241,22 +241,59 @@ void Game::rollLogic(vector<int>& roll, bool& hasRolled, bool& rolledDouble, int
                 cout << "Would you like to pay $50 or use a RollUpTheRimCard (you have " << order[playerIndex]->getRollUpTheRimCards() << " cards)"<< endl;
                 cout << "-pay" << endl << "-card" << endl << "-pass" << endl;
             }
-
-            while(getline(cin, input)){
+            bool passed = false;
+            while(!passed){
+                getline(cin, input);
                 if(canPass && input == "pass"){
                     cout << "You have passed" << endl;
-                    break;
+                    passed = true;
                 }
                 else if(input == "pay"){
-                    order[playerIndex]->subtractMoney(50);
-                    cout << "You have paid $50" << endl;
+                    if(order[playerIndex]->getMoney() >= 50){
+                        order[playerIndex]->subtractMoney(50);
+                        cout << "You have paid $50" << endl;
 
-                    order[playerIndex]->setInTims(false);
-                    newPos = pos + totalRoll;
-                    if(newPos >= 40){
-                        order[playerIndex]->addMoney(200);
-                        cout << "You passed the DC Tims Line. You gained $200" << endl;
-                        newPos = newPos % 40;
+                        order[playerIndex]->setInTims(false);
+                        newPos = pos + totalRoll;
+                        if(newPos >= 40){
+                            order[playerIndex]->addMoney(200);
+                            cout << "You passed the DC Tims Line. You gained $200" << endl;
+                            newPos = newPos % 40;
+                        }
+                    }
+                    else{
+                        cout << "You don't have $50. ";
+                        if(canPass){
+                            cout << "Would you like to pass, or make the money?" << endl;
+                        }
+                        else{
+                            cout << "Since it is your third turn in the DC Tims line, you must pay 50$" << endl;
+                            bool paidToLeave = false;
+                            while(!paidToLeave){
+                                int initialPlayers = numPlayers;
+                                makeMoney(playerIndex, newPos, over, hasRolled);
+                                if(initialPlayers == numPlayers){
+                                    if(order[playerIndex]->getMoney() >= 50){
+                                        paidToLeave = true;
+                                        order[playerIndex]->subtractMoney(50);
+                                        cout << "You have paid $50" << endl;
+                                        order[playerIndex]->setInTims(false);
+                                        newPos = pos + totalRoll;
+                                        if(newPos >= 40){
+                                            order[playerIndex]->addMoney(200);
+                                            cout << "You passed the DC Tims Line. You gained $200" << endl;
+                                            newPos = newPos % 40;
+                                        }
+                                    }
+                                    else{
+                                        cout << "You did not make enough, you have $" << order[playerIndex]->getMoney() << endl;
+                                    }
+                                }
+                                else{
+                                    passed = true;
+                                }
+                            }
+                        }
                     }
                 }
                 else if(input == "card"){
@@ -271,7 +308,7 @@ void Game::rollLogic(vector<int>& roll, bool& hasRolled, bool& rolledDouble, int
                             cout << "You passed the DC Tims Line. You gained $200" << endl;
                             newPos = newPos % 40;
                         }
-                        break;
+                        passed = true;
                     }
                     else{
                         cout << "You dont have a RollUpTheRim card" << endl;
@@ -363,8 +400,12 @@ void Game::rollLogic(vector<int>& roll, bool& hasRolled, bool& rolledDouble, int
     }
     while (game[newPos]->isTuitionPaid() == false && !over)
     {
+        int initialPlayers = numPlayers;
         makeMoney(playerIndex, newPos, over, hasRolled);
-        game[newPos]->landedOn(order[playerIndex]);
+        if(initialPlayers == numPlayers) game[newPos]->landedOn(order[playerIndex]);
+        else{
+            break;
+        }
     }
 }
 
@@ -387,10 +428,16 @@ void Game::makeMoney(int& playerIndex, int& newPos, bool& over, bool& hasRolled)
             int oldPos = order[playerIndex]->getPosition();
             order[playerIndex]->setPosition(-1);
             bool bankruptToPlayer = order[playerIndex]->setBankrupt(game[newPos]->getOwner());
+            std::vector<BoardPiece*> propertiesOwnedByBankruptPlayer = order[playerIndex]->getProperties();
             if(bankruptToPlayer == false){
-                std::vector<BoardPiece*> propertiesOwnedByBankruptPlayer = order[playerIndex]->getProperties();
                 for (auto i : propertiesOwnedByBankruptPlayer) {
                     auction(i);
+                    i->notifyObservers();
+                }
+            }
+            else{
+                for (auto i : propertiesOwnedByBankruptPlayer) {
+                    i->notifyObservers();
                 }
             }
             game[oldPos]->notifyObservers();
@@ -433,6 +480,7 @@ void Game::makeMoney(int& playerIndex, int& newPos, bool& over, bool& hasRolled)
                     else
                     {
                         cout << "You have sucessfully mortgaged " << cmd[1] << endl;
+                        game[i]->notifyObservers();
                         break;
                     }
                 }
@@ -454,6 +502,7 @@ void Game::makeMoney(int& playerIndex, int& newPos, bool& over, bool& hasRolled)
                     if (game[i]->sellImprovement(order[playerIndex]))
                     {
                         cout << "You have sucessfully sold " << cmd[1] << endl;
+                        game[i]->notifyObservers();
                     }
                     break;
                 }
@@ -484,6 +533,11 @@ void Game::makeMoney(int& playerIndex, int& newPos, bool& over, bool& hasRolled)
                 if (order[playerIndex]->trade(p, cmd[2], cmd[3]))
                 {
                     cout << "You have sucessfulled traded with " << cmd[1] << endl;
+                    for (int i = 0; i < pieces; ++i){
+                        if (game[i]->getName() == cmd[1] || game[i]->getName() == cmd[2]){
+                            game[i]->notifyObservers();
+                        }
+                    }
                 }
             }
             else
@@ -729,6 +783,7 @@ void Game::start()
                         else
                         {
                             cout << "You have sucessfully mortgaged " << cmd[1] << endl;
+                            game[i]->notifyObservers();
                             break;
                         }
                     }
@@ -747,6 +802,7 @@ void Game::start()
                         else
                         {
                             cout << "You have sucessfully unmortgaged " << cmd[1] << endl;
+                            game[i]->notifyObservers();
                             break;
                         }
                     }
@@ -774,6 +830,7 @@ void Game::start()
                             if (game[i]->sellImprovement(order[playerIndex]))
                             {
                                 cout << "You have sucessfully sold " << cmd[1] << endl;
+                                game[i]->notifyObservers();
                             }
                             break;
                         }
@@ -788,6 +845,7 @@ void Game::start()
                             if (game[i]->improve(order[playerIndex]))
                             {
                                 cout << "You have sucessfully improved " << cmd[1] << endl;
+                                game[i]->notifyObservers();
                             }
                             break;
                         }
@@ -834,6 +892,11 @@ void Game::start()
                     if (order[playerIndex]->trade(p, cmd[2], cmd[3]))
                     {
                         cout << "You have sucessfulled traded with " << cmd[1] << endl;
+                        for (int i = 0; i < pieces; ++i){
+                            if (game[i]->getName() == cmd[1] || game[i]->getName() == cmd[2]){
+                                game[i]->notifyObservers();
+                            }
+                        }
                     }
                 }
                 else

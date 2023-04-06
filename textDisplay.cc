@@ -11,36 +11,48 @@ void TextDisplay::updateBoardPiece(BoardPiece * piece) {
         board[row+1][col+1] = 'O';
         board[row+4][col+1] = piece->getOwner()->getCharacter();
     }
+    else{
+        board[row+1][col+1] = ' ';
+        board[row+4][col+1] = ' ';
+    }
 
     if (piece->isMortgaged() == true) {
-        board[row][col+1] = 'M';
-        board[row][col+2] = ' ';
-        board[row][col+3] = ' ';
-        board[row][col+4] = ' ';
-        board[row][col+5] = ' ';
-        board[row][col+6] = ' ';
+        board[row+1][col+2] = 'M';
+        board[row+1][col+3] = ' ';
+        board[row+1][col+4] = ' ';
+        board[row+1][col+5] = ' ';
+        board[row+1][col+6] = ' ';
+        board[row+1][col+7] = ' ';
+    }
+    else{
+        board[row+1][col+2] = ' ';
+        board[row+1][col+3] = ' ';
+        board[row+1][col+4] = ' ';
+        board[row+1][col+5] = ' ';
+        board[row+1][col+6] = ' ';
+        board[row+1][col+7] = ' ';
     }
 
     if (piece->getImprovementLevel() == 1) {
-        board[row][col+2] = 'I';
+        board[row+1][col+3] = 'I';
     } else if (piece->getImprovementLevel() == 2) {
-        board[row][col+2] = 'I';
-        board[row][col+3] = 'I';
+        board[row+1][col+3] = 'I';
+        board[row+1][col+4] = 'I';
     } else if (piece->getImprovementLevel() == 3) {
-        board[row][col+2] = 'I';
-        board[row][col+3] = 'I';
-        board[row][col+4] = 'I';
+        board[row+1][col+3] = 'I';
+        board[row+1][col+4] = 'I';
+        board[row+1][col+5] = 'I';
     } else if (piece->getImprovementLevel() == 4) {
-        board[row][col+2] = 'I';
-        board[row][col+3] = 'I';
-        board[row][col+4] = 'I';
-        board[row][col+5] = 'I';
+        board[row+1][col+3] = 'I';
+        board[row+1][col+4] = 'I';
+        board[row+1][col+5] = 'I';
+        board[row+1][col+6] = 'I';
     } else if (piece->getImprovementLevel() == 5) {
-        board[row][col+2] = 'I';
-        board[row][col+3] = 'I';
-        board[row][col+4] = 'I';
-        board[row][col+5] = 'I';
-        board[row][col+6] = 'I';
+        board[row+1][col+3] = 'I';
+        board[row+1][col+4] = 'I';
+        board[row+1][col+5] = 'I';
+        board[row+1][col+6] = 'I';
+        board[row+1][col+7] = 'I';
     }
 
     int playerNum = 0;
