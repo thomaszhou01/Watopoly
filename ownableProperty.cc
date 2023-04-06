@@ -161,7 +161,7 @@ void OwnableProperty::landedOn(Player* p){
                 std::cout << "Please enter y or n" << std::endl;
             }
         }
-        
+        std::cin.ignore();
         if(input == "y"){
             if(p->getMoney() >= this->cost){
                 p->addProperty(this);

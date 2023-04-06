@@ -8,8 +8,8 @@ void TextDisplay::updateBoardPiece(BoardPiece * piece) {
     int col = piece->getCol()-1;
 
     if (piece->getOwner() != nullptr) {
-        board[row][col] = 'O';
-        board[row + 3][col] = piece->getOwner()->getCharacter();
+        board[row+1][col+1] = 'O';
+        board[row+4][col+1] = piece->getOwner()->getCharacter();
     }
 
     if (piece->isMortgaged() == true) {
@@ -47,13 +47,13 @@ void TextDisplay::updateBoardPiece(BoardPiece * piece) {
     for (int i = 0; i < game->getNumPlayers(); ++i) {
         if (players[i]->getPosition() == piece->getPosition()) {
             if (playerNum < 4) {
-                board[row+3][col+4+playerNum] = players[i]->getCharacter();
+                board[row+3][col+7-playerNum] = players[i]->getCharacter();
             } else {
                 board[row+4][col+playerNum] = players[i]->getCharacter();
             }
         } else {
             if (playerNum < 4) {
-                board[row+3][col+4+playerNum] = ' ';
+                board[row+3][col+7-playerNum] = ' ';
             } else {
                 board[row+4][col+playerNum] = ' ';
             }

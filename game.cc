@@ -49,13 +49,6 @@ Game::Game()
     game.push_back(new OwnableProperty{"MC", "Math", 350, 200, {35, 175, 500, 1100, 1300, 1500}, 37, false, false, 2, 36, 81});
     game.push_back(new UnownableProperty{"COOP FEE", 38, 41, 81});
     game.push_back(new OwnableProperty{"DC", "Math", 400, 200, {50, 200, 600, 1400, 1700, 2000}, 39, false, false, 2, 46, 81});
-
-    textDisplay = new TextDisplay{this, order};
-    for (int i = 0; i < pieces; ++i)
-    {
-        game[i]->attach(textDisplay);
-        game[i]->notifyObservers();
-    }
 }
 
 Game::~Game()
@@ -73,6 +66,7 @@ Game::~Game()
 void Game::InitializeOrder()
 {
     cout << "How many players are playing?" << endl;
+    // add guard
     cin >> numPlayers;
     while (true)
     {
@@ -80,6 +74,7 @@ void Game::InitializeOrder()
         {
             cout << "Invalid number of players." << endl;
             cout << "Number of players must be between 2 and 8 (inclusive)" << endl;
+            //add guard
             cin >> numPlayers;
         }
         else
@@ -153,6 +148,13 @@ void Game::InitializeOrder()
         order.push_back(new Player{name, character});
         orderIndex.push_back(i);
     }
+
+    textDisplay = new TextDisplay{this, order};
+    for (int i = 0; i < pieces; ++i)
+    {
+        game[i]->attach(textDisplay);
+        game[i]->notifyObservers();
+    }
 }
 
 int Game::getPieces()
@@ -177,9 +179,10 @@ vector<int> Game::testRoll(int die1, int die2)
 
 vector<int> Game::rollDie()
 {
-    int die1 = rand() % 6 + 1;
-    int die2 = rand() % 6 + 1;
-    return vector<int>{die1, die2};
+    std::vector<int> v = {1,2,3,4,5,6};
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::shuffle(v.begin(), v.end(), std::default_random_engine(seed));
+    return vector<int>{v[0], v[1]};
 }
 
 std::vector<BoardPiece *> Game::getGame()
@@ -194,7 +197,7 @@ std::vector<Player *> Game::getOrder()
 
 void Game::commands(Player *p)
 {
-    cout << p->getName() << "'s turn. Here are your following options: ";
+    cout << p->getName() << "'s turn. Here are your following options: " << endl;
     if (p->isInTims() == true)
     {
         cout << "You are currently in DC Tims Line. Your turns here are: " << p->getTurnsInTims() << endl;
@@ -245,10 +248,16 @@ void Game::auction(BoardPiece *b)
                     cout << order[i]->getName() << ": ";
                     getline(cin, s);
                     stringstream ss(s);
+                    cmd.clear();
                     while (ss >> s1)
                     {
                         cmd.push_back(s1);
                     }
+
+                    for(auto i: cmd){
+                        cout << i << endl;
+                    }
+
                     if (cmd[0] == "withdraw")
                     {
                         inAuction[i] = "false";
@@ -292,10 +301,11 @@ void Game::auction(BoardPiece *b)
     {
         if (inAuction[i] == true)
         {
-            cout << "Congratulations to " << order[i]->getName() << "for winning the property for $" << bid << endl;
+            cout << "Congratulations to " << order[i]->getName() << " for winning the property for $" << bid << endl;
             order[i]->subtractMoney(bid);
             order[i]->addProperty(b);
             b->setOwner(order[i]);
+            b->setOwned(true);
             b->notifyObservers();
             break;
         }
@@ -307,6 +317,7 @@ void Game::start()
     bool over = false;
     bool hasRolled = false;
     int playerIndex = 0;
+    bool rolledDouble = false;
 
     cout << "Welcome to WATOPOLY" << endl;
     cout << "We have the following players: " << endl;
@@ -316,20 +327,21 @@ void Game::start()
     }
     textDisplay->display();
     commands(order[playerIndex]);
-    cout << "Please enter an option:" << endl;
-
+    cin.ignore();
     while (over == false)
     {
-        string s;
-        string s1;
+        string s= "";
+        string s1 = "";
         vector<string> cmd;
+        cmd.clear();
+
+        cout << "It is "<< order[playerIndex]->getName() << "'s turn. Please enter a command:" << endl;
         getline(cin, s);
         stringstream ss(s);
         while (ss >> s1)
         {
             cmd.push_back(s1);
         }
-
         if (cmd.size() == 1)
         {
             if (cmd[0] == "roll")
@@ -339,10 +351,15 @@ void Game::start()
                 vector<int> roll = rollDie();
                 int totalRoll = roll[0] + roll[1];
                 hasRolled = true;
+                rolledDouble = false;
                 cout << "You rolled: " << roll[0] << " & " << roll[1] << endl;
                 if (roll[0] == roll[1])
                 {
-                    ++consecutiveDoubles[playerIndex];
+                    consecutiveDoubles[playerIndex]++;
+                    rolledDouble = true;
+                }
+                else{
+                    rolledDouble = false;
                 }
 
                 if (order[playerIndex]->isInTims() == true)
@@ -374,7 +391,7 @@ void Game::start()
                 order[playerIndex]->setPosition(newPos);
                 game[pos]->notifyObservers();
                 game[newPos]->notifyObservers();
-
+                pos = newPos;
                 textDisplay->display();
                 cout << "You are currently on: " << game[newPos]->getName() << endl;
                 game[newPos]->landedOn(order[playerIndex]);
@@ -384,6 +401,7 @@ void Game::start()
                     newPos = order[playerIndex]->getPosition();
                     game[newPos]->landedOn(order[playerIndex]);
                     game[newPos]->notifyObservers();
+                    game[pos]->notifyObservers();
                     textDisplay->display();
                     cout << "You are currently on: " << game[newPos]->getName() << endl;
                 }
@@ -398,10 +416,12 @@ void Game::start()
                     {
                         cout << "Would you like to buy the propert? (Y/N)" << endl;
                         cin >> c;
+                        cin.ignore();
                         if (c == 'Y')
                         {
                             game[newPos]->setOwned(true);
                             game[newPos]->setOwner(order[playerIndex]);
+                            order[playerIndex]->addProperty(game[newPos]);
                             game[newPos]->notifyObservers();
                             cout << "You have succesfully purchased propert: " << game[newPos]->getName() << endl;
                             break;
@@ -409,6 +429,7 @@ void Game::start()
                         else if (c == 'N')
                         {
                             auction(game[newPos]);
+                            break;
                         }
                         else
                         {
@@ -454,7 +475,11 @@ void Game::start()
                             else
                             {
                                 cout << "You gave control to the next player" << endl;
-                                ++playerIndex % numPlayers;
+                                consecutiveDoubles[playerIndex] = 0;
+                                playerIndex++;
+                                if(playerIndex == numPlayers){
+                                    playerIndex = 0;
+                                }
                                 hasRolled = false;
                             }
                         }
@@ -546,14 +571,17 @@ void Game::start()
                         cout << "Invalid option" << endl;
                     }
                 }
-                cout << "Your turn has ended, please enter \"next\"" << endl;
             }
             else if (cmd[0] == "next")
             {
                 if (hasRolled == true)
                 {
                     cout << "You gave control to the next player" << endl;
-                    ++playerIndex % numPlayers;
+                    consecutiveDoubles[playerIndex] = 0;
+                    playerIndex++;
+                    if(playerIndex == numPlayers){
+                        playerIndex = 0;
+                    }
                     hasRolled = false;
                 }
                 else
@@ -701,12 +729,17 @@ void Game::start()
                     vector<int> roll = testRoll(stoi(cmd[1]), stoi(cmd[2]));
                     int totalRoll = roll[0] + roll[1];
                     hasRolled = true;
+                    rolledDouble = false;
                     cout << "You rolled: " << roll[0] << " & " << roll[1] << endl;
                     if (roll[0] == roll[1])
                     {
-                        ++consecutiveDoubles[playerIndex];
+                        consecutiveDoubles[playerIndex]++;
+                        rolledDouble = true;
                     }
-
+                    else{
+                        rolledDouble = false;
+                    }
+                    
                     if (order[playerIndex]->isInTims() == true)
                     {
                         if (roll[0] == roll[1])
@@ -736,7 +769,7 @@ void Game::start()
                     order[playerIndex]->setPosition(newPos);
                     game[pos]->notifyObservers();
                     game[newPos]->notifyObservers();
-
+                    pos = newPos;
                     textDisplay->display();
                     cout << "You are currently on: " << game[newPos]->getName() << endl;
                     game[newPos]->landedOn(order[playerIndex]);
@@ -746,6 +779,7 @@ void Game::start()
                         newPos = order[playerIndex]->getPosition();
                         game[newPos]->landedOn(order[playerIndex]);
                         game[newPos]->notifyObservers();
+                        game[pos]->notifyObservers();
                         textDisplay->display();
                         cout << "You are currently on: " << game[newPos]->getName() << endl;
                     }
@@ -760,10 +794,12 @@ void Game::start()
                         {
                             cout << "Would you like to buy the propert? (Y/N)" << endl;
                             cin >> c;
+                            cin.ignore();
                             if (c == 'Y')
                             {
                                 game[newPos]->setOwned(true);
                                 game[newPos]->setOwner(order[playerIndex]);
+                                order[playerIndex]->addProperty(game[newPos]);
                                 game[newPos]->notifyObservers();
                                 cout << "You have succesfully purchased propert: " << game[newPos]->getName() << endl;
                                 break;
@@ -771,6 +807,7 @@ void Game::start()
                             else if (c == 'N')
                             {
                                 auction(game[newPos]);
+                                break;
                             }
                             else
                             {
@@ -793,6 +830,7 @@ void Game::start()
                     while (game[newPos]->isTuitionPaid() == false)
                     {
                         cout << "Please enter an option to get enough money:" << endl;
+                        cin.ignore();
                         getline(cin, s);
                         while (ss >> s1)
                         {
@@ -816,7 +854,11 @@ void Game::start()
                                 else
                                 {
                                     cout << "You gave control to the next player" << endl;
-                                    ++playerIndex % numPlayers;
+                                    consecutiveDoubles[playerIndex] = 0;
+                                    playerIndex++;
+                                    if(playerIndex == numPlayers){
+                                        playerIndex = 0;
+                                    }
                                     hasRolled = false;
                                 }
                             }
@@ -908,7 +950,6 @@ void Game::start()
                             cout << "Invalid option" << endl;
                         }
                     }
-                    cout << "Your turn has ended, please enter \"next\"" << endl;
                 }
             }
             else
@@ -951,7 +992,16 @@ void Game::start()
         {
             cout << "Invalid option" << endl;
         }
-        cout << "Please enter an option:" << endl;
+
+        if(!rolledDouble || order[playerIndex]->isInTims()){
+            cout << "Your turn has ended" << endl;
+            consecutiveDoubles[playerIndex] = 0;
+            playerIndex++;
+            if(playerIndex == numPlayers){
+                playerIndex = 0;
+            }
+            hasRolled = false;
+        }
     }
 }
 
@@ -1075,6 +1125,7 @@ void Game::load(string file)
                         if (order[k]->getName() == owner)
                         {
                             game[j]->setOwner(order[k]);
+                            order[k]->addProperty(game[j]);
                             if (improvements == -1)
                             {
                                 game[j]->mortgage(order[k]);

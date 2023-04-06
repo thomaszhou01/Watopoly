@@ -24,6 +24,10 @@ int main(int argc, char *argv[])
         }
     }
     Game g;
+    if(testing){
+        g.setTesting();
+    }
+    g.InitializeOrder();
     g.start();
 
 }

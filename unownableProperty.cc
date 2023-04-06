@@ -35,6 +35,7 @@ void UnownableProperty::Tuition(Player* p){
             std::cout << "Please enter 1 or 2" << std::endl;
         }
     }
+    std::cin.ignore();
     if(input == "1"){
         total = 300;
     }
@@ -63,24 +64,25 @@ void UnownableProperty::SLC(Player* p){
     int getRollUptheRim = generateRandom(100);
     if(getRollUptheRim == 0  && Player::rollupCardsGiven < 4){
         p->setRollUpTheRimCards(p->getRollUpTheRimCards()+1);
+        Player::rollupCardsGiven++;
     }
     else if(randomNum >= 0 && randomNum < 3){
-        p->setPosition(p->getPosition()-3);
+        p->setPosition(p->getPosition()-3 >= 0 ? p->getPosition()-3 : p->getPosition()-3 + 40);
     }
     else if(randomNum >= 3 && randomNum < 7){
-        p->setPosition(p->getPosition()-2);
+        p->setPosition(p->getPosition()-2 >= 0 ? p->getPosition()-2 : p->getPosition()-2 + 40);
     }
     else if(randomNum >= 7 && randomNum < 11){
-        p->setPosition(p->getPosition()-1);
+        p->setPosition(p->getPosition()-1 >= 0 ? p->getPosition()-1 : p->getPosition()-1 + 40);
     }
     else if(randomNum >= 11 && randomNum < 14){
-        p->setPosition(p->getPosition()+1);
+        p->setPosition(p->getPosition()+1 < 40 ? p->getPosition()+1 : p->getPosition()+1 - 40);
     }
     else if(randomNum >= 14 && randomNum < 18){
-        p->setPosition(p->getPosition()+2);
+        p->setPosition(p->getPosition()+2 < 40 ? p->getPosition()+2 : p->getPosition()+2 - 40);
     }
     else if(randomNum >= 18 && randomNum < 22){
-        p->setPosition(p->getPosition()+3);
+        p->setPosition(p->getPosition()+3 < 40 ? p->getPosition()+3 : p->getPosition()+3 - 40);
     }
     else if(randomNum >= 22 && randomNum < 23){
         p->sendToTims();
@@ -144,28 +146,28 @@ void UnownableProperty::NeedlesHall(Player* p){
 }
 
 void UnownableProperty::landedOn(Player* p){
-    if(this->name == "Collect OSAP"){
+    if(this->name == "COLLECT OSAP"){
         //Implement this in game class
     }
     else if(this->name == "DC Tims Line"){
         //Nothing happens if a player lands on this square
     }
-    else if(this->name == "Go to Tims"){
+    else if(this->name == "GO TO TIMS"){
         p->sendToTims();
     }
     else if(this->name == "Goose Nesting"){
         //nothing happens
     }
-    else if(this->name == "Tuition"){
+    else if(this->name == "TUITION"){
         Tuition(p);
     }
-    else if(this->name == "Coop Fee"){
+    else if(this->name == "COOP FEE"){
         CoopFee(p);
     }
     else if(this->name == "SLC"){
         SLC(p);
     }
-    else if(this->name == "Needles Hall"){
+    else if(this->name == "NEEDLES HALL"){
         NeedlesHall(p);
     }
 

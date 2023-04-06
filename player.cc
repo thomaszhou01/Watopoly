@@ -183,7 +183,7 @@ bool Player::trade(Player* p, std::string give, std::string recieve){
 }
 
 void Player::setPosition(int pos){
-    position += pos;
+    position = pos;
 }
 
 void Player::showAssets(){
