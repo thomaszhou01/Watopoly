@@ -44,6 +44,7 @@ class Player{
         void showAssets();
         int getTurnsInTims();
         void setTurnsInTims(int i);
+        int setInTims(bool option);
 };
 
 #endif

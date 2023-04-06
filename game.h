@@ -20,9 +20,12 @@ class Game{
 
         int numPlayers; 
         std::vector<Player *> order;
+        std::vector<int> orderIndex;
         std::vector<BoardPiece *> game;
         TextDisplay * textDisplay;
         bool playerCharTaken[8] = {false, false, false, false, false, false, false, false};
+        int consecutiveDoubles[8] = {0,0,0,0,0,0,0,0};
+        
         
         std::vector<int> testRoll(int die1, int die2);
         std::vector<int> rollDie();
@@ -36,6 +39,7 @@ class Game{
         //void all();
         //void auction();
         void commands(Player * p);
+        void auction(BoardPiece * b);
     public:
         Game();     // Constructor initializer
         ~Game();
