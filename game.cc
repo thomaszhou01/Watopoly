@@ -495,7 +495,6 @@ void Game::start()
                             {
                                 cout << "You gave control to the next player" << endl;
                                 consecutiveDoubles[playerIndex] = 0;
-                                playerIndex++;
                                 if(playerIndex >= numPlayers){
                                     playerIndex = 0;
                                 }
@@ -893,7 +892,6 @@ void Game::start()
                                 {
                                     cout << "You gave control to the next player" << endl;
                                     consecutiveDoubles[playerIndex] = 0;
-                                    playerIndex++;
                                     if(playerIndex >= numPlayers){
                                         playerIndex = 0;
                                     }
