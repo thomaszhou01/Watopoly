@@ -250,9 +250,9 @@ void Game::rollLogic(vector<int>& roll, bool& hasRolled, bool& rolledDouble, int
                 }
                 else if(input == "pay"){
                     if(order[playerIndex]->getMoney() >= 50){
+                        passed = true;
                         order[playerIndex]->subtractMoney(50);
                         cout << "You have paid $50" << endl;
-
                         order[playerIndex]->setInTims(false);
                         newPos = pos + totalRoll;
                         if(newPos >= 40){
