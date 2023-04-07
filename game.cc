@@ -9,58 +9,46 @@ using namespace std;
 
 Game::Game()
 {
-    game.push_back(new UnownableProperty{"COLLECT OSAP", 0, 51, 81});
-    game.push_back(new OwnableProperty{"AL", "Arts1", 40, 50, {2, 10, 30, 90, 160, 250}, 1, false, false, 2, 51, 73});
-    game.push_back(new UnownableProperty{"SLC", 2, 51, 65});
-    game.push_back(new OwnableProperty{"ML", "Arts1", 60, 50, {4, 20, 60, 180, 320, 450}, 3, false, false, 2, 51, 57});
-    game.push_back(new UnownableProperty{"TUITION", 4, 51, 49});
-    game.push_back(new OwnableProperty{"MKV", "Residence", 200, 0, {}, 5, false, true, 4, 51, 41});
-    game.push_back(new OwnableProperty{"ECH", "Arts2", 100, 50, {6, 30, 90, 270, 400, 550}, 6, false, false, 3, 51, 33});
-    game.push_back(new UnownableProperty{"NEEDLES HALL", 7, 51, 25});
-    game.push_back(new OwnableProperty{"PAS", "Arts2", 100, 50, {6, 30, 90, 270, 400, 550}, 8, false, false, 3, 51, 17});
-    game.push_back(new OwnableProperty{"HH", "Arts2", 120, 50, {8, 40, 100, 300, 450, 600}, 9, false, false, 3, 51, 9});
-    game.push_back(new UnownableProperty{"DC Tims Line", 10, 51, 1});
-    game.push_back(new OwnableProperty{"RCH", "Eng", 140, 100, {10, 50, 150, 450, 625, 750}, 11, false, false, 3, 46, 1});
-    game.push_back(new OwnableProperty{"PAC", "Gym", 150, 0, {}, 12, true, false, 2, 41, 1});
-    game.push_back(new OwnableProperty{"DWE", "Eng", 140, 100, {10, 50, 150, 450, 625, 750}, 13, false, false, 3, 36, 1});
-    game.push_back(new OwnableProperty{"CPH", "Eng", 160, 100, {12, 60, 180, 500, 700, 900}, 14, false, false, 3, 31, 1});
-    game.push_back(new OwnableProperty{"UWP", "Residence", 200, 0, {}, 15, false, true, 4, 26, 1});
-    game.push_back(new OwnableProperty{"LHI", "Health", 180, 100, {14, 70, 200, 550, 750, 950}, 16, false, false, 3, 21, 1});
-    game.push_back(new UnownableProperty{"SLC", 17, 16, 1});
-    game.push_back(new OwnableProperty{"BMH", "Health", 180, 100, {14, 70, 200, 550, 750, 950}, 18, false, false, 3, 11, 1});
-    game.push_back(new OwnableProperty{"OPT", "Health", 200, 100, {16, 80, 220, 600, 800, 1000}, 19, false, false, 3, 6, 1});
-    game.push_back(new UnownableProperty{"Goose Nesting", 20, 1, 1});
-    game.push_back(new OwnableProperty{"EV1", "Env", 220, 150, {18, 90, 250, 700, 875, 1050}, 21, false, false, 3, 1, 9});
-    game.push_back(new UnownableProperty{"NEEDLES HALL", 22, 1, 17});
-    game.push_back(new OwnableProperty{"EV2", "Env", 220, 150, {18, 90, 250, 700, 875, 1050}, 23, false, false, 3, 1, 25});
-    game.push_back(new OwnableProperty{"EV3", "Env", 240, 150, {20, 100, 300, 750, 925, 1100}, 24, false, false, 3, 1, 33});
-    game.push_back(new OwnableProperty{"V1", "Residence", 200, 0, {}, 25, false, true, 4, 1, 41});
-    game.push_back(new OwnableProperty{"PHYS", "Sci1", 260, 150, {22, 110, 330, 800, 975, 1150}, 26, false, false, 3, 1, 49});
-    game.push_back(new OwnableProperty{"B1", "Sci1", 260, 150, {22, 110, 330, 800, 975, 1150}, 27, false, false, 3, 1, 57});
-    game.push_back(new OwnableProperty{"PAC", "Gym", 150, 0, {}, 28, true, false, 2, 1, 65});
-    game.push_back(new OwnableProperty{"B2", "Sci1", 280, 150, {24, 120, 360, 850, 1025, 1200}, 29, false, false, 3, 1, 73});
-    game.push_back(new UnownableProperty{"GO TO TIMS", 30, 1, 81});
-    game.push_back(new OwnableProperty{"EIT", "Sci2", 300, 200, {26, 130, 390, 900, 1100, 1275}, 31, false, false, 3, 6, 81});
-    game.push_back(new OwnableProperty{"ESC", "Sci2", 300, 200, {26, 130, 390, 900, 1100, 1275}, 32, false, false, 3, 11, 81});
-    game.push_back(new UnownableProperty{"SLC", 33, 16, 81});
-    game.push_back(new OwnableProperty{"C2", "Sci2", 320, 200, {28, 150, 450, 1000, 1200, 1400}, 34, false, false, 3, 21, 81});
-    game.push_back(new OwnableProperty{"REV", "Residence", 200, 0, {}, 35, false, true, 4, 26, 81});
-    game.push_back(new UnownableProperty{"NEEDLES HALL", 36, 31, 81});
-    game.push_back(new OwnableProperty{"MC", "Math", 350, 200, {35, 175, 500, 1100, 1300, 1500}, 37, false, false, 2, 36, 81});
-    game.push_back(new UnownableProperty{"COOP FEE", 38, 41, 81});
-    game.push_back(new OwnableProperty{"DC", "Math", 400, 200, {50, 200, 600, 1400, 1700, 2000}, 39, false, false, 2, 46, 81});
-}
-
-Game::~Game()
-{
-    for (int i = 0; i < pieces; ++i)
-    {
-        delete game[i];
-    }
-    for (int i = 0; i < numPlayers; ++i)
-    {
-        delete order[i];
-    }
+    game.push_back(make_shared<UnownableProperty>("COLLECT OSAP", 0, 51, 81));
+    game.push_back(make_shared<OwnableProperty>("AL", "Arts1", 40, 50, std::vector<int>{2, 10, 30, 90, 160, 250}, 1, false, false, 2, 51, 73));
+    game.push_back(make_shared<UnownableProperty>("SLC", 2, 51, 65));
+    game.push_back(make_shared<OwnableProperty>("ML", "Arts1", 60, 50, std::vector<int>{4, 20, 60, 180, 320, 450}, 3, false, false, 2, 51, 57));
+    game.push_back(make_shared<UnownableProperty>("TUITION", 4, 51, 49));
+    game.push_back(make_shared<OwnableProperty>("MKV", "Residence", 200, 0, std::vector<int>{}, 5, false, true, 4, 51, 41));
+    game.push_back(make_shared<OwnableProperty>("ECH", "Arts2", 100, 50, std::vector<int>{6, 30, 90, 270, 400, 550}, 6, false, false, 3, 51, 33));
+    game.push_back(make_shared<UnownableProperty>("NEEDLES HALL", 7, 51, 25));
+    game.push_back(make_shared<OwnableProperty>("PAS", "Arts2", 100, 50, std::vector<int>{6, 30, 90, 270, 400, 550}, 8, false, false, 3, 51, 17));
+    game.push_back(make_shared<OwnableProperty>("HH", "Arts2", 120, 50, std::vector<int>{8, 40, 100, 300, 450, 600}, 9, false, false, 3, 51, 9));
+    game.push_back(make_shared<UnownableProperty>("DC Tims Line", 10, 51, 1));
+    game.push_back(make_shared<OwnableProperty>("RCH", "Eng", 140, 100, std::vector<int>{10, 50, 150, 450, 625, 750}, 11, false, false, 3, 46, 1));
+    game.push_back(make_shared<OwnableProperty>("PAC", "Gym", 150, 0, std::vector<int>{}, 12, true, false, 2, 41, 1));
+    game.push_back(make_shared<OwnableProperty>("DWE", "Eng", 140, 100, std::vector<int>{10, 50, 150, 450, 625, 750}, 13, false, false, 3, 36, 1));
+    game.push_back(make_shared<OwnableProperty>("CPH", "Eng", 160, 100, std::vector<int>{12, 60, 180, 500, 700, 900}, 14, false, false, 3, 31, 1));
+    game.push_back(make_shared<OwnableProperty>("UWP", "Residence", 200, 0, std::vector<int>{}, 15, false, true, 4, 26, 1));
+    game.push_back(make_shared<OwnableProperty>("LHI", "Health", 180, 100, std::vector<int>{14, 70, 200, 550, 750, 950}, 16, false, false, 3, 21, 1));
+    game.push_back(make_shared<UnownableProperty>("SLC", 17, 16, 1));
+    game.push_back(make_shared<OwnableProperty>("BMH", "Health", 180, 100, std::vector<int>{14, 70, 200, 550, 750, 950}, 18, false, false, 3, 11, 1));
+    game.push_back(make_shared<OwnableProperty>("OPT", "Health", 200, 100, std::vector<int>{16, 80, 220, 600, 800, 1000}, 19, false, false, 3, 6, 1));
+    game.push_back(make_shared<UnownableProperty>("Goose Nesting", 20, 1, 1));
+    game.push_back(make_shared<OwnableProperty>("EV1", "Env", 220, 150, std::vector<int>{18, 90, 250, 700, 875, 1050}, 21, false, false, 3, 1, 9));
+    game.push_back(make_shared<UnownableProperty>("NEEDLES HALL", 22, 1, 17));
+    game.push_back(make_shared<OwnableProperty>("EV2", "Env", 220, 150, std::vector<int>{18, 90, 250, 700, 875, 1050}, 23, false, false, 3, 1, 25));
+    game.push_back(make_shared<OwnableProperty>("EV3", "Env", 240, 150, std::vector<int>{20, 100, 300, 750, 925, 1100}, 24, false, false, 3, 1, 33));
+    game.push_back(make_shared<OwnableProperty>("V1", "Residence", 200, 0, std::vector<int>{}, 25, false, true, 4, 1, 41));
+    game.push_back(make_shared<OwnableProperty>("PHYS", "Sci1", 260, 150, std::vector<int>{22, 110, 330, 800, 975, 1150}, 26, false, false, 3, 1, 49));
+    game.push_back(make_shared<OwnableProperty>("B1", "Sci1", 260, 150, std::vector<int>{22, 110, 330, 800, 975, 1150}, 27, false, false, 3, 1, 57));
+    game.push_back(make_shared<OwnableProperty>("PAC", "Gym", 150, 0, std::vector<int>{}, 28, true, false, 2, 1, 65));
+    game.push_back(make_shared<OwnableProperty>("B2", "Sci1", 280, 150, std::vector<int>{24, 120, 360, 850, 1025, 1200}, 29, false, false, 3, 1, 73));
+    game.push_back(make_shared<UnownableProperty>("GO TO TIMS", 30, 1, 81));
+    game.push_back(make_shared<OwnableProperty>("EIT", "Sci2", 300, 200, std::vector<int>{26, 130, 390, 900, 1100, 1275}, 31, false, false, 3, 6, 81));
+    game.push_back(make_shared<OwnableProperty>("ESC", "Sci2", 300, 200, std::vector<int>{26, 130, 390, 900, 1100, 1275}, 32, false, false, 3, 11, 81));
+    game.push_back(make_shared<UnownableProperty>("SLC", 33, 16, 81));
+    game.push_back(make_shared<OwnableProperty>("C2", "Sci2", 320, 200, std::vector<int>{28, 150, 450, 1000, 1200, 1400}, 34, false, false, 3, 21, 81));
+    game.push_back(make_shared<OwnableProperty>("REV", "Residence", 200, 0, std::vector<int>{}, 35, false, true, 4, 26, 81));
+    game.push_back(make_shared<UnownableProperty>("NEEDLES HALL", 36, 31, 81));
+    game.push_back(make_shared<OwnableProperty>("MC", "Math", 350, 200, std::vector<int>{35, 175, 500, 1100, 1300, 1500}, 37, false, false, 2, 36, 81));
+    game.push_back(make_shared<UnownableProperty>("COOP FEE", 38, 41, 81));
+    game.push_back(make_shared<OwnableProperty>("DC", "Math", 400, 200, std::vector<int>{50, 200, 600, 1400, 1700, 2000}, 39, false, false, 2, 46, 81));
 }
 
 void Game::InitializeOrder()
@@ -145,7 +133,7 @@ void Game::InitializeOrder()
             if (success)
                 break;
         }
-        order.push_back(new Player{name, character});
+        order.push_back(make_shared<Player>(name, character));
         orderIndex.push_back(i);
     }
     cin.ignore();
@@ -185,12 +173,12 @@ vector<int> Game::rollDie()
     return vector<int>{v[0], v[1]};
 }
 
-std::vector<BoardPiece *> Game::getGame()
+std::vector<std::shared_ptr<BoardPiece>> Game::getGame()
 {
     return game;
 }
 
-std::vector<Player *> Game::getOrder()
+std::vector<shared_ptr<Player>> Game::getOrder()
 {
     return order;
 }
@@ -377,13 +365,13 @@ void Game::rollLogic(vector<int>& roll, bool& hasRolled, bool& rolledDouble, int
     pos = newPos;
     textDisplay->display();
     cout << "You are currently on: " << game[newPos]->getName() << endl;
-    game[newPos]->landedOn(order[playerIndex]);
+    game[newPos]->landedOn(order[playerIndex].get());
     game[newPos]->notifyObservers();
     
     while (newPos != order[playerIndex]->getPosition())
     {
         newPos = order[playerIndex]->getPosition();
-        game[newPos]->landedOn(order[playerIndex]);
+        game[newPos]->landedOn(order[playerIndex].get());
         game[newPos]->notifyObservers();
         game[pos]->notifyObservers();
         textDisplay->display();
@@ -404,15 +392,15 @@ void Game::rollLogic(vector<int>& roll, bool& hasRolled, bool& rolledDouble, int
             if (c == 'Y')
             {
                 game[newPos]->setOwned(true);
-                game[newPos]->setOwner(order[playerIndex]);
-                order[playerIndex]->addProperty(game[newPos]);
+                game[newPos]->setOwner(order[playerIndex].get());
+                order[playerIndex]->addProperty(game[newPos].get());
                 game[newPos]->notifyObservers();
                 cout << "You have succesfully purchased property: " << game[newPos]->getName() << endl;
                 break;
             }
             else if (c == 'N')
             {
-                auction(game[newPos]);
+                auction(game[newPos].get());
                 break;
             }
             else
@@ -437,7 +425,7 @@ void Game::rollLogic(vector<int>& roll, bool& hasRolled, bool& rolledDouble, int
     {
         int initialPlayers = numPlayers;
         makeMoney(playerIndex, newPos, over, hasRolled);
-        if(initialPlayers == numPlayers) game[newPos]->landedOn(order[playerIndex]);
+        if(initialPlayers == numPlayers) game[newPos]->landedOn(order[playerIndex].get());
         else{
             break;
         }
@@ -508,7 +496,7 @@ void Game::makeMoney(int& playerIndex, int& newPos, bool& over, bool& hasRolled)
             {
                 if (game[i]->getName() == cmd[1])
                 {
-                    if (!game[i]->mortgage(order[playerIndex]))
+                    if (!game[i]->mortgage(order[playerIndex].get()))
                     {
                         cout << "This property does not belong to you" << endl;
                     }
@@ -534,7 +522,7 @@ void Game::makeMoney(int& playerIndex, int& newPos, bool& over, bool& hasRolled)
             {
                 if (game[i]->getName() == cmd[1])
                 {
-                    if (game[i]->sellImprovement(order[playerIndex]))
+                    if (game[i]->sellImprovement(order[playerIndex].get()))
                     {
                         cout << "You have sucessfully sold " << cmd[1] << endl;
                         game[i]->notifyObservers();
@@ -562,7 +550,7 @@ void Game::makeMoney(int& playerIndex, int& newPos, bool& over, bool& hasRolled)
             {
                 if (order[i]->getName() == cmd[1])
                 {
-                    p = order[i];
+                    p = order[i].get();
                     flag = true;
                 }
             }
@@ -649,14 +637,14 @@ void Game::auction(BoardPiece *b)
     bool inAuction[8] = {true, true, true, true, true, true, true, true};
     int numInAuction = numPlayers;
 
-    string s;
-    string s1;
+    string s = "";
+    string s1 = "";
     vector<string> cmd;
     int bid = 0;
 
     cout << "The AUCTION will commence" << endl;
     cout << "We will go in turns to raise the current bid or withdraw: raise <amount> / withdraw" << endl;
-    cout << "The is bid is 0. ";
+    cout << "The is bid is 0. " << endl;
     while (numInAuction != 1)
     {
         for (int i = 0; i < numPlayers; ++i)
@@ -673,35 +661,36 @@ void Game::auction(BoardPiece *b)
                     {
                         cmd.push_back(s1);
                     }
-
-                    for(auto i: cmd){
-                        cout << i << endl;
-                    }
-
-                    if (cmd[0] == "withdraw")
+                    
+                    if (cmd.size() == 1 && cmd[0] == "withdraw")
                     {
                         inAuction[i] = "false";
                         --numInAuction;
                         break;
                     }
-                    else if (cmd[0] == "raise")
+                    else if (cmd.size() == 2 && cmd[0] == "raise")
                     {
-                        if (stoi(cmd[1]) > 0)
-                        {
-                            int raise = stoi(cmd[1]);
-                            if ((bid + raise) > order[i]->getMoney())
+                        try{
+                            if (stoi(cmd[1]) > 0)
                             {
-                                cout << "You do not have enough money to bid, Please raise less or withdraw" << endl;
+                                int raise = stoi(cmd[1]);
+                                if ((bid + raise) > order[i]->getMoney())
+                                {
+                                    cout << "You do not have enough money to bid, Please raise less or withdraw" << endl;
+                                }
+                                else
+                                {
+                                    bid += raise;
+                                    cout << "The bid is now $" << bid << endl;
+                                    break;
+                                }
                             }
                             else
                             {
-                                bid += raise;
-                                cout << "The bid is now $" << bid << endl;
-                                break;
+                                cout << "Invalid <amount>" << endl;
                             }
                         }
-                        else
-                        {
+                        catch(...){
                             cout << "Invalid <amount>" << endl;
                         }
                     }
@@ -724,7 +713,7 @@ void Game::auction(BoardPiece *b)
             cout << "Congratulations to " << order[i]->getName() << " for winning the property for $" << bid << endl;
             order[i]->subtractMoney(bid);
             order[i]->addProperty(b);
-            b->setOwner(order[i]);
+            b->setOwner(order[i].get());
             b->setOwned(true);
             b->notifyObservers();
             break;
@@ -746,7 +735,7 @@ void Game::start()
         cout << order[i]->getName() << ": " << order[i]->getCharacter() << endl;
     }
     textDisplay->display();
-    commands(order[playerIndex]);
+    commands(order[playerIndex].get());
     while (over == false)
     {
         string s= "";
@@ -835,7 +824,7 @@ void Game::start()
                 {
                     if (game[i]->getName() == cmd[1])
                     {
-                        if (!game[i]->mortgage(order[playerIndex]))
+                        if (!game[i]->mortgage(order[playerIndex].get()))
                         {
                             cout << "This property does not belong to you" << endl;
                         }
@@ -854,7 +843,7 @@ void Game::start()
                 {
                     if (game[i]->getName() == cmd[1])
                     {
-                        if (!game[i]->unmortgage(order[playerIndex]))
+                        if (!game[i]->unmortgage(order[playerIndex].get()))
                         {
                             cout << "This property does not belong to you" << endl;
                         }
@@ -886,7 +875,7 @@ void Game::start()
                     {
                         if (game[i]->getName() == cmd[1])
                         {
-                            if (game[i]->sellImprovement(order[playerIndex]))
+                            if (game[i]->sellImprovement(order[playerIndex].get()))
                             {
                                 cout << "You have sucessfully sold " << cmd[1] << endl;
                                 game[i]->notifyObservers();
@@ -904,7 +893,7 @@ void Game::start()
                     {
                         if (game[i]->getName() == cmd[1])
                         {
-                            if (game[i]->improve(order[playerIndex]))
+                            if (game[i]->improve(order[playerIndex].get()))
                             {
                                 cout << "You have sucessfully improved " << cmd[1] << endl;
                                 game[i]->notifyObservers();
@@ -929,8 +918,20 @@ void Game::start()
                 }
                 else
                 {
-                    vector<int> roll = testRoll(stoi(cmd[1]), stoi(cmd[2]));
-                    rollLogic(roll, hasRolled, rolledDouble, playerIndex, over);
+                    try{
+                        int roll1 = stoi(cmd[1]);
+                        int roll2 = stoi(cmd[2]);
+                        if(roll1 >= 0 && roll2 >= 0){
+                            vector<int> roll = testRoll(roll1, roll2);
+                            rollLogic(roll, hasRolled, rolledDouble, playerIndex, over);
+                        }
+                        else{
+                            cout << "Invalid roll <die1> <die2>" << endl;
+                        }
+                    }
+                    catch(...){
+                        cout << "Invalid roll <die1> <die2>" << endl;
+                    }
                 }
             }
             else
@@ -948,7 +949,7 @@ void Game::start()
                 {
                     if (order[i]->getName() == cmd[1])
                     {
-                        p = order[i];
+                        p = order[i].get();
                         flag = true;
                     }
                 }
@@ -1027,7 +1028,7 @@ void Game::save(string file)
 
     for (int i = 0; i < numPlayers; ++i)
     {
-        Player *p = order[i];
+        Player *p = order[i].get();
         f << p->getName() << " ";
         f << p->getCharacter() << " ";
         f << p->getRollUpTheRimCards() << " ";
@@ -1095,7 +1096,7 @@ void Game::load(string file)
         }
         string name = s2[0];
         char character = s2[1][0];
-        order.push_back(new Player{name, character});
+        order.push_back(make_shared<Player>(name, character));
         orderIndex.push_back(i);
         order[i]->setRollUpTheRimCards(stoi(s2[2]));
         order[i]->setMoney(stoi(s2[3]));
@@ -1132,11 +1133,11 @@ void Game::load(string file)
                     {
                         if (order[k]->getName() == owner)
                         {
-                            game[j]->setOwner(order[k]);
-                            order[k]->addProperty(game[j]);
+                            game[j]->setOwner(order[k].get());
+                            order[k]->addProperty(game[j].get());
                             if (improvements == -1)
                             {
-                                game[j]->mortgage(order[k]);
+                                game[j]->mortgage(order[k].get());
                             }
                             else
                             {

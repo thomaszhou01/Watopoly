@@ -2,6 +2,8 @@
 #define GAME_H
 #include <string>
 #include <vector>
+#include <memory>
+#include <stdexcept>
 #include "player.h"
 #include "boardPiece.h"
 #include "subject.h"
@@ -19,9 +21,9 @@ class Game{
         bool testing = false;
 
         int numPlayers; 
-        std::vector<Player *> order;
+        std::vector<std::shared_ptr<Player>> order;
         std::vector<int> orderIndex;
-        std::vector<BoardPiece *> game;
+        std::vector<std::shared_ptr<BoardPiece>> game;
         TextDisplay * textDisplay;
         bool playerCharTaken[8] = {false, false, false, false, false, false, false, false};
         int consecutiveDoubles[8] = {0,0,0,0,0,0,0,0};
@@ -35,15 +37,14 @@ class Game{
         void auction(BoardPiece * b);
     public:
         Game();     // Constructor initializer
-        ~Game();
         void InitializeOrder();
         void start();   // starts the game
         int getNumPlayers();
         int getPieces();
         bool getTesting();
         void setTesting();
-        std::vector<Player *> getOrder();
-        std::vector<BoardPiece *> getGame();
+        std::vector<std::shared_ptr<Player>> getOrder();
+        std::vector<std::shared_ptr<BoardPiece>> getGame();
 
         void save(std::string file);
         void load(std::string file);
