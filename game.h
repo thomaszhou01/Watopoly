@@ -23,7 +23,7 @@ class Game{
         std::vector<std::shared_ptr<Player>> order;
         std::vector<int> orderIndex;
         std::vector<std::shared_ptr<BoardPiece>> game;
-        TextDisplay * textDisplay;
+        std::shared_ptr<TextDisplay> textDisplay;
         bool playerCharTaken[8] = {false, false, false, false, false, false, false, false};
         int consecutiveDoubles[8] = {0,0,0,0,0,0,0,0};
         
