@@ -731,15 +731,15 @@ void Game::start()
     {
         cout << order[i]->getName() << ": " << order[i]->getCharacter() << endl;
     }
-    textDisplay->display();
-    cout << "It is "<< order[playerIndex]->getName() << "'s turn. Please enter a command:" << endl;
-    commands(order[playerIndex].get());
     while (over == false)
     {
         string s= "";
         string s1 = "";
         vector<string> cmd;
         cmd.clear();
+        textDisplay->display();
+        cout << "It is "<< order[playerIndex]->getName() << "'s turn. Please enter a command:" << endl;
+        commands(order[playerIndex].get());
         getline(cin, s);
         stringstream ss(s);
         while (ss >> s1)
@@ -1007,9 +1007,6 @@ void Game::start()
                 playerIndex = 0;
             }
             hasRolled = false;
-            textDisplay->display();
-            cout << "It is "<< order[playerIndex]->getName() << "'s turn. Please enter a command:" << endl;
-            commands(order[playerIndex].get());
         }
     }
 }
