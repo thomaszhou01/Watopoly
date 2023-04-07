@@ -539,6 +539,9 @@ void Game::makeMoney(int& playerIndex, int& newPos, bool& over, bool& hasRolled)
                         cout << "You have sucessfully sold " << cmd[1] << endl;
                         game[i]->notifyObservers();
                     }
+                    else{
+                        cout << "You cannot sell " << cmd[1] << endl;
+                    }
                     break;
                 }
             }
@@ -888,6 +891,9 @@ void Game::start()
                                 cout << "You have sucessfully sold " << cmd[1] << endl;
                                 game[i]->notifyObservers();
                             }
+                            else{
+                                cout << "You cannot sell " << cmd[1] << endl;
+                            }
                             break;
                         }
                     }
@@ -902,6 +908,9 @@ void Game::start()
                             {
                                 cout << "You have sucessfully improved " << cmd[1] << endl;
                                 game[i]->notifyObservers();
+                            }
+                            else{
+                                cout << "You cannot improve " << cmd[1] << endl;
                             }
                             break;
                         }

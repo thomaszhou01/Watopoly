@@ -127,6 +127,10 @@ bool Player::trade(Player* p, std::string give, std::string recieve){
     bool hasRecieve = false;
     BoardPiece* giveProperty = nullptr;
     BoardPiece* recieveProperty = nullptr;
+    std::string giveId;
+    std::string recieveId;
+    int givePropertyImprovements = 0;
+    int recievePropertyImprovements = 0;
 
     //check if player has the property to give
     if(!giveTransform){
@@ -134,11 +138,21 @@ bool Player::trade(Player* p, std::string give, std::string recieve){
             if(i->getName() == give){
                 hasGive = true;
                 giveProperty = i;
+                giveId = giveProperty->getId();
                 break;
             }
         }
         if(!hasGive){
             std::cout << "You do not own this property to give" << std::endl;
+            return false;
+        }
+        for(auto & i : this->properties){
+            if(i->getId() == giveId){
+                givePropertyImprovements += i->getImprovementLevel();
+            }
+        }
+        if(givePropertyImprovements != 0){
+            std::cout << "Cannot trade, improvement level of all properties in monopoly is not 0" << std::endl;
             return false;
         }
     }
@@ -149,11 +163,21 @@ bool Player::trade(Player* p, std::string give, std::string recieve){
             if(i->getName() == recieve){
                 hasRecieve = true;
                 recieveProperty = i;
+                recieveId = recieveProperty->getId();
                 break;
             }
         }
         if(!hasRecieve){
             std::cout << p->getName() <<" does not own this property" << std::endl;
+            return false;
+        }
+        for(auto & i : this->properties){
+            if(i->getId() == recieveId){
+                recievePropertyImprovements += i->getImprovementLevel();
+            }
+        }
+        if(recievePropertyImprovements != 0){
+            std::cout << "Cannot trade, improvement level of all properties in monopoly is not 0" << std::endl;
             return false;
         }
     }
