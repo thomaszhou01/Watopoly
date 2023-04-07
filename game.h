@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <stdexcept>
 #include "player.h"
 #include "boardPiece.h"
 #include "subject.h"
