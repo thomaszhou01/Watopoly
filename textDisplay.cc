@@ -6,53 +6,54 @@ using namespace std;
 void TextDisplay::updateBoardPiece(BoardPiece * piece) {
     int row = piece->getRow()-1;
     int col = piece->getCol()-1;
+    if(piece->isOwnable()){
+        if (piece->getOwner() != nullptr) {
+            board[row+1][col+1] = 'O';
+            board[row+4][col+1] = piece->getOwner()->getCharacter();
+        }
+        else{
+            board[row+1][col+1] = ' ';
+            board[row+4][col+1] = ' ';
+        }
 
-    if (piece->getOwner() != nullptr) {
-        board[row+1][col+1] = 'O';
-        board[row+4][col+1] = piece->getOwner()->getCharacter();
-    }
-    else{
-        board[row+1][col+1] = ' ';
-        board[row+4][col+1] = ' ';
-    }
+        if (piece->isMortgaged() == true) {
+            board[row+1][col+2] = 'M';
+            board[row+1][col+3] = ' ';
+            board[row+1][col+4] = ' ';
+            board[row+1][col+5] = ' ';
+            board[row+1][col+6] = ' ';
+            board[row+1][col+7] = ' ';
+        }
+        else{
+            board[row+1][col+2] = ' ';
+            board[row+1][col+3] = ' ';
+            board[row+1][col+4] = ' ';
+            board[row+1][col+5] = ' ';
+            board[row+1][col+6] = ' ';
+            board[row+1][col+7] = ' ';
+        }
 
-    if (piece->isMortgaged() == true) {
-        board[row+1][col+2] = 'M';
-        board[row+1][col+3] = ' ';
-        board[row+1][col+4] = ' ';
-        board[row+1][col+5] = ' ';
-        board[row+1][col+6] = ' ';
-        board[row+1][col+7] = ' ';
-    }
-    else{
-        board[row+1][col+2] = ' ';
-        board[row+1][col+3] = ' ';
-        board[row+1][col+4] = ' ';
-        board[row+1][col+5] = ' ';
-        board[row+1][col+6] = ' ';
-        board[row+1][col+7] = ' ';
-    }
-
-    if (piece->getImprovementLevel() == 1) {
-        board[row+1][col+3] = 'I';
-    } else if (piece->getImprovementLevel() == 2) {
-        board[row+1][col+3] = 'I';
-        board[row+1][col+4] = 'I';
-    } else if (piece->getImprovementLevel() == 3) {
-        board[row+1][col+3] = 'I';
-        board[row+1][col+4] = 'I';
-        board[row+1][col+5] = 'I';
-    } else if (piece->getImprovementLevel() == 4) {
-        board[row+1][col+3] = 'I';
-        board[row+1][col+4] = 'I';
-        board[row+1][col+5] = 'I';
-        board[row+1][col+6] = 'I';
-    } else if (piece->getImprovementLevel() == 5) {
-        board[row+1][col+3] = 'I';
-        board[row+1][col+4] = 'I';
-        board[row+1][col+5] = 'I';
-        board[row+1][col+6] = 'I';
-        board[row+1][col+7] = 'I';
+        if (piece->getImprovementLevel() == 1) {
+            board[row+1][col+3] = 'I';
+        } else if (piece->getImprovementLevel() == 2) {
+            board[row+1][col+3] = 'I';
+            board[row+1][col+4] = 'I';
+        } else if (piece->getImprovementLevel() == 3) {
+            board[row+1][col+3] = 'I';
+            board[row+1][col+4] = 'I';
+            board[row+1][col+5] = 'I';
+        } else if (piece->getImprovementLevel() == 4) {
+            board[row+1][col+3] = 'I';
+            board[row+1][col+4] = 'I';
+            board[row+1][col+5] = 'I';
+            board[row+1][col+6] = 'I';
+        } else if (piece->getImprovementLevel() == 5) {
+            board[row+1][col+3] = 'I';
+            board[row+1][col+4] = 'I';
+            board[row+1][col+5] = 'I';
+            board[row+1][col+6] = 'I';
+            board[row+1][col+7] = 'I';
+        }
     }
 
     int playerNum = 0;

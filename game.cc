@@ -34,7 +34,7 @@ Game::Game()
     game.push_back(new UnownableProperty{"NEEDLES HALL", 22, 1, 17});
     game.push_back(new OwnableProperty{"EV2", "Env", 220, 150, {18, 90, 250, 700, 875, 1050}, 23, false, false, 3, 1, 25});
     game.push_back(new OwnableProperty{"EV3", "Env", 240, 150, {20, 100, 300, 750, 925, 1100}, 24, false, false, 3, 1, 33});
-    game.push_back(new OwnableProperty{"V1", "Residence", 200, 0, {}, 15, false, true, 4, 1, 41});
+    game.push_back(new OwnableProperty{"V1", "Residence", 200, 0, {}, 25, false, true, 4, 1, 41});
     game.push_back(new OwnableProperty{"PHYS", "Sci1", 260, 150, {22, 110, 330, 800, 975, 1150}, 26, false, false, 3, 1, 49});
     game.push_back(new OwnableProperty{"B1", "Sci1", 260, 150, {22, 110, 330, 800, 975, 1150}, 27, false, false, 3, 1, 57});
     game.push_back(new OwnableProperty{"PAC", "Gym", 150, 0, {}, 28, true, false, 2, 1, 65});
