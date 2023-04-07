@@ -132,7 +132,7 @@ void Game::InitializeOrder()
         order.push_back(make_shared<Player>(name, character));
         orderIndex.push_back(i);
     }
-    textDisplay = make_shared<TextDisplay>(this);
+    textDisplay = make_shared<TextDisplay>(this, order);
     for (int i = 0; i < pieces; ++i)
     {
         game[i]->attach(textDisplay.get());
@@ -1150,7 +1150,7 @@ void Game::load(string file)
             }
         }
     }
-    textDisplay = make_shared<TextDisplay>(this);
+    textDisplay = make_shared<TextDisplay>(this, order);
     for (int i = 0; i < pieces; ++i)
     {
         game[i]->attach(textDisplay.get());
