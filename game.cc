@@ -475,6 +475,8 @@ void Game::makeMoney(int& playerIndex, int& newPos, bool& over, bool& hasRolled)
                     playerIndex = 0;
                 }
                 hasRolled = false;
+                cout << "It is "<< order[playerIndex]->getName() << "'s turn. Please enter a command:" << endl;
+                commands(order[playerIndex].get());
             }
         }
         else
@@ -728,6 +730,8 @@ void Game::start()
     {
         cout << order[i]->getName() << ": " << order[i]->getCharacter() << endl;
     }
+    textDisplay->display();
+    cout << "It is "<< order[playerIndex]->getName() << "'s turn. Please enter a command:" << endl;
     commands(order[playerIndex].get());
     while (over == false)
     {
@@ -735,8 +739,6 @@ void Game::start()
         string s1 = "";
         vector<string> cmd;
         cmd.clear();
-        textDisplay->display();
-        cout << "It is "<< order[playerIndex]->getName() << "'s turn. Please enter a command:" << endl;
         getline(cin, s);
         stringstream ss(s);
         while (ss >> s1)
@@ -1004,6 +1006,8 @@ void Game::start()
                 playerIndex = 0;
             }
             hasRolled = false;
+            cout << "It is "<< order[playerIndex]->getName() << "'s turn. Please enter a command:" << endl;
+            commands(order[playerIndex].get());
         }
     }
 }
