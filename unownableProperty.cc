@@ -184,5 +184,3 @@ void UnownableProperty::landedOn(Player* p){
     }
 
 }
-
-UnownableProperty::~UnownableProperty(){}

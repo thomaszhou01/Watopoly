@@ -11,7 +11,6 @@ class OwnableProperty: public BoardPiece{
         bool improve(Player* p) override;   
         bool sellImprovement(Player* p) override;
         void landedOn(Player* p) override;
-        ~OwnableProperty() override;
 };
 
 #endif

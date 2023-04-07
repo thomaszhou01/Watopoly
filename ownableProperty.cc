@@ -178,5 +178,3 @@ void OwnableProperty::landedOn(Player* p){
         }
     }
 }
-
-OwnableProperty::~OwnableProperty(){}

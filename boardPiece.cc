@@ -83,7 +83,6 @@ bool BoardPiece::mortgage(Player* p){}
 bool BoardPiece::unmortgage(Player* p){}
 bool BoardPiece::improve(Player* p){}
 bool BoardPiece::sellImprovement(Player* p){}
-BoardPiece::~BoardPiece(){}
 
 int BoardPiece::getRow(){
     return row;

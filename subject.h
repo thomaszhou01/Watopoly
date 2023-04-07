@@ -13,7 +13,6 @@ class Subject{
         virtual std::string getName()=0;
         virtual int getRow()=0;
         virtual int getCol()=0;
-        virtual ~Subject()=0;
 };
 
 #endif

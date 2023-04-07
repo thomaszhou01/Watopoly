@@ -12,7 +12,6 @@ class UnownableProperty: public BoardPiece{
     public:
         UnownableProperty(std::string name, int position, int row, int col);
         void landedOn(Player* p) override;
-        ~UnownableProperty() override;
 };
 
 #endif

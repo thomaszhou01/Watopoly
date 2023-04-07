@@ -52,7 +52,6 @@ class BoardPiece: public Subject{
         virtual bool improve(Player* p);
         virtual bool sellImprovement(Player* p);
         virtual void landedOn(Player* p)=0;
-        virtual ~BoardPiece()=0;
 
         int getRow() override;
         int getCol() override;

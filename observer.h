@@ -6,7 +6,6 @@
 class Observer{
     public:
         virtual void notify(Subject * subject) = 0;
-        virtual ~Observer();
 };
 
 #endif

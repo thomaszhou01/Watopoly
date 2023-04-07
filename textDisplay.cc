@@ -107,5 +107,3 @@ void TextDisplay::display() {
         cout << endl;
     }
 }
-
-TextDisplay::~TextDisplay(){}

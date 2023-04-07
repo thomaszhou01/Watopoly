@@ -8,5 +8,3 @@ void Subject::attach(Observer* ob){
 void Subject::notifyObservers(){
     observer->notify(this);
 }
-
-Subject::~Subject(){}

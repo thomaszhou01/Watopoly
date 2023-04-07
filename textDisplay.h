@@ -18,7 +18,6 @@ class TextDisplay: public Observer{
         TextDisplay(Game * game, std::vector<Player*> players);   // Constructor
         virtual void notify(Subject * subject) override; // BoardPiece notifies the TextDisplay class to make changes 
         void display(); // outputs the board
-        ~TextDisplay() override;    // Destructor
 };
 
 #endif
