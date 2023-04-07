@@ -55,44 +55,35 @@ void Game::InitializeOrder()
 {
     cout << "How many players are playing?" << endl;
     // add guard
-    cin >> numPlayers;
     while (true)
     {
-        if (numPlayers > 8 || numPlayers < 2)
-        {
-            cout << "Invalid number of players." << endl;
-            cout << "Number of players must be between 2 and 8 (inclusive)" << endl;
-            //add guard
-            cin >> numPlayers;
-        }
-        else
-        {
-            break;
-        }
-    }
-    string name;
-    char character;
-    for (int i = 0; i < numPlayers; ++i)
-    {
-        cout << "Player " << i + 1 << ": ";
-        cout << "Please enter your name: " << endl;
-        while (true)
-        {
-            if (cin >> name)
-                break;
+        string temp="";
+        getline(cin, temp);
+        try{
+            numPlayers = stoi(temp);
+            if (numPlayers > 8 || numPlayers < 2)
+            {
+                cout << "Invalid number of players." << endl;
+                cout << "Number of players must be between 2 and 8 (inclusive)" << endl;
+            }
             else
             {
-                if (cin.eof())
-                    break;
-                else
-                {
-                    cin.clear();
-                    cin.ignore();
-                }
-                cout << "Incorrect type" << endl;
+                break;
             }
-            cout << "Please enter your name: " << endl;
         }
+        catch(...){
+            cout << "Please enter an integer" << endl;
+        }
+        
+    }
+    
+    for (int i = 0; i < numPlayers; ++i)
+    {
+        string name = "";
+        char character;
+        cout << "Player " << i + 1 << ": ";
+        cout << "Please enter your name: " << endl;
+        getline(cin, name);
 
         cout << "The playable Characters are: G: Goose, B: GRT Bus, D: Tim Hortons Doughnut, P: Professor, S: Student, $: Money, L: Laptop, T: Pink tie" << endl;
         bool success = false;
@@ -107,28 +98,33 @@ void Game::InitializeOrder()
                 }
             }
             cout << endl;
-            if (cin >> character)
+            string temp = "";
+            if (getline(cin, temp))
             {
-                for (int j = 0; j < 8; ++j)
-                {
-                    if (playerChar[j] == character && playerCharTaken[j] == false)
-                    {
-                        playerCharTaken[j] = true;
-                        success = true;
-                        break;
+                try{
+                    if(temp.length() == 1){
+                        character = temp[0];
+                        for (int j = 0; j < 8; ++j)
+                        {
+                            if (playerChar[j] == character && playerCharTaken[j] == false)
+                            {
+                                playerCharTaken[j] = true;
+                                success = true;
+                                break;
+                            }
+                        }
                     }
+                    else{
+                        cout << "Please enter one of the options" << endl;
+                    }
+                }
+                catch(...){
+                    cout << "Please enter one of the options" << endl;
                 }
             }
             else
             {
-                if (cin.eof())
-                    break;
-                else
-                {
-                    cin.clear();
-                    cin.ignore();
-                }
-                cout << "Incorrect type" << endl;
+                cout << "Please enter one of the options" << endl;
             }
             if (success)
                 break;
@@ -136,7 +132,6 @@ void Game::InitializeOrder()
         order.push_back(make_shared<Player>(name, character));
         orderIndex.push_back(i);
     }
-    cin.ignore();
     textDisplay = new TextDisplay{this, order};
     for (int i = 0; i < pieces; ++i)
     {
@@ -381,15 +376,14 @@ void Game::rollLogic(vector<int>& roll, bool& hasRolled, bool& rolledDouble, int
     // buy/auction
     if (game[newPos]->isOwnable() == true && game[newPos]->isOwned() == false)
     {
-        char c;
         cout << "You are given the option to BUY the property for: $" << game[newPos]->getPrice() << " else the property will be AUCTIONED" << endl;
 
         while (true)
         {
             cout << "Would you like to buy the property? (Y/N)" << endl;
-            cin >> c;
-            cin.ignore();
-            if (c == 'Y')
+            string c = "";
+            getline(cin, c);
+            if (c == "Y")
             {
                 game[newPos]->setOwned(true);
                 game[newPos]->setOwner(order[playerIndex].get());
@@ -398,7 +392,7 @@ void Game::rollLogic(vector<int>& roll, bool& hasRolled, bool& rolledDouble, int
                 cout << "You have succesfully purchased property: " << game[newPos]->getName() << endl;
                 break;
             }
-            else if (c == 'N')
+            else if (c == "Y")
             {
                 auction(game[newPos].get());
                 break;

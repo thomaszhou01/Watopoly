@@ -27,7 +27,7 @@ void UnownableProperty::Tuition(Player* p){
     std::cout << "Would you like to pay $300 in tuition, or 10% of your total worth (which is $" << total << ")? (1 for tuition, 2 for 10%)" << std::endl;
     std::string input;
     while(true){
-        std::cin >> input;
+        std::getline(std::cin, input);
         if(input == "1" || input == "2"){
             break;
         }
@@ -35,7 +35,6 @@ void UnownableProperty::Tuition(Player* p){
             std::cout << "Please enter 1 or 2" << std::endl;
         }
     }
-    std::cin.ignore();
     if(input == "1"){
         total = 300;
     }

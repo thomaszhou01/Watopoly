@@ -154,7 +154,7 @@ void OwnableProperty::landedOn(Player* p){
         std::cout << "Would you like to purchase " << this->getName() << " for $" << this->getPrice() << "? (y/n)" << std::endl;
         std::string input;
         while(true){
-            std::cin >> input;
+            std::getline(std::cin, input);
             if(input == "y" || input == "n"){
                 break;
             }
@@ -162,7 +162,6 @@ void OwnableProperty::landedOn(Player* p){
                 std::cout << "Please enter y or n" << std::endl;
             }
         }
-        std::cin.ignore();
         if(input == "y"){
             if(p->getMoney() >= this->cost){
                 p->addProperty(this);

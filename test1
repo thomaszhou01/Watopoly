@@ -1,7 +1,7 @@
 3
-asdasd G 0 1420 6
-bqweioryqwoe B 0 0 38
-csawesdsd $ 0 1500 0
+asdasd G 0 1420 10 0
+bqweioryqwoe B 0 0 38 
+csawesdsd $ 0 1500 0 
 AL BANK 0
 ML BANK 0
 MKV BANK 0
@@ -28,5 +28,5 @@ EIT BANK 0
 ESC BANK 0
 C2 BANK 0
 REV BANK 0
-MC BANK 0
+MC asdasd 0
 DC asdasd 0
