@@ -728,7 +728,6 @@ void Game::start()
     {
         cout << order[i]->getName() << ": " << order[i]->getCharacter() << endl;
     }
-    textDisplay->display();
     commands(order[playerIndex].get());
     while (over == false)
     {
@@ -736,6 +735,7 @@ void Game::start()
         string s1 = "";
         vector<string> cmd;
         cmd.clear();
+        textDisplay->display();
         cout << "It is "<< order[playerIndex]->getName() << "'s turn. Please enter a command:" << endl;
         getline(cin, s);
         stringstream ss(s);
