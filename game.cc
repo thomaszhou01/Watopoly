@@ -392,7 +392,7 @@ void Game::rollLogic(vector<int>& roll, bool& hasRolled, bool& rolledDouble, int
                 cout << "You have succesfully purchased property: " << game[newPos]->getName() << endl;
                 break;
             }
-            else if (c == "Y")
+            else if (c == "N")
             {
                 auction(game[newPos].get());
                 break;
