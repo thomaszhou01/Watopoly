@@ -81,9 +81,17 @@ void Game::InitializeOrder()
     {
         string name = "";
         char character;
-        cout << "Player " << i + 1 << ": ";
-        cout << "Please enter your name: " << endl;
-        getline(cin, name);
+        while(true){
+            cout << "Player " << i + 1 << ": ";
+            cout << "Please enter your name: " << endl;
+            getline(cin, name);
+            if(name.find(" ") != string::npos){
+                cout << "Your name cannot contain spaces" << endl;
+            }
+            else{
+                break;
+            }
+        }
 
         cout << "The playable Characters are: G: Goose, B: GRT Bus, D: Tim Hortons Doughnut, P: Professor, S: Student, $: Money, L: Laptop, T: Pink tie" << endl;
         bool success = false;
