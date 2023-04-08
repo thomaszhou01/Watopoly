@@ -661,7 +661,7 @@ void Game::auction(BoardPiece *b)
                     
                     if (cmd.size() == 1 && cmd[0] == "withdraw")
                     {
-                        inAuction[i] = "false";
+                        inAuction[i] = false;
                         --numInAuction;
                         break;
                     }
