@@ -66,35 +66,35 @@ void OwnableProperty::landedOn(Player* p){
     if(owned && !mortgaged){
         this->tuitionPaid = true;
         int tuitionRequired = 0;
-        //calculate number of gyms
-        if(this->gym){
-            std::vector<BoardPiece*> properties = this->ownedPlayer->getProperties();
-            int gyms = 0;
-            for(auto & i : properties){
-                if(i->isGym()){
-                    gyms++;
-                }
-            }
-            if(gyms == 1){
-                tuitionRequired = 25;
-            }
-            else if(gyms == 2){
-                tuitionRequired = 50;
-            }
-            else if(gyms == 3){
-                tuitionRequired = 100;
-            }
-            else if(gyms == 4){
-                tuitionRequired = 200;
-            }
-        }
-        //residence
-        else if (this->residence){
+        //calculate number of residences
+        if(this->residence){
             std::vector<BoardPiece*> properties = this->ownedPlayer->getProperties();
             int residences = 0;
             for(auto & i : properties){
                 if(i->isResidence()){
                     residences++;
+                }
+            }
+            if(residences == 1){
+                tuitionRequired = 25;
+            }
+            else if(residences == 2){
+                tuitionRequired = 50;
+            }
+            else if(residences == 3){
+                tuitionRequired = 100;
+            }
+            else if(residences == 4){
+                tuitionRequired = 200;
+            }
+        }
+        //gym
+        else if (this->gym){
+            std::vector<BoardPiece*> properties = this->ownedPlayer->getProperties();
+            int gyms = 0;
+            for(auto & i : properties){
+                if(i->isGym()){
+                    gyms++;
                 }
             }
 
@@ -104,12 +104,12 @@ void OwnableProperty::landedOn(Player* p){
             int roll1 = v[0];
             std::shuffle(v.begin(), v.end(), std::default_random_engine(seed));
             int roll2 = v[0];
-
-            if(residences == 2){
-                tuitionRequired = 4*(roll1+roll2);
+            std::cout << "Rolled " << roll1 << " and " << roll2 << std::endl;
+            if(gyms == 2){
+                tuitionRequired = 10*(roll1+roll2);
             }
             else{
-                tuitionRequired = 10*(roll1+roll2);
+                tuitionRequired = 4*(roll1+roll2);
             }
         }
         else{

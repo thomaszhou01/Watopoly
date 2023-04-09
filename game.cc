@@ -37,7 +37,7 @@ Game::Game()
     game.push_back(make_shared<OwnableProperty>("V1", "Residence", 200, 0, std::vector<int>{}, 25, false, true, 4, 1, 41));
     game.push_back(make_shared<OwnableProperty>("PHYS", "Sci1", 260, 150, std::vector<int>{22, 110, 330, 800, 975, 1150}, 26, false, false, 3, 1, 49));
     game.push_back(make_shared<OwnableProperty>("B1", "Sci1", 260, 150, std::vector<int>{22, 110, 330, 800, 975, 1150}, 27, false, false, 3, 1, 57));
-    game.push_back(make_shared<OwnableProperty>("PAC", "Gym", 150, 0, std::vector<int>{}, 28, true, false, 2, 1, 65));
+    game.push_back(make_shared<OwnableProperty>("CIF", "Gym", 150, 0, std::vector<int>{}, 28, true, false, 2, 1, 65));
     game.push_back(make_shared<OwnableProperty>("B2", "Sci1", 280, 150, std::vector<int>{24, 120, 360, 850, 1025, 1200}, 29, false, false, 3, 1, 73));
     game.push_back(make_shared<UnownableProperty>("GO TO TIMS", 30, 1, 81));
     game.push_back(make_shared<OwnableProperty>("EIT", "Sci2", 300, 200, std::vector<int>{26, 130, 390, 900, 1100, 1275}, 31, false, false, 3, 6, 81));
