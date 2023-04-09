@@ -722,6 +722,9 @@ void Game::auction(BoardPiece *b, int playerThatStartedAuction)
                         cout << "Invalid option" << endl;
                     }
                 }
+                else{
+                    break;
+                }
             }
             if (numInAuction == 1)
             {
