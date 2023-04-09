@@ -32,7 +32,7 @@ class Game{
         void rollLogic(std::vector<int>& roll, bool& hasRolled, bool& rolledDouble, int& playerIndex, bool& over);
         void makeMoney(int& playerIndex, int& newPos, bool& over, bool& hasRolled);
         void commands(Player * p);
-        void auction(BoardPiece * b);
+        void auction(BoardPiece * b, int playerThatStartedAuction);
     public:
         Game();     // Constructor initializer
         void InitializeOrder();

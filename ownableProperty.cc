@@ -63,7 +63,7 @@ bool OwnableProperty::sellImprovement(Player* p){
 
 // need to implement residences/gyms
 void OwnableProperty::landedOn(Player* p){
-    if(owned && !mortgaged){
+    if(owned && !mortgaged && ownedPlayer != p){
         this->tuitionPaid = true;
         int tuitionRequired = 0;
         //calculate number of residences
@@ -147,7 +147,7 @@ void OwnableProperty::landedOn(Player* p){
             this->tuitionPaid = false;
         }
     }
-    else if(owned && !mortgaged){
+    else if(owned && mortgaged){
         std::cout << "This property is mortgaged" << std::endl;
     }
     else if(!owned){

@@ -265,6 +265,14 @@ void Game::rollLogic(vector<int>& roll, bool& hasRolled, bool& rolledDouble, int
                                 }
                                 else if(input == "pay"){
                                     int initialPlayers = numPlayers;
+                                    cout << "You do not have enough money to pay." << endl;
+                                    cout << "Here are your following options:" << endl;
+                                    cout << "-bankrupt" << endl;
+                                    cout << "-trade <name> <money> <property>" << endl;
+                                    cout << "-trade <name> <property> <property>" << endl;
+                                    cout << "-trade <name> <property> <money>" << endl;
+                                    cout << "-mortgage <property>" << endl;
+                                    cout << "-improve <property> sell" << endl;
                                     makeMoney(playerIndex, newPos, over, hasRolled);
                                     if(initialPlayers == numPlayers){
                                         if(order[playerIndex]->getMoney() >= 50){
@@ -294,6 +302,14 @@ void Game::rollLogic(vector<int>& roll, bool& hasRolled, bool& rolledDouble, int
                         }
                         else{
                             cout << "Since it is your third turn in the DC Tims line, you must pay 50$" << endl;
+                            cout << "You do not have enough money to pay." << endl;
+                            cout << "Here are your following options:" << endl;
+                            cout << "-bankrupt" << endl;
+                            cout << "-trade <name> <money> <property>" << endl;
+                            cout << "-trade <name> <property> <property>" << endl;
+                            cout << "-trade <name> <property> <money>" << endl;
+                            cout << "-mortgage <property>" << endl;
+                            cout << "-improve <property> sell" << endl;
                             while(!passed){
                                 int initialPlayers = numPlayers;
                                 makeMoney(playerIndex, newPos, over, hasRolled);
@@ -365,8 +381,10 @@ void Game::rollLogic(vector<int>& roll, bool& hasRolled, bool& rolledDouble, int
     game[pos]->notifyObservers();
     game[newPos]->notifyObservers();
     pos = newPos;
-    textDisplay.display();
-    cout << "You are currently on: " << game[newPos]->getName() << endl;
+    if(!over){
+        textDisplay.display();
+        cout << "You are currently on: " << game[newPos]->getName() << endl;
+    }
     game[newPos]->landedOn(order[playerIndex].get());
     game[newPos]->notifyObservers();
     
@@ -401,7 +419,7 @@ void Game::rollLogic(vector<int>& roll, bool& hasRolled, bool& rolledDouble, int
             }
             else if (c == "N")
             {
-                auction(game[newPos].get());
+                auction(game[newPos].get(), playerIndex);
                 break;
             }
             else
@@ -455,7 +473,7 @@ void Game::makeMoney(int& playerIndex, int& newPos, bool& over, bool& hasRolled)
             std::vector<BoardPiece*> propertiesOwnedByBankruptPlayer = order[playerIndex]->getProperties();
             if(bankruptToPlayer == false){
                 for (auto i : propertiesOwnedByBankruptPlayer) {
-                    auction(i);
+                    auction(i, playerIndex);
                     i->notifyObservers();
                 }
             }
@@ -636,10 +654,11 @@ void Game::commands(Player *p)
     cout << "Please understand that if you enter \"next\" or \"roll\" you are not able to enter any other options" << endl;
 }
 
-void Game::auction(BoardPiece *b)
+void Game::auction(BoardPiece *b, int playerThatStartedAuction)
 {
     bool inAuction[8] = {true, true, true, true, true, true, true, true};
-    int numInAuction = numPlayers;
+    inAuction[playerThatStartedAuction] = false;
+    int numInAuction = numPlayers-1;
 
     string s = "";
     string s1 = "";
