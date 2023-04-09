@@ -1038,11 +1038,11 @@ void Game::save(string file)
         f << p->getRollUpTheRimCards() << " ";
         f << p->getMoney() << " ";
         f << p->getPosition() << " ";
-        if (p->getPosition() == 10)
+        if (!p->isInTims() && p->getPosition() == 10)
         {
             f << 0;
         }
-        else if (p->isInTims())
+        else if (p->isInTims() && p->getPosition() == 10)
         {
             f << 1 << " ";
             f << p->getTurnsInTims();

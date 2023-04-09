@@ -1,6 +1,6 @@
 2
-asdasd G 0 1820 10 0
-bqweioryqwoe B 0 1000 24
+asdasd G 0 1820 10 1 1
+bqweioryqwoe B 0 1130 24 
 AL BANK 0
 ML BANK 0
 MKV BANK 0
@@ -20,7 +20,7 @@ EV2 BANK 0
 EV3 BANK 0
 V1 asdasd 0
 PHYS BANK 0
-B1 bqweioryqwoe 0
+B1 bqweioryqwoe -1
 CIF asdasd 0
 B2 BANK 0
 EIT BANK 0
