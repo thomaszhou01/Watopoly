@@ -500,9 +500,6 @@ void Game::makeMoney(int& playerIndex, int& newPos, bool& over, bool& hasRolled)
                     playerIndex = 0;
                 }
                 hasRolled = false;
-                textDisplay.display();
-                cout << "It is "<< order[playerIndex]->getName() << "'s turn. Please enter a command:" << endl;
-                commands(order[playerIndex].get());
             }
         }
         else
