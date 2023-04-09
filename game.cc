@@ -665,7 +665,7 @@ void Game::auction(BoardPiece *b, int playerThatStartedAuction)
     vector<string> cmd;
     int bid = 0;
 
-    cout << "The AUCTION will commence" << endl;
+    cout << "The AUCTION will commence for " << b->getName() << endl;
     cout << "We will go in turns to raise the current bid or withdraw: raise <amount> / withdraw" << endl;
     cout << "The is bid is 0. " << endl;
     while (numInAuction != 1)
