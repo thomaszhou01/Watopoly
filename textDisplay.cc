@@ -1,4 +1,5 @@
 #include "textDisplay.h"
+#include "game.h"
 #include <fstream>
 using namespace std;
 
@@ -57,12 +58,12 @@ void TextDisplay::updateBoardPiece(BoardPiece * piece) {
     }
 
     int playerNum = 0;
-    for (int i = 0; i < players.size(); ++i) {
-        if (players[i]->getPosition() == piece->getPosition()) {
+    for (int i = 0; i < game->getOrder().size(); ++i) {
+        if (game->getOrder()[i]->getPosition() == piece->getPosition()) {
             if (playerNum < 4) {
-                board[row+3][col+7-playerNum] = players[i]->getCharacter();
+                board[row+3][col+7-playerNum] = game->getOrder()[i]->getCharacter();
             } else {
-                board[row+4][col+playerNum] = players[i]->getCharacter();
+                board[row+4][col+playerNum] = game->getOrder()[i]->getCharacter();
             }
         } else {
             if (playerNum < 4) {
@@ -76,7 +77,7 @@ void TextDisplay::updateBoardPiece(BoardPiece * piece) {
 }
 
 // sets up board, does not update anything yet.
-TextDisplay::TextDisplay(Game * game, std::vector<shared_ptr<Player>> players): game{game}, players{players} {
+TextDisplay::TextDisplay(Game * game): game{game} {
     ifstream f("board.txt");
     string s;
     int row = 0;

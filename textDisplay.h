@@ -6,8 +6,9 @@
 #include "observer.h"
 #include "player.h"
 #include "boardPiece.h"
-#include "game.h"
 #include "subject.h"
+class Game;
+
 
 class TextDisplay: public Observer{
     protected:
@@ -16,7 +17,7 @@ class TextDisplay: public Observer{
         char board[56][89];
         void updateBoardPiece(BoardPiece * piece); // updates the allocated board pieces
     public:
-        TextDisplay(Game * game, std::vector<std::shared_ptr<Player>> players);   // Constructor
+        TextDisplay(Game * game);   // Constructor
         virtual void notify(Subject * subject) override; // BoardPiece notifies the TextDisplay class to make changes 
         void display(); // outputs the board
 };

@@ -1,5 +1,4 @@
 #include "game.h"
-#include "textDisplay.h"
 #include "ownableProperty.h"
 #include "unownableProperty.h"
 #include <iostream>
@@ -7,7 +6,7 @@
 #include <string>
 using namespace std;
 
-Game::Game()
+Game::Game(): textDisplay{this}
 {
     game.push_back(make_shared<UnownableProperty>("COLLECT OSAP", 0, 51, 81));
     game.push_back(make_shared<OwnableProperty>("AL", "Arts1", 40, 50, std::vector<int>{2, 10, 30, 90, 160, 250}, 1, false, false, 2, 51, 73));
@@ -140,10 +139,10 @@ void Game::InitializeOrder()
         order.push_back(make_shared<Player>(name, character));
         orderIndex.push_back(i);
     }
-    textDisplay = make_shared<TextDisplay>(this, order);
+
     for (int i = 0; i < pieces; ++i)
     {
-        game[i]->attach(textDisplay.get());
+        game[i]->attach(&textDisplay);
         game[i]->notifyObservers();
     }
 }
@@ -366,7 +365,7 @@ void Game::rollLogic(vector<int>& roll, bool& hasRolled, bool& rolledDouble, int
     game[pos]->notifyObservers();
     game[newPos]->notifyObservers();
     pos = newPos;
-    textDisplay->display();
+    textDisplay.display();
     cout << "You are currently on: " << game[newPos]->getName() << endl;
     game[newPos]->landedOn(order[playerIndex].get());
     game[newPos]->notifyObservers();
@@ -377,7 +376,7 @@ void Game::rollLogic(vector<int>& roll, bool& hasRolled, bool& rolledDouble, int
         game[newPos]->landedOn(order[playerIndex].get());
         game[newPos]->notifyObservers();
         game[pos]->notifyObservers();
-        textDisplay->display();
+        textDisplay.display();
         cout << "You are currently on: " << game[newPos]->getName() << endl;
     }
 
@@ -483,7 +482,7 @@ void Game::makeMoney(int& playerIndex, int& newPos, bool& over, bool& hasRolled)
                     playerIndex = 0;
                 }
                 hasRolled = false;
-                textDisplay->display();
+                textDisplay.display();
                 cout << "It is "<< order[playerIndex]->getName() << "'s turn. Please enter a command:" << endl;
                 commands(order[playerIndex].get());
             }
@@ -745,7 +744,7 @@ void Game::start()
         string s1 = "";
         vector<string> cmd;
         cmd.clear();
-        textDisplay->display();
+        textDisplay.display();
         cout << "It is "<< order[playerIndex]->getName() << "'s turn. Please enter a command:" << endl;
         commands(order[playerIndex].get());
         getline(cin, s);
@@ -1158,10 +1157,9 @@ void Game::load(string file)
             }
         }
     }
-    textDisplay = make_shared<TextDisplay>(this, order);
     for (int i = 0; i < pieces; ++i)
     {
-        game[i]->attach(textDisplay.get());
+        game[i]->attach(&textDisplay);
         game[i]->notifyObservers();
     }
 

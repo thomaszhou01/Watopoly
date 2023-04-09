@@ -6,8 +6,7 @@
 #include "player.h"
 #include "boardPiece.h"
 #include "subject.h"
-
-class TextDisplay;
+#include "textDisplay.h"
 
 class Game{
     protected:
@@ -23,7 +22,7 @@ class Game{
         std::vector<std::shared_ptr<Player>> order;
         std::vector<int> orderIndex;
         std::vector<std::shared_ptr<BoardPiece>> game;
-        std::shared_ptr<TextDisplay> textDisplay;
+        TextDisplay textDisplay;
         bool playerCharTaken[8] = {false, false, false, false, false, false, false, false};
         int consecutiveDoubles[8] = {0,0,0,0,0,0,0,0};
         
