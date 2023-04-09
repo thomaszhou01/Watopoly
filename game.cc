@@ -800,8 +800,14 @@ void Game::start()
             {
                 if (s == "pay $50")
                 {
-                    cout << "You have paid $50. Congrats you made it out of DC Tims Line" << endl;
-                    order[playerIndex]->setInTims(false);
+                    if(order[playerIndex]->getMoney() >= 50){
+                        order[playerIndex]->subtractMoney(50);
+                        cout << "You have paid $50" << endl;
+                        order[playerIndex]->setInTims(false);
+                    }
+                    else{
+                        cout << "You do not have $50" << endl;
+                    }
                 }
                 else if (s == "use RUTRC")
                 {
