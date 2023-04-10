@@ -1167,6 +1167,7 @@ void Game::load(string file)
                             if (improvements == -1)
                             {
                                 game[j]->mortgage(order[k].get());
+                                order[k].get()->subtractMoney(game[j].get()->getPrice()/2);
                             }
                             else
                             {

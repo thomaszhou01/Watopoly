@@ -48,6 +48,9 @@ bool Player::setBankrupt(Player* p){
                     std::cout << "Unmortgaged "<< i->getName() << std::endl;
                     i->unmortgage(p);
                 }
+                else if(input == "n"){
+                    p->subtractMoney(i->getPrice()*0.1);
+                }
             }
         }
         p->setRollUpTheRimCards(p->getRollUpTheRimCards() + rollUpTheRimCards);
